@@ -1,0 +1,207 @@
+body{
+    background-image: url('Imagenes/logoInicio.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.form-container {
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 1300px;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 60vh;
+    height: 60%;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 30px;
+}
+/*
+.register-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: rgba(23, 34, 69, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+}
+*/
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    height: 20%;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Esto alinea los elementos hacia la parte inferior */
+    align-items: flex-start; /* Esto alinea los elementos hacia la derecha */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    height: 60%; /* Asegúrate de que el formulario ocupe todo el espacio disponible */
+
+    width: 100%;
+}
+
+.form-control {
+    flex: 1;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+.avatar-upload {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-top: -180px;
+}
+
+.avatar-label {
+    cursor: pointer;
+}
+
+.avatar-circle {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    margin-top: 0px;
+}
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the circle while maintaining aspect ratio */
+}
+
+
+.avatar-input {
+    display: none;
+}
+
+.questions {
+    width: 80%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.questionsInput {
+    width: 90%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.questions input{
+    width: 90%;
+    justify-content: left;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.questions-title {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.botonCont {
+    align-items: center;
+    margin-left: 80%px; /* Ajusta el espacio a la izquierda del botón */
+    justify-content: left;
+    margin-left: 25%
+}
+
+.btn-register {
+    width: 170%;
+    padding: 15px; /* Ajusté un poco el padding */
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 50%;
+   
+   
+}
+
+.error-text {
+    color: red;
+    font-size: 12px;
+    
+}
+.input-error {
+    border-color: red;
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-title {
+        font-size: 24px;
+    }
+
+    .register-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .avatar-upload {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .btn-register {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-control {
+        margin: 5px;
+    }
+
+    .questions input {
+        width: 80%;
+    }
+}
