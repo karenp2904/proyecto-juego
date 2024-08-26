@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './UserForm.css'; 
+import axios from 'axios';
+
 
 const UserForm: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -138,6 +140,7 @@ const UserForm: React.FC = () => {
         event.preventDefault();
         if (validateForm()) {
             console.log('Formulario enviado correctamente:', formData);
+            axios.post( `http://127.0.0.1:3000/api/registro`, formData )
         }
     };
 
