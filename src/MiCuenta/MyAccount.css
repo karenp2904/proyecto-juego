@@ -1,0 +1,182 @@
+
+.fondo2 {
+  background-image: url('../Images/arbol2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100%;
+  min-height: 120vh; /* Asegura que el contenedor ocupe al menos la altura del viewport */
+  display: flex;
+  flex-direction: column; /* Asegúrate de que esto se ajuste a tus necesidades */
+}
+
+
+.account-container {
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(128, 155, 144, 0.2);
+  max-width: 800px;
+  width: 90%;
+  min-height: 100vh; /* Asegura que el contenedor tenga al menos la altura del viewport */
+  margin: auto;
+  background-color: rgba(49, 43, 49, 0.7);
+  color: #fff;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+
+  
+  .account-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .avatar-section {
+    display: flex;
+    flex-direction: row;
+    align-items:center ;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 90%;
+  }
+  
+  .avatar-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    margin-bottom: 15px;
+  }
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .avatar-input {
+    display: none;
+  }
+  
+  .avatar-label {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #3B5B58;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 15px;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+  }
+ 
+
+  .account-details {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 20px;
+    width: 90%;
+   
+  }
+  
+  .details-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .detail-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 60%; /* Cada item ocupará un poco menos de la mitad para dar espacio entre ellos */
+    
+  }
+
+  .cont-smallGroup{
+    max-width: 600PX;
+    width: 30%;
+    margin-left: 12%;
+    margin: 9 auto;
+    padding-left: 5%;
+  }
+  
+  .another-cont{
+    margin: 10px;
+    width: 70%;
+    margin-left: 34%; /* Empuja el contenedor a la derecha */
+    margin-right: 0%;
+    align-items: flex-end;
+    justify-content: flex-end;
+  
+}
+
+ .another-cont .detail-item{
+   
+    width: 170%;
+    padding-right: 5%;
+    float: right;
+    
+ }
+
+
+  .separete-item{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .detail-item label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .form-control {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  .btn-update {
+    width: 50%;
+    padding: 15px;
+    background-color: #3B5B58;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+  }
+  
+  .btn-update:hover {
+    background-color: #7aafa9;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .details-row {
+      flex-direction: column;
+    }
+    .fondo{
+      height: 120%;
+    }
+  
+    .detail-item {
+      width: 100%; /* En pantallas más pequeñas, cada item ocupa todo el ancho */
+    }
+  }
+  

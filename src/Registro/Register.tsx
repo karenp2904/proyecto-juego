@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import UserForm from './UserForm.tsx';
-
+import './Register.css';
 
 const Register = () => {
     const [show, setShow] = useState(false);
@@ -12,7 +12,9 @@ const Register = () => {
 
     return (
         <>
-       <UserForm /> 
+         <div className="registro-container">
+            <UserForm /> 
+         </div>
         </>
     );
 };
