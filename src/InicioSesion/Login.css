@@ -1,0 +1,89 @@
+
+.fondo{
+  background-image: url('../Images/fondo.jpeg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.login-container {
+  background-color: #809B90;
+  padding: 50px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+  position: relative;
+}
+ .logo {
+  position: absolute;
+  top: -125px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  max-width: 120px; 
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.INICIO{
+  margin-bottom: 5px;
+  color: #fff;
+  text-align: center;
+  
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.btn-ingresar {
+  display: flex;
+  width: 50%;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: #3B5B58;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  align-content: center;
+  margin: auto auto;
+}
+
+button:hover {
+  background-color: #2E4644;
+}
+.text{
+  font-size: 10px;
+  margin-top: 10px;
+}
+.extra-links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.extra-links a {
+  color: #fff;
+ 
+  font-size: 12px;
+  display: block;
+  margin: 5px 0;
+}
