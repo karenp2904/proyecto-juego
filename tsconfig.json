@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react-jsx", // o "react" si es para versiones anteriores de React
+   "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "types": ["jest", "node"]
+    
+  },
+  "include": ["src/**/*", "tsconfig.json", "jest.config.js"],
+  "exclude": ["node_modules"]
+}
