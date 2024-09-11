@@ -1,0 +1,153 @@
+.auction-product-card {
+    position: relative; /* Asegura el correcto posicionamiento del contenido */
+    width: 230px;
+    height: 400px;
+    background-image: url('/build/Images/marco1.png'); /* Imagen de fondo */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    border-radius: 20px; /* Redondea los bordes */
+    display: flex;
+    padding: -20%; /* Espacio interno */
+    color: #000; /* Color del texto */
+    margin: 1%;
+    
+}
+
+.product-content {
+    position: relative;
+    width: 98%;
+    height: 94%;
+    margin: 6%;
+    margin-left: 2%;
+    margin-right: 2%;
+    display: flex;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Sombra alrededor de la carta */
+    border-radius: 15px;
+    background-color: rgba(214, 177, 113, 0.8);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    color: #1b1616; /* Color del texto */
+}
+
+.card-image {
+    position: relative;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid rgb(0, 0, 0); /* Borde dorado */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Sombra dorada */
+    transition: transform 0.3s ease;
+    animation: rotateImage 10s infinite linear, glow 2s ease-in-out infinite alternate;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-top: 15px;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.card-details {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.product-image {
+    width: 50%;
+    margin-top: -18%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 5px #3a3b0b dashed;
+
+}
+.product-name{
+    width: 50%;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 200;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #000;
+    margin: 15px;
+}
+.auction-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .bid-info, .time-info {
+    display: flex;
+    align-items: center;
+    margin:2%;
+    color: #444;
+  }
+  
+  .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    margin-right: 10px;
+    text-transform: uppercase;
+  }
+  
+  .bid-credits {
+    width: 80px;
+    background-color: #3f616f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #0f0e0e;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    margin:2%;
+  }
+  
+  .time-remaining {
+    width: 80px;
+    background-color: #5e2c24;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+   
+    color: #000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: pulse 1.5s infinite;
+    margin-right: 3%
+  }
+  
+.btn-puja{
+  border-radius: 5px;
+  border-style: dotted ;
+  height: 10%;
+  width: 50%;
+  background-color: rgb(223, 174, 91);
+}
+
+
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  

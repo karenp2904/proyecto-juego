@@ -1,6 +1,6 @@
 .registro-container {
     display: flex;
-    background-image: url('../Images/fondo.jpeg'); 
+    background-image: url('../../public/Images/fondo.jpeg'); 
     overflow: hidden; /* Oculta cualquier contenido que se desborde */
     background-size: cover; 
     background-position: center; 

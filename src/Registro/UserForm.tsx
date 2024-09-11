@@ -17,7 +17,7 @@ const UserForm: React.FC = () => {
     });
 
      // Establecer la imagen de avatar predeterminada
-     const defaultAvatar = require('../Images/usuario.png');
+     const defaultAvatar = '../../public/Images/usuario.png';
      const [avatarPreview, setAvatarPreview] = useState<string>(defaultAvatar);
  
 
@@ -285,7 +285,7 @@ const UserForm: React.FC = () => {
                     </div>
                 </form>
                 <button className="return-button1" type="button" onClick={() => window.location.href = "/Login"}>
-                        <img src="../Images/atras.png" alt="volver" />
+                        <img src="../../public/Images/atras.png" alt="volver" />
                 </button>
             </div>
     );

@@ -29,7 +29,7 @@ function Login() {
             <form onSubmit={handleSubmit}>
               <div className="logo-container">
                 <h1 className="INICIO">INICIO DE SESION</h1>
-                <img className="logo" src="../Images/LOGO.PNG"></img>
+                <img className="logo" src="../../public/Images/LOGO.PNG"></img>
                 
               </div>
               <label htmlFor="username" className="text">USUARIO / CORREO ELECTRÓNICO </label>

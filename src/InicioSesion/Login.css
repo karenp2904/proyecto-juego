@@ -1,6 +1,6 @@
 
 .fondo{
-  background-image: url('../Images/fondo.jpeg'); 
+  background-image: url('../../public/Images/fondo.jpeg'); 
   background-size: cover; 
   background-repeat: no-repeat; 
   background-position: center center; 
@@ -16,6 +16,7 @@
   background-color: #809B90;
   padding: 50px 20px 20px;
   border-radius: 10px;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

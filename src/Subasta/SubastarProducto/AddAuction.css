@@ -1,0 +1,44 @@
+.card{
+    background-color: rgba(214, 177, 113, 0.5);
+    display: flex;
+    flex-direction: row;
+}
+
+.product-registration {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    background-color: rgba(17, 77, 129, 0.1);
+    padding: 2%;
+    border-radius: 2%;
+    width: 100%; 
+}
+
+.product-registration input {
+    width: 100%; 
+    margin-bottom: 10px; 
+    max-width: 300px; 
+}
+
+
+.form-group{
+    justify-content: center;
+}
+
+.inventory-grid{
+    justify-content: center;
+    
+}
+.form-label{
+    color: black;
+}
+h4{
+    color: black;
+}
+.inventory-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(214, 177, 113, 0.8);
+   
+}

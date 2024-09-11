@@ -1,7 +1,7 @@
 
 
 .fondo {
-    background-image: url('../Images/logoInicio.jpeg'); /* Ruta de la imagen */
+    background-image: url('../../public/Images/logoInicio.jpeg'); /* Ruta de la imagen */
     background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
     background-position: top; /* Centra la imagen de fondo */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
