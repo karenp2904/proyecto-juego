@@ -44,7 +44,9 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                     <div className="auction-details">
                         <div className="bid-info">
                             <span className="label">Oferta actual:</span>
-                            <span className="bid-credits">{currentBid} créditos</span>
+                            <span className="bid-credits">
+                                {currentBid} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                            </span>                       
                         </div>
                         <div className="time-info">
                             <span className="label">Tiempo restante:</span>

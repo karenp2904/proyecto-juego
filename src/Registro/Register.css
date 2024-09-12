@@ -1,10 +1,12 @@
 .registro-container {
     display: flex;
-    background-image: url('../../public/Images/fondo.jpeg'); 
-    overflow: hidden; /* Oculta cualquier contenido que se desborde */
-    background-size: cover; 
-    background-position: center; 
-    height: 100hv;
-    margin: 0px;
-    padding: 0px;
+    background-image: url('../../public/Images/fondo.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    height: 100vh; 
+    width: 100vw; 
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
 }

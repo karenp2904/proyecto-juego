@@ -83,20 +83,16 @@ const AddAuction: React.FC = () => {
         
             <div className="card p-4">
                
-
                 <div className="row">
                     <div className="col-md-8">
                         <h4>Inventario del Jugador</h4>
                           
-                        <div className="inventory-grid d-flex flex-wrap"   style={{ 
-                                maxHeight: '500px',  /* Ajusta según necesites */
-                                overflowY: 'auto' 
-                            }}
-                        >
+                        <div className="inventory-grid d-flex flex-wrap"  >
                             {inventory.map((item) => (
-                                <div key={item.id} className="card inventory-card m-3" style={{ width: '70%' }}onClick={() => handleSelectProduct(item)}>
-                                        <img src={item.imageUrl} className="card-img-top" alt={item.name} style={{ height: '150px', objectFit: 'cover' }} />                                    <div className="card-body text-center">
-                                        <h5 className="card-title">{item.name}</h5>
+                                <div key={item.id} className="card inventory-card m-3" onClick={() => handleSelectProduct(item)}>
+                                        <img src={item.imageUrl} className="card-img-top" alt={item.name}  />                    
+                                        <div className="card-body text-center">
+                                        <h5 className="card-title-auction ">{item.name}</h5>
                                     </div>
                                 </div>
                             ))}
@@ -108,10 +104,14 @@ const AddAuction: React.FC = () => {
                 <div className="col-md-6 ">
                     {selectedProduct && (
                         <div className="product-registration">
-                            <h4>Producto Seleccionado: {selectedProduct.name}</h4>
-                            <img src={selectedProduct.imageUrl} className="img-fluid mb-3" alt={selectedProduct.name} style={{ maxHeight: '150px', objectFit: 'cover' }} />
-                            <div className="form-group">
-                                <label className='form-label'>Valor Inicial (Créditos)</label>
+                            <h4>Producto Seleccionado: </h4>
+                            <h4 className='name-product'>{selectedProduct.name} </h4>
+                            <div className='marcoImagen'> 
+                                <img src={selectedProduct.imageUrl} className="img-fluid mb-3" alt={selectedProduct.name}  />
+                            </div>
+                            
+                            <div className="form-group-auction">
+                                <label className='form-label-auction'>Valor Inicial</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -122,8 +122,8 @@ const AddAuction: React.FC = () => {
                                 />
                                 
                             </div>
-                            <div className="form-group">
-                                <label className='form-label'>Valor de Compra Inmediata (Créditos)</label>
+                            <div className="form-group-auction">
+                                <label className='form-label-auction'>Valor Compra Inmediata</label>
                                     <input
                                     type="number"
                                     className="form-control"
@@ -133,8 +133,8 @@ const AddAuction: React.FC = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label className='form-label'>Días de Subasta</label>
+                            <div className="form-group-auction">
+                                <label className='form-label-auction'>Días de Subasta</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -144,7 +144,8 @@ const AddAuction: React.FC = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <button onClick={handleAddProduct} className="btn btn-primary mt-3">Añadir Producto</button>
+                                <button onClick={handleAddProduct} className="btn-auction mt-3">Añadir Producto</button>
+                            
                         </div>
                         )}
                     </div>
