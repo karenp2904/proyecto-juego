@@ -12,7 +12,7 @@ interface UserData {
   securityQuestion2: string;
   securityQuestion3: string;
 }
-
+const imgAvatar='../../public/Images/usuario.png';
 const MyAccount: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
     name: 'Nombre de ejemplo',
@@ -20,11 +20,13 @@ const MyAccount: React.FC = () => {
     nickname: 'ApodoEjemplo',
     email: 'ejemplo@correo.com',
     password: 'password',
-    avatar: require('../Images/usuario.png'), // `require` carga la image 
+    avatar: `${imgAvatar}`, // `require` carga la image 
     securityQuestion1: 'Respuesta de ejemplo 1',
     securityQuestion2: 'Respuesta de ejemplo 2',
     securityQuestion3: 'Respuesta de ejemplo 3',
   });
+
+  
 
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

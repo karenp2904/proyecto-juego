@@ -1,0 +1,119 @@
+.card{ 
+    background-color:  rgba(250, 220, 143,0.6) ;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: -2%;
+}
+
+.product-registration {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+    background-color: rgba(250, 220, 143,0.1) ;
+    padding: 2%;
+    border-radius: 2%;
+    width: 100%; 
+    height: 95%;
+}
+
+.product-registration input {
+    width: 100%; 
+    margin-bottom: 10px; 
+    max-width: 300px; 
+}
+.card-img-top{
+    height: 150px;
+    object-fit: cover ;
+}
+
+.marcoImagen {
+    margin: 5%;
+    width: 50%;
+    height: 35%;
+    padding: 15px; /* Espacio para que la imagen no toque los bordes */
+    background: linear-gradient(145deg, #dabd5e, #8c8c3a); /* Degradado dorado */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra externa para darle más profundidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marcoImagen::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(145deg, #f9f871, #d4af37); /* Borde dorado externo */
+    border-radius: 15px; /* Más redondeado para dar un efecto de capas */
+    z-index: -1; /* Para que quede detrás del marco */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra más suave para el borde externo */
+}
+
+.img-fluid {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px; /* Redondea los bordes de la imagen */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para la imagen */
+}
+
+
+.form-group-auction{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+   
+}
+
+.name-product{
+    font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.inventory-grid{
+    justify-content: center;
+    max-height: 500px; 
+    overflow-y: auto ;
+    
+}
+
+.form-label-auction{
+    width: 50%;
+    color: black;
+    font-weight: 500;
+    justify-content: start;
+}
+h4{
+    color: black;
+}
+.inventory-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(214, 177, 113, 0.8);
+   
+}
+
+.btn-auction {
+    width: 50%;
+    background-color:  #d4af37  ;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: pulse 1.5s infinite;
+    margin-right: 4%;
+    margin-top: 5%;
+}
+
+.btn-auction:hover{
+    background-color:  #3d87a0 ;
+}

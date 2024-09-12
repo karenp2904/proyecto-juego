@@ -98,7 +98,7 @@ const RecoveryForm: React.FC = () => {
                     </div>
                     <button type="submit" className="btn-recover">Recuperar Cuenta</button>
                     <button className="return-button" type="button" onClick={() => window.location.href = "/Login"}>
-                        <img src="../Images/atras.png" alt="volver" />
+                        <img src="./Images/atras.png" alt="volver" />
                     </button>
 
                 </form>

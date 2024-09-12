@@ -17,7 +17,7 @@ const UserForm: React.FC = () => {
     });
 
      // Establecer la imagen de avatar predeterminada
-     const defaultAvatar = require('../Images/usuario.png');
+     const defaultAvatar = '../../Images/usuario.png';
      const [avatarPreview, setAvatarPreview] = useState<string>(defaultAvatar);
  
 
@@ -76,6 +76,8 @@ const UserForm: React.FC = () => {
         };
         const nameSurnameRegex = /^[A-Za-z]+$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/; // Al menos una mayúscula, un carácter especial, un número y longitud mínima de 8
+
         let isValid = true;
 
         if (!formData.name) {
@@ -112,6 +114,9 @@ const UserForm: React.FC = () => {
 
         if (!formData.password) {
             newErrors.password = 'La contraseña es requerida.';
+            isValid = false;
+        } else if (!passwordRegex.test(formData.password)) {
+            newErrors.password = 'La contraseña debe tener al menos una letra mayúscula, un carácter especial, un número y una longitud mínima de 8 caracteres.';
             isValid = false;
         } else if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Las contraseñas no coinciden.';
@@ -280,7 +285,7 @@ const UserForm: React.FC = () => {
                     </div>
                 </form>
                 <button className="return-button1" type="button" onClick={() => window.location.href = "/Login"}>
-                        <img src="../Images/atras.png" alt="volver" />
+                        <img src="./Images/atras.png" alt="volver" />
                 </button>
             </div>
     );
