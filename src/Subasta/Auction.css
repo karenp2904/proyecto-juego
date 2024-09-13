@@ -16,5 +16,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 5%;
 }
+.search-auction {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+    width: 28%; 
+    padding: 10px; 
+    position: relative;
+    right: 0%;
+    left: 65%;
+    top: 8%;
+}
+
+

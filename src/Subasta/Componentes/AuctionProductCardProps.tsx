@@ -6,6 +6,7 @@ interface AuctionProductCardProps {
     name: string;
     imageUrl: string;
     currentBid: number;
+    buyInmediatly:number;
     auctionEndTime: string;
     onBid: (productId: string) => void;
     onBuyNow: (productId: string) => void;
@@ -15,8 +16,10 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
     name,
     imageUrl,
     currentBid,
+    buyInmediatly,
     auctionEndTime,
     onBid,
+    onBuyNow
 }) => {
     const calculateTimeLeft = () => {
         const difference = +new Date(auctionEndTime) - +new Date();
@@ -48,10 +51,17 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                                 {currentBid} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
+                        <div className="bid-info">
+                            <span className="label">Venta inmediata:</span>
+                            <span className="bid-credits">
+                                {buyInmediatly} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                            </span>                       
+                        </div>
                         <div className="time-info">
                             <span className="label">Tiempo restante:</span>
                             <span className="time-remaining">{calculateTimeLeft()}</span>
                         </div>
+
                     </div>
                     <button className='btn-puja'>PUJAR</button>
 

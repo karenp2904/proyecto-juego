@@ -51,6 +51,33 @@ const Auction: React.FC = () => {
             buyNowPrice: 500,
             auctionEndTime: '2024-09-01T12:00:00',
         },
+        {
+            id: '1',
+            name: 'Espada Épica',
+            description: 'Una espada legendaria con poderosos encantamientos.',
+            imageUrl: '/Images/imagenPruebaSubasta.jpg',
+            currentBid: 100,
+            buyNowPrice: 500,
+            auctionEndTime: '2024-09-01T12:00:00',
+        },
+        {
+            id: '1',
+            name: 'Espada Épica',
+            description: 'Una espada legendaria con poderosos encantamientos.',
+            imageUrl: '/Images/imagenPruebaSubasta.jpg',
+            currentBid: 100,
+            buyNowPrice: 500,
+            auctionEndTime: '2024-09-01T12:00:00',
+        },
+        {
+            id: '1',
+            name: 'Espada Épica',
+            description: 'Una espada legendaria con poderosos encantamientos.',
+            imageUrl: '/Images/imagenPruebaSubasta.jpg',
+            currentBid: 100,
+            buyNowPrice: 500,
+            auctionEndTime: '2024-09-01T12:00:00',
+        },
      
         // Más productos aquí
     ]);
@@ -70,6 +97,9 @@ const Auction: React.FC = () => {
     return (
         <div className="auction-window">
             <h2> </h2>
+            <div className="search-auction">
+                <input type="text" className='barra' />
+            </div>
             <div className="product-list">
                 {products.map((product) => (
                     <AuctionProductCard
@@ -78,7 +108,7 @@ const Auction: React.FC = () => {
                         name={product.name}
                         imageUrl={product.imageUrl}
                         currentBid={product.currentBid}
-                        
+                        buyInmediatly={product.buyNowPrice}
                         auctionEndTime={product.auctionEndTime}
                         onBid={handleBid}
                         onBuyNow={handleBid}
