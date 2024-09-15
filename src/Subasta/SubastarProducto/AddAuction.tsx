@@ -73,7 +73,7 @@ const AddAuction: React.FC = () => {
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
             console.log('Producto añadido:', productToAdd);
-            // Aquí podrías manejar la lógica de añadir el producto a la subasta
+            //  la lógica de añadir el producto a la subasta
         }
     };
 

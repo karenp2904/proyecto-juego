@@ -1,0 +1,55 @@
+/* Estilo para la superposición (overlay) del panel de confirmación */
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+/* Estilo para el panel de confirmación */
+.confirmation-panel {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+.confirmation-panel h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #28a745; /* Verde para indicar éxito */
+}
+
+.confirmation-panel p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.btn2-close {
+    color: #ff4d4d;
+    background-color: #efa0a0;
+    font-size: 18px; 
+    border: none; 
+    cursor: pointer;
+    position: absolute; 
+    top: 40%; 
+    right: 38%;
+    width: 3%; 
+    height: 4%; 
+    font-weight: bold;
+}
+
+
+.confirmar-p{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 300;
+}

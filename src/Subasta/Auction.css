@@ -6,11 +6,11 @@
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
-    height: 100vh;
+    min-height: 100vh; /* Asegura que ocupe al menos toda la ventana */
     width: 100vw;
     box-sizing: border-box;
+    overflow: auto; /* Si el contenido es mayor que la ventana */
 }
-
 
 .product-list {
     display: flex;
@@ -27,7 +27,6 @@
     position: relative;
     right: 0%;
     left: 65%;
-    top: 8%;
 }
 
 

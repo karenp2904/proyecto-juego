@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AuctionProductCard.css';
+import BidForm from '../RealizarPuja/BidForm.tsx'
 
 interface AuctionProductCardProps {
     id: string;
@@ -8,8 +9,7 @@ interface AuctionProductCardProps {
     currentBid: number;
     buyInmediatly:number;
     auctionEndTime: string;
-    onBid: (productId: string) => void;
-    onBuyNow: (productId: string) => void;
+   
 }
 const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
     id,
@@ -18,8 +18,7 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
     currentBid,
     buyInmediatly,
     auctionEndTime,
-    onBid,
-    onBuyNow
+  
 }) => {
     const calculateTimeLeft = () => {
         const difference = +new Date(auctionEndTime) - +new Date();
@@ -38,6 +37,14 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
         return timeLeft;
     };
 
+    const [isBidding, setIsBidding] = useState(false); // Estado para mostrar u ocultar el formulario de puja
+
+    const handleBidAction = () => {
+        setIsBidding(true); // Mostrar el formulario de puja
+    };
+
+
+
     return (
 
             <div className="auction-product-card">
@@ -51,9 +58,9 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                                 {currentBid} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
-                        <div className="bid-info">
+                        <div className="buy-info">
                             <span className="label">Venta inmediata:</span>
-                            <span className="bid-credits">
+                            <span className="buy-credits">
                                 {buyInmediatly} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
@@ -63,9 +70,20 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                         </div>
 
                     </div>
-                    <button className='btn-puja'>PUJAR</button>
+                    <button className="btn-puja" onClick={handleBidAction}>PUJAR</button>
 
                 </div>
+
+                {/* Mostrar el componente de BidForm solo si el usuario hizo clic en PUJAR */}
+                {isBidding && (
+                   <div className="overlay"> {/* Capa superpuesta de fondo */}
+                        <BidForm 
+                            name={name} 
+                            currentBid={currentBid}
+                            onClose={() => setIsBidding(false)} // Función para cerrar el formulario
+                        />
+                    </div>
+                )}
                 
             </div>
        
