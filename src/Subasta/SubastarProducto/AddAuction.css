@@ -35,10 +35,10 @@
     margin: 5%;
     width: 50%;
     height: 35%;
-    padding: 15px; /* Espacio para que la imagen no toque los bordes */
+    padding: 15px; 
     background: linear-gradient(145deg, #dabd5e, #8c8c3a); /* Degradado dorado */
-    border-radius: 15px; /* Bordes redondeados */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra externa para darle más profundidad */
+    border-radius: 15px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,18 +51,18 @@
     left: -10px;
     right: -10px;
     bottom: -10px;
-    background: linear-gradient(145deg, #f9f871, #d4af37); /* Borde dorado externo */
-    border-radius: 15px; /* Más redondeado para dar un efecto de capas */
+    background: linear-gradient(145deg, #f9f871, #d4af37); 
+    border-radius: 15px;
     z-index: -1; /* Para que quede detrás del marco */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra más suave para el borde externo */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /
 }
 
 .img-fluid {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px; /* Redondea los bordes de la imagen */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para la imagen */
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
 }
 
 

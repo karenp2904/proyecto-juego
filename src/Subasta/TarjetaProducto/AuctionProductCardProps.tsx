@@ -5,6 +5,7 @@ import BidForm from '../RealizarPuja/BidForm.tsx'
 interface AuctionProductCardProps {
     id: string;
     name: string;
+    description: string;
     imageUrl: string;
     currentBid: number;
     buyInmediatly:number;
@@ -14,6 +15,7 @@ interface AuctionProductCardProps {
 const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
     id,
     name,
+    description,
     imageUrl,
     currentBid,
     buyInmediatly,
@@ -43,6 +45,16 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
         setIsBidding(true); // Mostrar el formulario de puja
     };
 
+     // Crear el objeto `product` con todas las propiedades necesarias
+     const producto = {
+        id,
+        name,
+        description, 
+        imageUrl,
+        currentBid,
+        buyNowPrice: buyInmediatly, // Renombrar esta propiedad como la espera `BidForm`
+        auctionEndTime,
+    };
 
 
     return (
@@ -77,11 +89,10 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                 {/* Mostrar el componente de BidForm solo si el usuario hizo clic en PUJAR */}
                 {isBidding && (
                    <div className="overlay"> {/* Capa superpuesta de fondo */}
-                        <BidForm 
-                            name={name} 
-                            currentBid={currentBid}
-                            onClose={() => setIsBidding(false)} // Función para cerrar el formulario
-                        />
+                    <BidForm 
+                        product={producto} // Pasa el producto seleccionado
+                        onClose={() => setIsBidding(false)} // Función para cerrar el formulario
+                    />
                     </div>
                 )}
                 
