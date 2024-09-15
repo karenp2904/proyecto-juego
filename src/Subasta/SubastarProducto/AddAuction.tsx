@@ -14,6 +14,7 @@ interface AuctionProduct {
 }
 
 const AddAuction: React.FC = () => {
+
     const inventory: AuctionProduct[] = [
         {
             id: '1',
@@ -75,84 +76,86 @@ const AddAuction: React.FC = () => {
             console.log('Producto añadido:', productToAdd);
             //  la lógica de añadir el producto a la subasta
         }
-    };
+    }
+   
 
+   
     return (
-    <div className="auction-window">
-        <div className="container mt-5">
-        
-            <div className="card p-4">
+        <div className="auction-window">
+            <div className="container mt-5">
                
-                <div className="row">
-                    <div className="col-md-8">
-                        <h4>Inventario del Jugador</h4>
-                          
-                        <div className="inventory-grid d-flex flex-wrap"  >
-                            {inventory.map((item) => (
-                                <div key={item.id} className="card inventory-card m-3" onClick={() => handleSelectProduct(item)}>
-                                        <img src={item.imageUrl} className="card-img-top" alt={item.name}  />                    
-                                        <div className="card-body text-center">
-                                        <h5 className="card-title-auction ">{item.name}</h5>
+                <div className="card p-4">
+               
+                    <div className="row">
+                        <div className="col-md-8">
+                            <h4>Inventario del Jugador</h4>
+                            
+                            <div className="inventory-grid d-flex flex-wrap"  >
+                                {inventory.map((item) => (
+                                    <div key={item.id} className="card inventory-card m-3" onClick={() => handleSelectProduct(item)}>
+                                            <img src={item.imageUrl} className="card-img-top" alt={item.name}  />                    
+                                            <div className="card-body text-center">
+                                            <h5 className="card-title-auction ">{item.name}</h5>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div className="col-md-6 ">
-                    {selectedProduct && (
-                        <div className="product-registration">
-                            <h4>Producto Seleccionado: </h4>
-                            <h4 className='name-product'>{selectedProduct.name} </h4>
-                            <div className='marcoImagen'> 
-                                <img src={selectedProduct.imageUrl} className="img-fluid mb-3" alt={selectedProduct.name}  />
-                            </div>
-                            
-                            <div className="form-group-auction">
-                                <label className='form-label-auction'>Valor Inicial</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    name="currentBid"
-                                    placeholder="Monto Inicial"
-                                    value={auctionDetails.currentBid}
-                                    onChange={handleInputChange}
-                                />
+                    <div className="col-md-6 ">
+                    <button onClick={() => window.location.href = "/Subasta"} className="btn-closeAdd">x</button>
+                        {selectedProduct && (
+                            <div className="product-registration">
+                                <h4>Producto Seleccionado: </h4>
+                                <h4 className='name-product'>{selectedProduct.name} </h4>
+                                <div className='marcoImagen'> 
+                                    <img src={selectedProduct.imageUrl} className="img-fluid mb-3" alt={selectedProduct.name}  />
+                                </div>
+                                
+                                <div className="form-group-auction">
+                                    <label className='form-label-auction'>Valor Inicial</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="currentBid"
+                                        placeholder="Monto Inicial"
+                                        value={auctionDetails.currentBid}
+                                        onChange={handleInputChange}
+                                    />
+                                    
+                                </div>
+                                <div className="form-group-auction">
+                                    <label className='form-label-auction'>Valor Compra Inmediata</label>
+                                        <input
+                                        type="number"
+                                        className="form-control"
+                                        name="buyNowPrice"
+                                        placeholder="Monto de Compra Inmediata"
+                                        value={auctionDetails.buyNowPrice}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="form-group-auction">
+                                    <label className='form-label-auction'>Días de Subasta</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        name="auctionEndTime"
+                                        placeholder="Días de Subasta"
+                                        value={auctionDetails.auctionEndTime}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                    <button onClick={handleAddProduct} className="btn-auction mt-3">Añadir Producto</button>
                                 
                             </div>
-                            <div className="form-group-auction">
-                                <label className='form-label-auction'>Valor Compra Inmediata</label>
-                                    <input
-                                    type="number"
-                                    className="form-control"
-                                    name="buyNowPrice"
-                                    placeholder="Monto de Compra Inmediata"
-                                    value={auctionDetails.buyNowPrice}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group-auction">
-                                <label className='form-label-auction'>Días de Subasta</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    name="auctionEndTime"
-                                    placeholder="Días de Subasta"
-                                    value={auctionDetails.auctionEndTime}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                                <button onClick={handleAddProduct} className="btn-auction mt-3">Añadir Producto</button>
-                            
+                            )}
                         </div>
-                        )}
                     </div>
                 </div>
-            </div>
-    </div>
+        </div>
     );
-};
-
+}
 export default AddAuction;
