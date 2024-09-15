@@ -6,15 +6,73 @@
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
-    height: 100vh;
+    min-height: 100vh; /* Asegura que ocupe al menos toda la ventana */
     width: 100vw;
     box-sizing: border-box;
+    overflow: auto; /* Si el contenido es mayor que la ventana */
 }
-
 
 .product-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 2%;
 }
+.search-auction {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+    width: 28%; 
+    padding-top: 5%;
+    position: relative;
+    right: 0%;
+    left: 65%;
+    bottom: 10%;
+}
+
+.barra {
+    width: 80%;
+    border-radius: 10px;
+    border: 2px solid #b29053; /* Color dorado/bronce */
+    display: block;
+    font-size: 18px;
+    background-color: #fff8e1; /* Fondo claro */
+  }
+  
+  .button-space {
+    display: flex;
+    justify-content: end;
+    text-align: center; /* Centrar el botón */
+    margin-right: 7.5%;
+   
+  }
+  
+  
+.button-add {
+    background-color: #b29053; /* Mantener el color dorado/bronce */
+    color: white;
+    border: none;
+    padding: 10px 35px; /* Aumentar el tamaño del botón */
+    font-size: 18px;
+    border-radius: 15px; /* Bordes más redondeados */
+    cursor: pointer;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4); /* Sombra más profunda para resaltarlo */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1.5px; /* Espaciado entre letras para una mejor lectura */
+  }
+  
+  .button-add:hover {
+    background-color: #d4a76c; /* Tonalidad más clara al hacer hover */
+    transform: scale(1.08); /* Aumenta el tamaño al pasar el mouse */
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.6); /* Sombra más intensa al hacer hover */
+  }
+  
+  .button-add:active {
+    background-color: #a9784b;
+    transform: scale(1); /* Vuelve al tamaño original al hacer clic */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); /* Sombra más sutil al hacer clic */
+  }
+  
+
+

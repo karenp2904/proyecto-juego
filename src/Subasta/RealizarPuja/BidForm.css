@@ -1,0 +1,149 @@
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+
+.bid-form {
+    background-color: rgba(238, 204, 111,0.8); /* Color de fondo similar a pergamino */
+    padding: 20px;
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra más fuerte para dar profundidad */
+    max-width: 400px;
+    width: 100%;
+    z-index: 1100;
+    
+    /* Borde decorativo inspirado en subastas */
+    border: 3px solid rgba(139, 69, 19, 0.8); /* Borde marrón como el marco de un cartel de subasta */
+    border-radius: 5px;
+    border-image: linear-gradient(to bottom, #8b4513, #a0522d, #cd853f) 1; /* Degradado en el borde para darle textura */
+    position: relative;
+}
+
+/* Decoración en la parte superior del formulario */
+.bid-form:before {
+    content: '🔨'; /* Icono de martillo de subasta */
+    font-size: 36px;
+    color: #8b4513;
+    position: absolute;
+    top: -28px; /* Posicionar el icono encima del formulario */
+    left: 50%;
+    border-radius: 5px;
+    transform: translateX(-50%);
+}
+
+.name-product {
+    font-size: 24px; 
+    font-weight: bold;
+    color: #433c06;
+    font-family: 'Poppins','Arial', sans-serif;
+    text-transform: capitalize; 
+    letter-spacing: 1px; 
+    text-align: center; 
+    margin-bottom: 10px; 
+    
+  
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* sombra*/
+    
+    /* Transición para efecto suave al pasar el mouse */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+
+
+.bid-form select, 
+.bid-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+
+.btn-offer, .btn-closer {
+    margin-top: 10px;
+    padding: 10px ;
+    background-color: #09451a;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 40%;
+    font-weight: bold;
+
+}
+
+
+.btn-closer {
+    background-color: #ff4d4d;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 30%;
+    height: 10%;
+
+}
+.btn-offer:hover {
+    background-color: #315c3d;
+}
+
+.btn-closer:hover {
+    background-color: #dd8282;
+}
+
+
+
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+.separtor{
+    display: flex;
+    flex-direction: row;
+}
+.bid-form h3 {
+    color: #333;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.bid-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+
+.bid-form select {
+    cursor: pointer;
+}
+
+.bid-form input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.bid-form input[type="number"]::-webkit-outer-spin-button,
+.bid-form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

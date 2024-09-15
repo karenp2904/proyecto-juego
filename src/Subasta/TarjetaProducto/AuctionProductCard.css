@@ -29,6 +29,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 
 }
 
@@ -42,15 +43,19 @@
     object-fit: cover;
     border-radius: 10px;
 }
-.product-name{
-    width: 50%;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 200;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    color: #000;
-    margin: 15px;
+.product-name {
+  width: 85%;
+  height: auto; /* Cambiar a auto para ajustar la altura según el contenido */
+  font-size: clamp(12px, 2vw, 16px); /* Ajusta el tamaño de fuente entre 16px y 20px */
+  font-style: normal;
+  font-weight: 200;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #000;
+  margin: 15px;
+  overflow: hidden; /* Oculta el texto que desborda */
 }
+
+
 .auction-details {
     display: flex;
     flex-direction: column;
@@ -58,22 +63,26 @@
     justify-content: center;
   }
   
-  .bid-info, .time-info {
+  .bid-info, .time-info, .buy-info {
     display: flex;
     align-items: center;
     margin:1%;
     color: #444;
   }
+
+  .buy-info{
+    width: 225px;
+  }
   
   .label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #444;
     margin-right: 10px;
     text-transform: uppercase;
   }
   
-  .bid-credits {
+  .bid-credits , .buy-credits{
     width: 80px;
     background-color: #256d75 ;
     padding: 5px 10px;
@@ -83,11 +92,14 @@
     color: #0f0e0e;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     margin:2%;
+   
   }
-  
+  .buy-credits{
+    margin-right: 6%;
+  }
   .time-remaining {
     width: 80px;
-    background-color:   #07556c  ;
+    background-color:   rgb(7, 85, 108)  ;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 13px;
@@ -95,7 +107,7 @@
     color: #000;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     animation: pulse 1.5s infinite;
-    margin-right: 4%
+    margin-right: 5%
   }
   
   .btn-puja{
@@ -130,3 +142,16 @@
     }
   }
   
+/* Estilo para la superposición (overlay) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de todo */
+}
