@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AddAuction.css'
+import AuctionProduct from '../../types/AuctionProduct';
 
 
-interface AuctionProduct {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    currentBid: number;
-    buyNowPrice: number;
-    auctionEndTime: string;
-}
 
 const AddAuction: React.FC = () => {
 
@@ -23,7 +15,7 @@ const AddAuction: React.FC = () => {
             imageUrl: '/Images/imagenPruebaSubasta.jpg',
             currentBid: 100,
             buyNowPrice: 500,
-            auctionEndTime: '',
+            auctionEndTime: 2,
         },
         {
             id: '2',
@@ -32,7 +24,7 @@ const AddAuction: React.FC = () => {
             imageUrl: '/Images/imagenPruebaSubasta.jpg',
             currentBid: 50,
             buyNowPrice: 300,
-            auctionEndTime: '',
+            auctionEndTime: 1,
         },
         {
             id: '3',
@@ -41,7 +33,7 @@ const AddAuction: React.FC = () => {
             imageUrl: '/Images/imagenPruebaSubasta.jpg',
             currentBid: 20,
             buyNowPrice: 100,
-            auctionEndTime: '',
+            auctionEndTime: 5,
         },
         
     ];
@@ -74,7 +66,9 @@ const AddAuction: React.FC = () => {
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
             console.log('Producto añadido:', productToAdd);
-            //  la lógica de añadir el producto a la subasta
+          
+
+            //ubicacion del endpoint
         }
     }
    

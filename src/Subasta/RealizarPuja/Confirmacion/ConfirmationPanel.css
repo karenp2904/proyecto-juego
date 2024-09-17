@@ -5,14 +5,13 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegura que esté por encima de todo */
+    z-index: 1000; 
 }
 
-/* Estilo para el panel de confirmación */
 .confirmation-panel {
     background-color: white;
     padding: 30px;
@@ -26,7 +25,7 @@
 .confirmation-panel h2 {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #28a745; /* Verde para indicar éxito */
+    color: #28a745;
 }
 
 .confirmation-panel p {

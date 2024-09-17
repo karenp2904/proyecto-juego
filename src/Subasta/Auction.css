@@ -1,5 +1,5 @@
 .auction-window {
-    padding: 20px;
+    padding: 0px;
     text-align: center;
     background-image: url(../../public/Images/SUBASTAS.png);
     background-repeat: no-repeat;
@@ -23,56 +23,94 @@
     justify-content: flex-end;
     align-items: center; 
     width: 28%; 
-    padding-top: 5%;
     position: relative;
     right: 0%;
     left: 65%;
+    margin-top: 10%;
     bottom: 10%;
 }
 
 .barra {
     width: 80%;
     border-radius: 10px;
-    border: 2px solid #b29053; /* Color dorado/bronce */
+    border: 2px solid #b29053; 
     display: block;
     font-size: 18px;
-    background-color: #fff8e1; /* Fondo claro */
-  }
-  
+    background-color: #fff8e1;
+}
   .button-space {
     display: flex;
     justify-content: end;
-    text-align: center; /* Centrar el botón */
+    text-align: center; 
     margin-right: 7.5%;
    
   }
   
   
 .button-add {
-    background-color: #b29053; /* Mantener el color dorado/bronce */
+    background-color:  #a2471e ; 
     color: white;
     border: none;
-    padding: 10px 35px; /* Aumentar el tamaño del botón */
+    padding: 10px 35px; 
     font-size: 18px;
-    border-radius: 15px; /* Bordes más redondeados */
+    border-radius: 15px; 
     cursor: pointer;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4); /* Sombra más profunda para resaltarlo */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4); 
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
-    letter-spacing: 1.5px; /* Espaciado entre letras para una mejor lectura */
+    letter-spacing: 1.5px; 
   }
   
   .button-add:hover {
-    background-color: #d4a76c; /* Tonalidad más clara al hacer hover */
-    transform: scale(1.08); /* Aumenta el tamaño al pasar el mouse */
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.6); /* Sombra más intensa al hacer hover */
+    background-color: #c98362 ; 
+    transform: scale(1.08); 
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.6); 
   }
   
   .button-add:active {
     background-color: #a9784b;
-    transform: scale(1); /* Vuelve al tamaño original al hacer clic */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); /* Sombra más sutil al hacer clic */
+    transform: scale(1); 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
   }
   
 
 
+/* Responsividad para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .search-auction {
+      padding-top: 3%;
+      width: 90%;
+  }
+  
+  .barra {
+      font-size: 16px;
+  }
+  
+  .button-space {
+      margin-right: 5%;
+  }
+  
+  .button-add {
+      padding: 8px 25px;
+      font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-auction {
+      padding-top: 2%;
+  }
+  
+  .barra {
+      font-size: 14px;
+  }
+  
+  .button-space {
+      margin-right: 3%;
+  }
+  
+  .button-add {
+      padding: 6px 20px;
+      font-size: 14px;
+  }
+}
