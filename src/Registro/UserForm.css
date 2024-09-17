@@ -5,14 +5,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 1300px;
     width: 100%;
-    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    margin: 0 auto; 
     margin-top: 2%;;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 90vh; /* Mantén esta propiedad si quieres que el contenedor tenga una altura mínima */
-    height: 90%; /* Cambia a auto si el contenido crece */
-    overflow: hidden; /* Evita el desbordamiento */
+    min-height: 90vh;
+    height: 90%; 
+    overflow: hidden; 
 }
 
 .register-form {
@@ -23,7 +23,7 @@
     background-color: rgba(128, 155, 144, 0.5);
     padding: 20px;
     border-radius: 10px;
-    height: 90%; /* Ajusta la altura según el contenido */
+    height: 90%; 
     width: 100%;
 }
 
@@ -59,11 +59,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto; /* Centra horizontalmente */
+    margin: 0 auto; 
    
     left: 75%; 
     top: 15%;
-    transform: translateX(-50%); /* Corrige el centramiento horizontal */
+    transform: translateX(-50%); 
     position: fixed;
 }
 
@@ -82,7 +82,7 @@
 .avatar-circleR img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the circle while maintaining aspect ratio */
+    object-fit: cover; 
 }
 
 
@@ -122,14 +122,14 @@
 
 .botonCont {
     align-items: center;
-    margin-left: 80%px; /* Ajusta el espacio a la izquierda del botón */
+    margin-left: 80%px; 
     justify-content: left;
     margin-left: 25%
 }
 
 .btn-register {
     width: 20%;
-    padding: 15px; /* Ajusté un poco el padding */
+    padding: 15px; 
     background-color: #3B5B58;
     color: #fff;
     border: none;
@@ -148,11 +148,11 @@
 
 .error-message {
     color: red;
-    font-size: 10px; /* Tamaño de letra más pequeño */
-    position: absolute; /* Posiciona el error sobre el input */
-    top: -0px; /* Ajusta esto según sea necesario para que el error esté justo encima del input */
-    left: 0; /* Alinea el texto a la izquierda */
-    display: none; /* Ocultar por defecto */
+    font-size: 10px; 
+    position: absolute; 
+    top: -0px;
+    left: 0; 
+    display: none; 
 }
 
 .return-button1 {

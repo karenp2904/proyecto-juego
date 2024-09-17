@@ -1,35 +1,55 @@
 import React, { useState } from 'react';
 import './BidForm.css';
 import ConfirmationPanel from './Confirmacion/ConfirmationPanel';
+import AuctionProduct from '../../types/AuctionProduct';
+
 
 interface BidFormProps {
-    name: string;
-    currentBid: number;
-    onClose: () => void;
+    product: AuctionProduct;
+    onClose: () => void; // Función para cerrar el formulario
 }
 
-const BidForm: React.FC<BidFormProps> = ({ name, currentBid, onClose }) => {
-    const [bidAmount, setBidAmount] = useState(currentBid + 1);
+const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
+    const [bidAmount, setBidAmount] = useState(product.currentBid + 1);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [offerType, setOfferType] = useState('oferta'); // Nueva selección para tipo de oferta
+    const [offerType, setOfferType] = useState('oferta');
 
-    const handleBidSubmit = (e: React.FormEvent) => {
+
+    const handleBidSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('panel de confirmacion');
-        setShowConfirmation(true);
 
+        if (offerType === 'compra') {
+            // Si el tipo es 'compra', se toma el valor de la compra inmediata
+            console.log(`Compra inmediata: ${product.buyNowPrice}`);
+            
+            //endpoint para retirar el producto
 
+            setShowConfirmation(true)
+
+        } else if (offerType === 'oferta') {
+            // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
+            if (bidAmount) {
+                console.log(`Oferta enviada: ${bidAmount}`);
+                
+                //endpoint para agregar el valor actual en el producto subastado (nueva puja)
+                setShowConfirmation(true)
+
+            } else {
+                console.log('Por favor, ingresa un valor de oferta.');
+            }
+        }
     };
+
 
     const handleCloseConfirmation = () => {
         setShowConfirmation(false);
-        onClose(); // Cerrar tanto el ConfirmationPanel como el BidForm
+        onClose(); // Cerrar am
     };
 
     return (
         <div className="bid-form">
             <h3>NUEVA PUJA</h3>
-            <h3 className='name-product'>{name}</h3>
+            <h3 className='name-product'>{product.name}</h3>
             <form onSubmit={handleBidSubmit}>
                 <div className="separator">
                     <label htmlFor="offer-type">Tipo de operación:</label>
@@ -51,7 +71,7 @@ const BidForm: React.FC<BidFormProps> = ({ name, currentBid, onClose }) => {
                                 type="number"
                                 id="bid-amount"
                                 value={bidAmount}
-                                min={currentBid + 1}
+                                min={product.currentBid + 1}
                                 onChange={(e) => setBidAmount(Number(e.target.value))}
                             />
                         </>
@@ -71,7 +91,7 @@ const BidForm: React.FC<BidFormProps> = ({ name, currentBid, onClose }) => {
             {showConfirmation && (
                 <ConfirmationPanel 
                     bidAmount={bidAmount} 
-                    name={name}
+                    name={product.name}
                     onClose={handleCloseConfirmation} // Función que cierra el panel y el formulario
                 />
             )}

@@ -1,12 +1,11 @@
 
 
 .fondo {
-    background-image: url('../../public/Images/logoInicio.jpeg'); /* Ruta de la imagen */
-    background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
-    background-position: top; /* Centra la imagen de fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 100%; /* Asegúrate de que esto sea necesario en tu diseño */
-    height: 100vh; /* Ajusta la altura para cubrir toda la ventana si es necesario */
+    background-image: url('../../public/Images/logoInicio.jpeg'); 
+    background-size: cover; 
+    background-position: top; 
+    background-repeat: no-repeat;
+    height: 100vh; 
 }
 
 .recovery-container {

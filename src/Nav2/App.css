@@ -1,0 +1,75 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Estilo general de la barra de navegación */
+.NavBar {
+    background-color: #1B4242; /* Color de fondo */
+    padding: 10px 20px; /* Espaciado interno */
+    position: fixed; /* Fijar en la parte superior */
+    height: 40px;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa el ancho completo de la pantalla */
+    z-index: 1000; /* Asegura que la barra esté encima de otros elementos */
+    float: right;
+
+}
+
+.Container{
+    margin-left: 100px;
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.NavBar ul{
+    list-style: none;/*Se quita el estilo de lista*/
+    display: flex;/*Coloca los elementos en fila*/
+    margin: 0;
+    padding: 0;
+}
+
+.NavBar ul li{
+    margin-right: 34px;
+    font-size: 1em;
+}
+
+.NavBar ul li:hover{
+    transform: scale(1.1);
+}
+
+.NavBar ul li a{
+    color: white;
+    text-decoration: none;/*Para quitar el subrayado*/
+    padding: 8px 10px;
+}
+
+.Busqueda {
+    display: flex; /* Los coloca en fila*/
+    align-items: center;
+    margin-left: 500px; /*Para que se vaya a ka derecha del todo*/
+}
+
+.Busqueda input {
+    padding: 5px;
+    border-radius: 4px 0 0 4px;
+    outline: none; /* Elimina el borde de enfoque */
+    background-color: #ecf0f1; /* Color de fondo del input */
+    color: #1B4242; /* Color del texto */
+}
+
+.Busqueda button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #578271; /* Color de fondo del botón */
+    color: white;
+    border-radius: 0 4px 4px 0; /* Bordes redondeados en el botón */
+    cursor: pointer; /* Cambia el cursor a puntero */
+    transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+}
+
+.Busqueda button:hover {
+    background-color: #44685A; /* Color de fondo al hacer hover */
+}
