@@ -2,16 +2,9 @@ import React, { useState, useEffect } from 'react';
 import AuctionProductCard from './TarjetaProducto/AuctionProductCardProps'
 import './Auction.css'
 import { url } from 'inspector';
+import NavBar from '../NavBar/NavBar';
+import AuctionProduct from '../types/AuctionProduct';
 
-interface AuctionProduct {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    currentBid: number;
-    buyNowPrice: number;
-    auctionEndTime: string;
-}
 
 const Auction: React.FC = () => {
 
@@ -32,7 +25,7 @@ const Auction: React.FC = () => {
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
                     currentBid: 100,
                     buyNowPrice: 500,
-                    auctionEndTime: '2024-09-01T12:00:00',
+                    auctionEndTime: 2,
                 },
                 {
                     id: '2',
@@ -41,7 +34,7 @@ const Auction: React.FC = () => {
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
                     currentBid: 100,
                     buyNowPrice: 500,
-                    auctionEndTime: '2024-09-01T12:00:00',
+                    auctionEndTime: 3,
                 },
                 {
                     id: '3',
@@ -50,7 +43,7 @@ const Auction: React.FC = () => {
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
                     currentBid: 100,
                     buyNowPrice: 500,
-                    auctionEndTime: '2024-09-01T12:00:00',
+                    auctionEndTime: 2,
                 },
                 {
                     id: '4',
@@ -59,7 +52,7 @@ const Auction: React.FC = () => {
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
                     currentBid: 100,
                     buyNowPrice: 500,
-                    auctionEndTime: '2024-09-01T12:00:00',
+                    auctionEndTime: 5,
                 },
                 {
                     id: '5',
@@ -68,7 +61,7 @@ const Auction: React.FC = () => {
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
                     currentBid: 100,
                     buyNowPrice: 500,
-                    auctionEndTime: '2024-09-01T12:00:00',
+                    auctionEndTime: 4,
                 }
             ]
             setProducts(data); // Actualiza el estado de productos
@@ -92,7 +85,9 @@ const Auction: React.FC = () => {
     );
 
     return (
+        
         <div className="auction-window">
+           <NavBar/>
             <h2> </h2>
             <div className="search-auction">
                 <input
@@ -116,7 +111,7 @@ const Auction: React.FC = () => {
                             description={product.description}
                             imageUrl={product.imageUrl}
                             currentBid={product.currentBid}
-                            buyInmediatly={product.buyNowPrice}
+                            buyNowPrice={product.buyNowPrice}
                             auctionEndTime={product.auctionEndTime}
                         />
                     ))

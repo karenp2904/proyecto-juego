@@ -1,0 +1,76 @@
+.NavBar {
+    background-color: #1B4242;
+    padding: 10px 20px;
+    position: fixed;
+    height: 50px;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Container {
+    margin-top: 0px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.NavBar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+
+.NavBar ul li {
+    margin-right: 34px;
+    font-size: 1em;
+}
+
+.NavBar ul li:hover {
+    transform: scale(1.1);
+}
+
+.NavBar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 10px;
+}
+
+.Busqueda {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.Busqueda input {
+    padding: 5px;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    background-color: #ecf0f1;
+    color: #1B4242;
+}
+
+.Busqueda button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #578271;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.Busqueda button:hover {
+    background-color: #44685A;
+}
+
+.img-navBar{
+    width: 2%;
+    height: 4%;
+}

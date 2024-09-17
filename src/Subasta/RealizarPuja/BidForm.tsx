@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import './BidForm.css';
 import ConfirmationPanel from './Confirmacion/ConfirmationPanel';
+import AuctionProduct from '../../types/AuctionProduct';
 
-interface AuctionProduct {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    currentBid: number;
-    buyNowPrice: number;
-    auctionEndTime: string;
-}
 
 interface BidFormProps {
     product: AuctionProduct;

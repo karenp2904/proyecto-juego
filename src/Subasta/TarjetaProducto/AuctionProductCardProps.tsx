@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import './AuctionProductCard.css';
 import BidForm from '../RealizarPuja/BidForm.tsx'
+import Timer from './Timer.tsx';
+import AuctionProduct from '../../types/AuctionProduct.ts';
 
-interface AuctionProductCardProps {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    currentBid: number;
-    buyInmediatly:number;
-    auctionEndTime: string;
-   
-}
-const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
+
+const AuctionProductCard: React.FC<AuctionProduct> = ({
     id,
     name,
     description,
     imageUrl,
     currentBid,
-    buyInmediatly,
+    buyNowPrice,
     auctionEndTime,
   
 }) => {
@@ -52,7 +45,7 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
         description, 
         imageUrl,
         currentBid,
-        buyNowPrice: buyInmediatly, // Renombrar esta propiedad como la espera `BidForm`
+        buyNowPrice,
         auctionEndTime,
     };
 
@@ -73,12 +66,11 @@ const AuctionProductCard: React.FC<AuctionProductCardProps> = ({
                         <div className="buy-info">
                             <span className="label">Venta inmediata:</span>
                             <span className="buy-credits">
-                                {buyInmediatly} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                                {buyNowPrice} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
                         <div className="time-info">
-                            <span className="label">Tiempo restante:</span>
-                            <span className="time-remaining">{calculateTimeLeft()}</span>
+                            <Timer totalDays={auctionEndTime} />
                         </div>
 
                     </div>

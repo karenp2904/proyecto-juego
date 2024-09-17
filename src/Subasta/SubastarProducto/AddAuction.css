@@ -54,7 +54,7 @@
     background: linear-gradient(145deg, #f9f871, #d4af37); 
     border-radius: 15px;
     z-index: -1; /* Para que quede detrás del marco */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
 }
 
 .img-fluid {
