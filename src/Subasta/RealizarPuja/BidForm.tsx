@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './BidForm.css';
 import ConfirmationPanel from './Confirmacion/ConfirmationPanel';
 import AuctionProduct from '../../types/AuctionProduct';
+import { useAuth } from "../../hooks/useAuth";
 
 
 interface BidFormProps {
@@ -10,6 +11,11 @@ interface BidFormProps {
 }
 
 const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
+
+
+    const user = useAuth(s => s.user);
+
+
     const [bidAmount, setBidAmount] = useState(product.currentBid + 1);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [offerType, setOfferType] = useState('oferta');
