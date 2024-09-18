@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import './RecoveryForm.css'; 
-
+import { Router } from "../Router/Router";
+import { useNavigate } from "react-router-dom";
 
 
 const RecoveryForm: React.FC = () => {
+
+    const navigate = useNavigate();
+
+    const handleToLogin = ()=>{
+        navigate(Router.login)
+    }
+
+
     const [answers, setAnswers] = useState({
         securityQuestion1: '',
         securityQuestion2: '',
@@ -97,7 +106,7 @@ const RecoveryForm: React.FC = () => {
                         {errors.securityQuestion3 && <small className="error-text">{errors.securityQuestion3}</small>}
                     </div>
                     <button type="submit" className="btn-recover">Recuperar Cuenta</button>
-                    <button className="return-button" type="button" onClick={() => window.location.href = "/Login"}>
+                    <button className="return-button" type="button" onClick={handleToLogin}>
                         <img src="./Images/atras.png" alt="volver" />
                     </button>
 

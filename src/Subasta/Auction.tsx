@@ -20,7 +20,7 @@ const Auction: React.FC = () => {
            const data: AuctionProduct[] = [
                 {
                     idAuction:'1',
-                    id: '1',
+                    idProduct: '1',
                     name: 'Espada Épica',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -30,7 +30,7 @@ const Auction: React.FC = () => {
                 },
                 {
                     idAuction:'2',
-                    id: '2',
+                    idProduct: '2',
                     name: 'Espada ',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -40,7 +40,7 @@ const Auction: React.FC = () => {
                 },
                 {
                     idAuction:'3',
-                    id: '3',
+                    idProduct: '3',
                     name: ' Escudo',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -50,7 +50,7 @@ const Auction: React.FC = () => {
                 },
                 {
                     idAuction:'4',
-                    id: '4',
+                    idProduct: '4',
                     name: 'Pocion',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -60,7 +60,7 @@ const Auction: React.FC = () => {
                 },
                 {
                     idAuction:'5',
-                    id: '5',
+                    idProduct: '5',
                     name: 'Martillo Magico',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -110,9 +110,9 @@ const Auction: React.FC = () => {
                 {filteredInventory.length > 0 ? (
                     filteredInventory.map((product) => (
                         <AuctionProductCard
-                            key={product.id}
+                            key={product.idAuction}
                             idAuction={product.idAuction}
-                            id={product.id}
+                            idProduct={product.idProduct}
                             name={product.name}
                             description={product.description}
                             imageUrl={product.imageUrl}

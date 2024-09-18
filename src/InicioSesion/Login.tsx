@@ -1,55 +1,64 @@
-import React, { useState } from "react";
 import "./Login.css";
 import { useAuth } from "../hooks/useAuth";
+import { Router } from "../Router/Router";
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
+  const navigate = useNavigate();
   const auth = useAuth(s => s.auth);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     // Prevenir la recarga de la página
     event.preventDefault();
-
+  
     try {
       // Validación de campos vacíos
-      if (username === "" || password === "") {
+      if (email === "" || password === "") {
         alert("Por favor, completa todos los campos.");
         return;
       }
-
-      console.log("Username:", username);
+  
+      console.log("Username:", email);
       console.log("Password:", password);
-
-      const response = await fetch('', {
+  
+      // Realizar una solicitud GET con Axios
+      const response = await fetch('http://localhost:3000/api/auth', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email: email, password }),
       });
-
+  
+      console.log(response)
       if (response.ok) {
         const data = await response.json();
-        console.log('Respuesta del servidor:', data);
-        if (data.success) {
+        console.log('Login exitoso:', data.usuario);
+        if(data.usuario){
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
+          navigate(Router.subasta);
+  
+          //const usuarioJSON = JSON.stringify(data.usuario);
+          //console.log('Información del usuario en JSON:', usuarioJSON);
+          
 
-          const usuarioJSON = JSON.stringify(data.usuario);
-          console.log('Información del usuario en JSON:', usuarioJSON);
         } else {
           console.error('Error en el inicio de sesión:', data.message);
         }
       } else {
         console.error('Error en la solicitud de inicio de sesión:', response.statusText);
       }
-
     } catch (error) {
       console.error('Error en la solicitud de inicio de sesión:', error);
     }
   };
+  
 
   return (
     <div className="fondo">
@@ -63,8 +72,8 @@ function Login() {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
