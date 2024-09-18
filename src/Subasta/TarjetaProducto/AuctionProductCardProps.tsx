@@ -7,7 +7,7 @@ import AuctionProduct from '../../types/AuctionProduct.ts';
 
 const AuctionProductCard: React.FC<AuctionProduct> = ({
     idAuction,
-    id,
+    idProduct,
     name,
     description,
     imageUrl,
@@ -42,7 +42,7 @@ const AuctionProductCard: React.FC<AuctionProduct> = ({
      // Crear el objeto `product` con todas las propiedades necesarias
      const producto = {
         idAuction,
-        id,
+        idProduct,
         name,
         description, 
         imageUrl,

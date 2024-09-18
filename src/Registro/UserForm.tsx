@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import './UserForm.css'; 
 import axios from 'axios';
-
+import { Router } from "../Router/Router";
+import { useNavigate } from "react-router-dom";
 
 const UserForm: React.FC = () => {
+
+    
+  const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         surname: '',
@@ -14,6 +19,7 @@ const UserForm: React.FC = () => {
         securityQuestion1: '',
         securityQuestion2: '',
         securityQuestion3: '',
+        credits:0,
     });
 
      // Establecer la imagen de avatar predeterminada
@@ -140,6 +146,10 @@ const UserForm: React.FC = () => {
         setErrors(newErrors);
         return isValid;
     };
+
+    const handleToLogin = ()=>{
+        navigate(Router.login)
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -284,7 +294,7 @@ const UserForm: React.FC = () => {
                         </div>
                     </div>
                 </form>
-                <button className="return-button1" type="button" onClick={() => window.location.href = "/Login"}>
+                <button className="return-button1" type="button" onClick={handleToLogin}>
                         <img src="./Images/atras.png" alt="volver" />
                 </button>
             </div>

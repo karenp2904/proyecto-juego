@@ -3,11 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './AddAuction.css'
 import Product from '../../types/Product';
 import { useAuth } from "../../hooks/useAuth";
-
+import { Router } from "../../Router/Router";
+import { useNavigate } from "react-router-dom";
 
 const AddAuction: React.FC = () => {
 
     const user = useAuth(s => s.user);
+
+    const navigate = useNavigate();
+
+    const handleToSubasta = ()=>{
+        navigate(Router.subasta)
+    }
 
 
     const [inventory, setInventory] = useState<Product[]>([]); // Estado inicial 
@@ -91,7 +98,10 @@ const AddAuction: React.FC = () => {
             console.log('Producto añadido:', productToAdd);
           
 
+            
             //ubicacion del endpoint
+
+            handleToSubasta()
         }
     }
    
@@ -122,7 +132,7 @@ const AddAuction: React.FC = () => {
 
 
                     <div className="col-md-6 ">
-                    <button onClick={() => window.location.href = "/Subasta"} className="btn-closeAdd">x</button>
+                    <button onClick={handleToSubasta} className="btn-closeAdd">x</button>
                         {selectedProduct && (
                             <div className="product-registration">
                                 <h4>Producto Seleccionado: </h4>
