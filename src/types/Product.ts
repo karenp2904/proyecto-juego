@@ -1,5 +1,4 @@
-export default interface AuctionProduct {
-    idAuction:string,
+export default interface Product {
     id: string;
     name: string;
     description: string;
