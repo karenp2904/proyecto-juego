@@ -1,4 +1,5 @@
 export default interface AuctionProduct {
+    idAuction:string,
     id: string;
     name: string;
     description: string;

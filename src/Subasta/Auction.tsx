@@ -19,6 +19,7 @@ const Auction: React.FC = () => {
            // const data = await response.json();
            const data: AuctionProduct[] = [
                 {
+                    idAuction:'1',
                     id: '1',
                     name: 'Espada Épica',
                     description: 'Una espada legendaria con poderosos encantamientos.',
@@ -28,6 +29,7 @@ const Auction: React.FC = () => {
                     auctionEndTime: 2,
                 },
                 {
+                    idAuction:'2',
                     id: '2',
                     name: 'Espada ',
                     description: 'Una espada legendaria con poderosos encantamientos.',
@@ -37,6 +39,7 @@ const Auction: React.FC = () => {
                     auctionEndTime: 3,
                 },
                 {
+                    idAuction:'3',
                     id: '3',
                     name: ' Escudo',
                     description: 'Una espada legendaria con poderosos encantamientos.',
@@ -46,6 +49,7 @@ const Auction: React.FC = () => {
                     auctionEndTime: 2,
                 },
                 {
+                    idAuction:'4',
                     id: '4',
                     name: 'Pocion',
                     description: 'Una espada legendaria con poderosos encantamientos.',
@@ -55,6 +59,7 @@ const Auction: React.FC = () => {
                     auctionEndTime: 5,
                 },
                 {
+                    idAuction:'5',
                     id: '5',
                     name: 'Martillo Magico',
                     description: 'Una espada legendaria con poderosos encantamientos.',
@@ -106,6 +111,7 @@ const Auction: React.FC = () => {
                     filteredInventory.map((product) => (
                         <AuctionProductCard
                             key={product.id}
+                            idAuction={product.idAuction}
                             id={product.id}
                             name={product.name}
                             description={product.description}
