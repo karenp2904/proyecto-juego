@@ -1,10 +1,8 @@
-export default interface AuctionProduct {
-    idAuction:string,
-    idProduct: string;
+export default interface Product {
+    id: string;
     name: string;
     description: string;
     imageUrl: string;
-    initialAmount?:number;
     currentBid: number;
     buyNowPrice: number;
     auctionEndTime: number;

@@ -24,7 +24,8 @@ const Auction: React.FC = () => {
             // const data = await response.json();
             data = [
                 {
-                    id: '1',
+                    idAuction:'1',
+                    idProduct: '1',
                     name: 'Espada Épica',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -33,7 +34,8 @@ const Auction: React.FC = () => {
                     auctionEndTime: 2,
                 },
                 {
-                    id: '2',
+                    idAuction:'2',
+                    idProduct: '2',
                     name: 'Espada ',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -42,7 +44,8 @@ const Auction: React.FC = () => {
                     auctionEndTime: 3,
                 },
                 {
-                    id: '3',
+                    idAuction:'3',
+                    idProduct: '3',
                     name: ' Escudo',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -51,7 +54,8 @@ const Auction: React.FC = () => {
                     auctionEndTime: 2,
                 },
                 {
-                    id: '4',
+                    idAuction:'4',
+                    idProduct: '4',
                     name: 'Pocion',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -60,7 +64,8 @@ const Auction: React.FC = () => {
                     auctionEndTime: 5,
                 },
                 {
-                    id: '5',
+                    idAuction:'5',
+                    idProduct: '5',
                     name: 'Martillo Magico',
                     description: 'Una espada legendaria con poderosos encantamientos.',
                     imageUrl: '/Images/imagenPruebaSubasta.jpg',
@@ -111,8 +116,9 @@ const Auction: React.FC = () => {
                 {filteredInventory.length > 0 ? (
                     filteredInventory.map((product) => (
                         <AuctionProductCard
-                            key={product.id}
-                            id={product.id}
+                            key={product.idAuction}
+                            idAuction={product.idAuction}
+                            idProduct={product.idProduct}
                             name={product.name}
                             description={product.description}
                             imageUrl={product.imageUrl}

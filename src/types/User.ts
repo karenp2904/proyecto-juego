@@ -7,5 +7,6 @@ export default interface User{
     password :string,
     securityquestion1 :string,
     securityquestion2 :string,
-    securityquestion3 :string
+    securityquestion3 :string,
+    credits:number
 }

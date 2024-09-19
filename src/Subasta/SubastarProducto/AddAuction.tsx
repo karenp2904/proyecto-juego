@@ -1,50 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AddAuction.css'
-import AuctionProduct from '../../types/AuctionProduct';
+import Product from '../../types/Product';
+import { useAuth } from "../../hooks/useAuth";
+import { Router } from "../../Router/Router";
+import { useNavigate } from "react-router-dom";import AuctionProduct from '../../types/AuctionProduct';
 import axios from 'axios';
+
 
 const AddAuction: React.FC = () => {
 
-    const inventory: AuctionProduct[] = [
-        {
-            id: '1',
-            name: 'Espada Épica',
-            description: 'Una espada legendaria con poderosos encantamientos.',
-            imageUrl: '/Images/imagenPruebaSubasta.jpg',
-            currentBid: 100,
-            buyNowPrice: 500,
-            auctionEndTime: 2,
-        },
-        {
-            id: '2',
-            name: 'Escudo Mágico',
-            description: 'Un escudo con propiedades defensivas únicas.',
-            imageUrl: '/Images/imagenPruebaSubasta.jpg',
-            currentBid: 50,
-            buyNowPrice: 300,
-            auctionEndTime: 1,
-        },
-        {
-            id: '3',
-            name: 'Poción de Vida',
-            description: 'Recupera completamente la salud del usuario.',
-            imageUrl: '/Images/imagenPruebaSubasta.jpg',
-            currentBid: 20,
-            buyNowPrice: 100,
-            auctionEndTime: 5,
-        },
-        
-    ];
+    const user = useAuth(s => s.user);
 
-    const [selectedProduct, setSelectedProduct] = useState<AuctionProduct | null>(null);
+    const navigate = useNavigate();
+
+    const handleToSubasta = ()=>{
+        navigate(Router.subasta)
+    }
+
+
+    const [inventory, setInventory] = useState<Product[]>([]); // Estado inicial 
+    
+
+     // Método para obtener los productos subastados
+     const fetchProducts = async () => {
+        try {
+           // const response = await fetch(''); 
+           // const data = await response.json();
+           const data: Product[] =  [
+            {
+                id: '1',
+                name: 'Espada Épica',
+                description: 'Una espada legendaria con poderosos encantamientos.',
+                imageUrl: '/Images/imagenPruebaSubasta.jpg',
+                currentBid: 100,
+                buyNowPrice: 500,
+                auctionEndTime: 2,
+            },
+            {
+                id: '2',
+                name: 'Escudo Mágico',
+                description: 'Un escudo con propiedades defensivas únicas.',
+                imageUrl: '/Images/imagenPruebaSubasta.jpg',
+                currentBid: 50,
+                buyNowPrice: 300,
+                auctionEndTime: 1,
+            },
+            {
+                id: '3',
+                name: 'Poción de Vida',
+                description: 'Recupera completamente la salud del usuario.',
+                imageUrl: '/Images/imagenPruebaSubasta.jpg',
+                currentBid: 20,
+                buyNowPrice: 100,
+                auctionEndTime: 5,
+            },
+            
+        ];
+    
+        setInventory(data); // Actualiza el estado de productos
+        } catch (error) {
+            console.error('Error al obtener los productos:', error);
+        }
+    };
+
+   
+    useEffect(() => {
+        fetchProducts();
+    }, []); // Solo se ejecuta una vez
+
+   
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [auctionDetails, setAuctionDetails] = useState({
         currentBid: 0,
         buyNowPrice: 0,
         auctionEndTime: '',
     });
 
-    const handleSelectProduct = (product: AuctionProduct) => {
+    const handleSelectProduct = (product: Product) => {
         setSelectedProduct(product);
     };
 
@@ -70,6 +103,9 @@ const AddAuction: React.FC = () => {
             const ip = config.ip
             const port = config.port
             axios.post(`http://${ip}:${port}/api/new/auction`, productToAdd)
+
+            handleToSubasta()
+            //ubicacion del endpoint
         }
     }
    
@@ -98,7 +134,7 @@ const AddAuction: React.FC = () => {
 
 
                     <div className="col-md-6 ">
-                    <button onClick={() => window.location.href = "/Subasta"} className="btn-closeAdd">x</button>
+                    <button onClick={handleToSubasta} className="btn-closeAdd">x</button>
                         {selectedProduct && (
                             <div className="product-registration">
                                 <h4>Producto Seleccionado: </h4>
