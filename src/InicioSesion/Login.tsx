@@ -3,7 +3,6 @@ import { useAuth } from "../hooks/useAuth";
 import { Router } from "../Router/Router";
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");

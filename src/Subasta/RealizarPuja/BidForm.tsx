@@ -33,6 +33,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
             setShowConfirmation(true)
 
+            console.log(user?.iduser + '-'+ user?.name)
         } else if (offerType === 'oferta') {
             // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
             if (bidAmount) {
@@ -59,6 +60,8 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const handleCloseConfirmation = () => {
         setShowConfirmation(false);
         onClose(); // Cerrar am
+        console.log(user?.iduser + '-'+ user?.name)
+
     };
 
     return (

@@ -156,6 +156,7 @@ const UserForm: React.FC = () => {
         if (validateForm()) {
             console.log('Formulario enviado correctamente:', formData);
             axios.post( `http://127.0.0.1:3000/api/registro`, formData )
+            handleToLogin()
         }
     };
 
