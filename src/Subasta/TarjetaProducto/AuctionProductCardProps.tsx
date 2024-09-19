@@ -16,22 +16,6 @@ const AuctionProductCard: React.FC<AuctionProduct> = ({
     auctionEndTime,
   
 }) => {
-    const calculateTimeLeft = () => {
-        const difference = +new Date(auctionEndTime) - +new Date();
-        let timeLeft = "";
-
-        if (difference > 0) {
-            const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((difference / 1000 / 60) % 60);
-            const seconds = Math.floor((difference / 1000) % 60);
-            timeLeft = `${hours}h ${minutes}m ${seconds}s`;
-        } else {
-           // timeLeft = "Subasta finalizada";
-           timeLeft="2 dias"
-        }
-
-        return timeLeft;
-    };
 
     const [isBidding, setIsBidding] = useState(false); // Estado para mostrar u ocultar el formulario de puja
 
