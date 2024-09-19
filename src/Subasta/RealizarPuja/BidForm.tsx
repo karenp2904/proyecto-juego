@@ -38,11 +38,11 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
             // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
             if (bidAmount) {
                 console.log(`Oferta enviada: ${bidAmount}`);
-                
+                const idAuction= product.idAuction
                 const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
                 const ip = config.ip
                 const port = config.port
-                axios.post(`http://${ip}:${port}/api/new/bid`,{ idauction: '???', bidAmount  }).then(response =>{
+                axios.post(`http://${ip}:${port}/api/new/bid`,{ idAuction, bidAmount  }).then(response =>{
                     if (response.data.answer){
                         //setShowConfirmation(true)
                     }

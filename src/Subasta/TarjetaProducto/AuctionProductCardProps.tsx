@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './AuctionProductCard.css';
-import BidForm from '../RealizarPuja/BidForm.tsx'
-import Timer from './Timer.tsx';
-import AuctionProduct from '../../types/AuctionProduct.ts';
+import BidForm from '../RealizarPuja/BidForm'
+import Timer from './Timer';
+import AuctionProduct from '../../types/AuctionProduct';
 
 
 const AuctionProductCard: React.FC<AuctionProduct> = ({
