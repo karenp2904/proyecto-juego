@@ -14,13 +14,87 @@ const Auction: React.FC = () => {
     // Método para obtener los productos subastados
     const fetchProducts = async () => {
         try {
+            const response = await fetch('http://localhost:4000/api/subastas');
+            
+            // Verifica si la respuesta no es ok
+            if (!response.ok) throw new Error('Error en la solicitud de subastas');
+            
+        
+            
+            // Intenta analizar la respuesta como JSON
+            const data = await response.json()
+            console.log(data)
+            // Mapea los datos a la interfaz `AuctionProduct`
+            const mappedData: AuctionProduct[] = data.map((item: any) => ({
 
-            const config = fetch("../server-ip-config.json") as unknown as ConfigInterface
-            const ip = config.ip
-            const port = config.port
-            let data: AuctionProduct[] = await axios.post(`http://${ip}:${port}/api/subastas`)
+                idAuction: item.idauction.toString(),
+                idProduct: item.idproduct?.toString() || '',
+                name: item.name,
+                description: item.description,
+                imageUrl: item.image,
+                initialAmount: item.initialAmount ? parseFloat(item.initialAmount) : 0,
+                currentBid: parseFloat(item.current_bid),
+                buyNowPrice: parseFloat(item.buy_now_price),
+                auctionEndTime: new Date(item.end_time).getTime()
+            }));
+    
+            console.log(mappedData);  // Aquí puedes utilizarlo según tu lógica
+    
+            setProducts(mappedData)
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+        }
+    }
+    
+    /*
+    const fetchProducts = async () => {
+        try {
+            // Obtén la configuración del archivo JSON
+            const configResponse = await fetch("../server-ip-config.json");
+            if (!configResponse.ok) throw new Error('Error al obtener la configuración');
+           // const config = await configResponse.json();
+           // const ip = config.ip;
+            //const port = config.port;
+    
+            // Realiza la solicitud a la API
+            const response = await fetch('http://localhost:4000/api/subastas');
+            if (!response.ok) throw new Error('Error en la solicitud de subastas');
+            
+            // Parsea la respuesta como JSON
+            const data = await response.json();
+            
+            // Verifica que `data` sea un array
+            if (!Array.isArray(data)) {
+                throw new TypeError('La respuesta no es un array');
+            }
+
+            console.log(data + '<-')
+    
+             // Mapea los datos a la interfaz `AuctionProduct`
+        const mappedData: AuctionProduct[] = data.map((item: any) => ({
+            idAuction: item.idauction.toString(), // Convertir a string si es necesario
+            idProduct: item.idproduct?.toString() || '', // Asegúrate de tener un valor adecuado
+            name: item.name,
+            description: item.description,
+            imageUrl: item.image, // Usar la clave correcta
+            initialAmount: item.initialAmount ? parseFloat(item.initialAmount) : 0, // Convertir a número
+            currentBid: parseFloat(item.current_bid), // Convertir a número
+            buyNowPrice: parseFloat(item.buy_now_price), // Convertir a número
+            auctionEndTime: new Date(item.end_time).getTime() // Convertir a timestamp
+        }));
+            // Actualiza el estado de productos
+            console.log(mappedData);  // Aquí puedes utilizarlo según tu lógica
+    
+            setProducts(mappedData)
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+        }
+    }
+    */
+       
             // const response = await fetch(''); 
             // const data = await response.json();
+            /*
             data = [
                 {
                     idAuction:'1',
@@ -73,12 +147,12 @@ const Auction: React.FC = () => {
                     auctionEndTime: 4,
                 }
             ]
+                */
 
-            setProducts(data); // Actualiza el estado de productos
-        } catch (error) {
-            console.error('Error al obtener los productos:', error);
-        }
-    };
+           // setProducts(data); // Actualiza el estado de productos
+    
+    
+
 
    
     useEffect(() => {
@@ -133,6 +207,7 @@ const Auction: React.FC = () => {
         </div>
     );
 };
+
 
 export default Auction;
 interface ConfigInterface{
