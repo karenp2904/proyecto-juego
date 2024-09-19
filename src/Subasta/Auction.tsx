@@ -4,7 +4,7 @@ import './Auction.css'
 import { url } from 'inspector';
 import NavBar from '../NavBar/NavBar';
 import AuctionProduct from '../types/AuctionProduct';
-
+import axios from 'axios';
 
 const Auction: React.FC = () => {
 
@@ -15,9 +15,14 @@ const Auction: React.FC = () => {
     // Método para obtener los productos subastados
     const fetchProducts = async () => {
         try {
-           // const response = await fetch(''); 
-           // const data = await response.json();
-           const data: AuctionProduct[] = [
+
+            const config = fetch("../server-ip-config.json") as unknown as ConfigInterface
+            const ip = config.ip
+            const port = config.port
+            let data: AuctionProduct[] = await axios.post(`http://${ip}:${port}/api/subastas`)
+            // const response = await fetch(''); 
+            // const data = await response.json();
+            data = [
                 {
                     idAuction:'1',
                     idProduct: '1',
@@ -69,6 +74,7 @@ const Auction: React.FC = () => {
                     auctionEndTime: 4,
                 }
             ]
+
             setProducts(data); // Actualiza el estado de productos
         } catch (error) {
             console.error('Error al obtener los productos:', error);
@@ -130,3 +136,7 @@ const Auction: React.FC = () => {
 };
 
 export default Auction;
+interface ConfigInterface{
+    ip: string;
+    port: string;
+}

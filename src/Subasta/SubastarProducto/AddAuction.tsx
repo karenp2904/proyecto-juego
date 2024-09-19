@@ -4,7 +4,9 @@ import './AddAuction.css'
 import Product from '../../types/Product';
 import { useAuth } from "../../hooks/useAuth";
 import { Router } from "../../Router/Router";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";import AuctionProduct from '../../types/AuctionProduct';
+import axios from 'axios';
+
 
 const AddAuction: React.FC = () => {
 
@@ -89,23 +91,23 @@ const AddAuction: React.FC = () => {
 
     const handleAddProduct = () => {
         if (selectedProduct) {
-            const productToAdd= {
-                ...selectedProduct,
+            const productToAdd = {
+                idproduct: selectedProduct.id,
+                //iduser: ???,
                 currentBid: auctionDetails.currentBid,
                 buyNowPrice: auctionDetails.buyNowPrice,
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
             console.log('Producto añadido:', productToAdd);
-          
-
-            
-            //ubicacion del endpoint
+            const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
+            const ip = config.ip
+            const port = config.port
+            axios.post(`http://${ip}:${port}/api/new/auction`, productToAdd)
 
             handleToSubasta()
+            //ubicacion del endpoint
         }
     }
-   
-
    
     return (
         <div className="auction-window">
@@ -186,3 +188,7 @@ const AddAuction: React.FC = () => {
     );
 }
 export default AddAuction;
+interface ConfigInterface{
+    ip: string;
+    port: string;
+}
