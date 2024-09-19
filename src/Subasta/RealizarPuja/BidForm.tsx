@@ -41,7 +41,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
                 const ip = config.ip
                 const port = config.port
-                axios.post(`http://${ip}:${port}/api/new/bid`,{ idauction: '???', bidAmount: '???'  }).then(response =>{
+                axios.post(`http://${ip}:${port}/api/new/bid`,{ idauction: '???', bidAmount  }).then(response =>{
                     if (response.data.answer){
                         //setShowConfirmation(true)
                     }
