@@ -26,7 +26,7 @@ function Login() {
       console.log("Password:", password);
   
       // Realizar una solicitud GET con Axios
-      const response = await fetch('http://localhost:3000/api/auth', {
+      const response = await fetch('http://localhost:4000/api/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,11 +46,8 @@ function Login() {
   
           //const usuarioJSON = JSON.stringify(data.usuario);
           //console.log('Información del usuario en JSON:', usuarioJSON);
-          
-
-        } else {
-          console.error('Error en el inicio de sesión:', data.message);
-        }
+        
+        } 
       } else {
         console.error('Error en la solicitud de inicio de sesión:', response.statusText);
       }

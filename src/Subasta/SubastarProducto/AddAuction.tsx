@@ -106,7 +106,7 @@ const AddAuction: React.FC = () => {
             const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
             const ip = config.ip
             const port = config.port
-            axios.post(`http://${ip}:${port}/api/new/auction`, productToAdd)
+            axios.post(`http://localhost:4000/api/new/auction`, productToAdd)
 
             handleToSubasta()
             //ubicacion del endpoint
