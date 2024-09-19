@@ -20,6 +20,8 @@ const AppRouter: FC = () => {
         <Route path={Router.subastarProducto} element={<AddAuction />} />    
         <Route path={Router.miCuenta} element={<MyAccount />} />   
         <Route path={Router.registro} element={<Register />} />   
+        <Route path={Router.recuperarCuenta} element={<RecoveryForm />} />   
+
 
       </Routes>
     </BrowserRouter>

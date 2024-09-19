@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuctionProductCard from './TarjetaProducto/AuctionProductCardProps'
 import './Auction.css'
-import { url } from 'inspector';
 import NavBar from '../NavBar/NavBar';
 import AuctionProduct from '../types/AuctionProduct';
 import axios from 'axios';

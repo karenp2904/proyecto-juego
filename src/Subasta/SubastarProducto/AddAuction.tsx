@@ -93,7 +93,7 @@ const AddAuction: React.FC = () => {
         if (selectedProduct) {
             const productToAdd = {
                 idproduct: selectedProduct.id,
-                //iduser: ???,
+                iduser: user?.iduser,
                 currentBid: auctionDetails.currentBid,
                 buyNowPrice: auctionDetails.buyNowPrice,
                 auctionEndTime: auctionDetails.auctionEndTime,

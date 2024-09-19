@@ -7,9 +7,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["jest","node"]
+    "types": ["jest","node"],
+    "rootDir": "./src",  
+    "outDir": "./build/js"
     
   },
-  "include": ["src/**/*", "tsconfig.json", "jest.config.js"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
