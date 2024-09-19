@@ -4,7 +4,7 @@ import './AddAuction.css'
 import Product from '../../types/Product';
 import { useAuth } from "../../hooks/useAuth";
 import { Router } from "../../Router/Router";
-import { useNavigate } from "react-router-dom";import AuctionProduct from '../../types/AuctionProduct';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -90,6 +90,9 @@ const AddAuction: React.FC = () => {
     };
 
     const handleAddProduct = () => {
+
+        console.log(user?.iduser + '-'+ user?.name)
+
         if (selectedProduct) {
             const productToAdd = {
                 idproduct: selectedProduct.id,

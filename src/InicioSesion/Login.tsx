@@ -40,6 +40,7 @@ function Login() {
         console.log('Login exitoso:', data.usuario);
         if(data.usuario){
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
+          console.log(data.usuario)
           auth();
           navigate(Router.subasta);
   
