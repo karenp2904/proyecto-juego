@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AddAuction.css'
 import AuctionProduct from '../../types/AuctionProduct';
-
-
+import axios from 'axios';
 
 const AddAuction: React.FC = () => {
 
@@ -60,19 +59,19 @@ const AddAuction: React.FC = () => {
     const handleAddProduct = () => {
         if (selectedProduct) {
             const productToAdd = {
-                ...selectedProduct,
+                idproduct: selectedProduct.id,
+                //iduser: ???,
                 currentBid: auctionDetails.currentBid,
                 buyNowPrice: auctionDetails.buyNowPrice,
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
             console.log('Producto añadido:', productToAdd);
-          
-
-            //ubicacion del endpoint
+            const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
+            const ip = config.ip
+            const port = config.port
+            axios.post(`http://${ip}:${port}/api/new/auction`, productToAdd)
         }
     }
-   
-
    
     return (
         <div className="auction-window">
@@ -153,3 +152,7 @@ const AddAuction: React.FC = () => {
     );
 }
 export default AddAuction;
+interface ConfigInterface{
+    ip: string;
+    port: string;
+}

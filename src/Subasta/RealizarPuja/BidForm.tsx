@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './BidForm.css';
 import ConfirmationPanel from './Confirmacion/ConfirmationPanel';
 import AuctionProduct from '../../types/AuctionProduct';
+import axios from 'axios';
 
 
 interface BidFormProps {
@@ -31,8 +32,16 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
             if (bidAmount) {
                 console.log(`Oferta enviada: ${bidAmount}`);
                 
-                //endpoint para agregar el valor actual en el producto subastado (nueva puja)
+                const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
+                const ip = config.ip
+                const port = config.port
+                axios.post(`http://${ip}:${port}/api/new/bid`,{ idauction: '???', bidAmount: '???'  }).then(response =>{
+                    if (response.data.answer){
+                        //setShowConfirmation(true)
+                    }
+                })
                 setShowConfirmation(true)
+
 
             } else {
                 console.log('Por favor, ingresa un valor de oferta.');
@@ -100,3 +109,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 };
 
 export default BidForm;
+interface ConfigInterface{
+    ip: string;
+    port: string;
+}
