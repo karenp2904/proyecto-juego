@@ -20,12 +20,7 @@ const Timer: React.FC<TimeInfoProps> = ({ totalDays }) => {
             const days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             const hours = Math.floor((timeDiff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
             const minutes = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
-            const seconds = Math.floor((timeDiff % (60 * 1000)) / 1000);
 
-            console.log('Days:', days);
-            console.log('Hours:', hours);
-            console.log('Minutes:', minutes);
-            console.log('Seconds:', seconds);
 
             return `${days} días  ${hours} h ${minutes} min`;
         };
