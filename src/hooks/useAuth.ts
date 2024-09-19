@@ -6,14 +6,18 @@ export type IUseAuth = {
     auth: () => void
 }
 
-export const useAuth = create<IUseAuth>((set) => ({
-    user: null,
-    auth: async () => {
-        const usuario = localStorage.getItem("usuario");
-        if(usuario) {
-            set({
-                user: JSON.parse(usuario)
-            })
+export const useAuth = create<IUseAuth>((set) => {
+    const usuario = localStorage.getItem("usuario");
+
+    return {
+        user: usuario ? JSON.parse(usuario) : null,
+        auth: async () => {
+            const usuario = localStorage.getItem("usuario");
+            if (usuario) {
+                set({
+                    user: JSON.parse(usuario)
+                });
+            }
         }
-    }
-}));
+    };
+});

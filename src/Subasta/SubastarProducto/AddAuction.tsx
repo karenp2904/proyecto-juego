@@ -16,6 +16,7 @@ const AddAuction: React.FC = () => {
 
     const handleToSubasta = ()=>{
         navigate(Router.subasta)
+        console.log(user)
     }
 
 
