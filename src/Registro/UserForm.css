@@ -14,32 +14,38 @@
     height: 90%; 
     overflow: hidden; 
 }
-
 .register-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-start;
+   
     background-color: rgba(128, 155, 144, 0.5);
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
-    height: 90%; 
+    height: 100%; 
     width: 100%;
+    box-sizing: border-box; 
+    overflow: hidden; /* Evita desbordamiento */
+
+    
 }
 
 .form-title {
     text-align: center;
     font-size: 36px;
     color: #fff;
-
+    margin: auto;
 }
+
 
 .form-group {
     display: flex;
-    width: 60%;
-    height: 20%;
+    width: 60%; 
+    max-width: 60%;
+    height: 17%; 
     justify-content: space-between;
-
+    box-sizing: border-box;
+    margin-bottom: 10px; 
 }
 
 
@@ -89,43 +95,57 @@
 .avatar-inputR {
     display: none;
 }
-
+#form-questions{
+    display: flex;
+    width: 100%; 
+    height: 22; 
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-bottom: 10px; 
+}
 .questions {
     width: 100%;
-    margin-top: 2%;
-    margin-bottom: 20px;
+    height: 50%;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
 }
 
 .questionsInput {
-    width: 100%;
-    margin-bottom: 20px;
+    width: 60%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.questions input{
-    width: 90%;
+.questions input {
+    width: 100%; 
     justify-content: left;
     text-align: center;
     margin-bottom: 10px;
 }
 
+#form-questions {
+    width: 95%; 
+    margin: 1%; 
+    height: 20%;
+}
 .questions-title {
     color: #fff;
     text-align: center;
     margin-bottom: 20px;
+    margin-left: 2%;
+    display: flex;
+    justify-self: center;
+    align-items: center;
 }
 
 .botonCont {
     align-items: center;
-    margin-left: 80%px; 
+    margin-left: 5%;
     justify-content: left;
-    margin-left: 25%
 }
+
 
 .btn-register {
     width: 20%;
@@ -139,27 +159,57 @@
     position: absolute;
     right: 15%;
     bottom: 28%;
-   
     justify-content: flex-end;
     align-items: flex-end;
     align-content: flex-end;
    
 }
+.error-text {
+    position: relative;
+    background-color: #3B5B58;
+    border-radius: 5px;
+    width: 100px;
+    height: 50px;
+    max-width: 120px;
+    margin-top: 10px;
+    top: 18%;
+    font-size: 8px;
+}
 
 .error-message {
     color: red;
-    font-size: 10px; 
-    position: absolute; 
-    top: -0px;
-    left: 0; 
-    display: none; 
+    display: flex;
+   
 }
+
+.error {
+    border-color: red;
+    background-color: rgba(241, 174, 174, 0.3);
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+/* Cuando hay error, muestra el mensaje */
+.form-controlR.input-error + .error-message {
+    visibility: visible;  
+}
+
+
+input.input-error,
+select.input-error,
+textarea.input-error {
+    border-color: red;
+
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.8); 
+}
+
+
+
 
 .return-button1 {
     display: flex;
     position: absolute;
-    left: 11%; 
-    bottom: 10%;
+    left: 10%; 
+    bottom: 5%;
     background-repeat: no-repeat;
     height: 6%;
     width: 5%; 
@@ -176,17 +226,6 @@
     background: none;
 
 }
-/* Mostrar error si hay contenido en el span */
-.form-controlR .error-message.active {
-    display: block;
-    border-color: red;
-}
-
-.input-error {
-    border-color: red;
-}
-
-
 
 
 /* Responsive Design */
@@ -196,39 +235,59 @@
     }
 
     .form-title {
-        font-size: 24px;
-    }
-
-    .register-form {
-        flex-direction: column;
-        align-items: center;
+        font-size: 28px;
     }
 
     .form-group {
         width: 100%;
+        flex-direction: column;
     }
 
-    .avatar-upload {
+    .form-controlR {
         width: 100%;
-        margin: 20px 0;
+        margin: 5px 0;
     }
 
-    .avatar-circle {
+    .avatar-circleR {
+        width: 150px;
+        height: 150px;
+    }
+
+    .btn-register {
+        width: 60%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 10px;
+    }
+
+    .form-title {
+        font-size: 24px;
+    }
+
+    .form-group {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .form-controlR {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .avatar-circleR {
         width: 100px;
         height: 100px;
     }
 
     .btn-register {
         width: 80%;
-    }
-}
-
-@media (max-width: 480px) {
-    .form-control {
-        margin: 5px;
+        bottom: 10%;
     }
 
     .questions input {
-        width: 80%;
+        width: 100%;
     }
 }

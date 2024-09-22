@@ -3,6 +3,7 @@ import './UserForm.css';
 import axios from 'axios';
 import { Router } from "../Router/Router";
 import { useNavigate } from "react-router-dom";
+import Environment from "../shared/Environment";
 
 const UserForm: React.FC = () => {
 
@@ -114,15 +115,16 @@ const UserForm: React.FC = () => {
             newErrors.email = 'El correo electrónico es requerido.';
             isValid = false;
         } else if (!emailRegex.test(formData.email)) {
-            newErrors.email = 'Por favor, introduzca un correo electrónico válido.';
+            newErrors.email = 'El correo electrónico no es válido.';
             isValid = false;
         }
 
         if (!formData.password) {
             newErrors.password = 'La contraseña es requerida.';
             isValid = false;
-        } else if (!passwordRegex.test(formData.password)) {
-            newErrors.password = 'La contraseña debe tener al menos una letra mayúscula, un carácter especial, un número y una longitud mínima de 8 caracteres.';
+        } else if ((!passwordRegex.test(formData.password)) || ( !passwordRegex.test(formData.confirmPassword))) {
+            newErrors.password = 'La contraseña no es valida.';
+            
             isValid = false;
         } else if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Las contraseñas no coinciden.';
@@ -155,7 +157,7 @@ const UserForm: React.FC = () => {
         event.preventDefault();
         if (validateForm()) {
             console.log('Formulario enviado correctamente:', formData);
-            axios.post( `http://127.0.0.1:3000/api/registro`, formData )
+            axios.post( `${Environment.getDomain()}/api/registro`, formData )
             handleToLogin()
         }
     };
@@ -163,9 +165,9 @@ const UserForm: React.FC = () => {
     return (
             <div className="form-container">
                 <form className="register-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <h2 className="form-title">CREAR CUENTA NUEVA</h2>
-                    </div>
+                   
+                    <h2 className="form-title">CREAR CUENTA NUEVA</h2>
+                    
 
                     <div className="form-group">
                         
@@ -180,33 +182,6 @@ const UserForm: React.FC = () => {
                         />
                         {errors.name && <small className="error-text">{errors.name}</small>}
                         
-                        
-                        <input 
-                            type="text" 
-                            name="surname" 
-                            className={`form-controlR ${errors.surname && 'input-error'}`} 
-                            placeholder="Apellido" 
-                            value={formData.surname} 
-                            onChange={handleInputChange} 
-                            required
-                        />
-                        {errors.surname && <small className="error-text">{errors.surname}</small>}
-                        
-                        
-                        <input 
-                            type="text" 
-                            name="nickname" 
-                            className={`form-controlR ${errors.nickname && 'input-error'}`} 
-                            placeholder="Apodo" 
-                            value={formData.nickname} 
-                            onChange={handleInputChange} 
-                            required
-                        />
-                        {errors.nickname && <small className="error-text">{errors.nickname}</small>}
-                    </div>
-
-                    <div className="form-group">
-                        
                         <input 
                             type="email" 
                             name="email" 
@@ -217,7 +192,23 @@ const UserForm: React.FC = () => {
                             required
                         />
                         {errors.email && <small className="error-text">{errors.email}</small>}
-                    
+                        
+    
+                    </div>
+
+                    <div className="form-group">
+                        <input 
+                                type="text" 
+                                name="surname" 
+                                className={`form-controlR ${errors.surname && 'input-error'}`} 
+                                placeholder="Apellido" 
+                                value={formData.surname} 
+                                onChange={handleInputChange} 
+                                required
+                            />
+                            {errors.surname && <small className="error-text">{errors.surname}</small>}
+                            
+                            
                         <input 
                             type="password" 
                             name="password" 
@@ -228,6 +219,22 @@ const UserForm: React.FC = () => {
                             required
                         />
                         {errors.password && <small className="error-text">{errors.password}</small>}
+                            
+                            
+                    </div>
+
+                    <div className="form-group">
+                        
+                        <input 
+                                    type="text" 
+                                    name="nickname" 
+                                    className={`form-controlR ${errors.nickname && 'input-error'}`} 
+                                    placeholder="Apodo" 
+                                    value={formData.nickname} 
+                                    onChange={handleInputChange} 
+                                    required
+                                />
+                        {errors.nickname && <small className="error-text">{errors.nickname}</small>}
 
                         
                         <input 
@@ -253,23 +260,26 @@ const UserForm: React.FC = () => {
                     </div>
                     
                     <div className="questions">
-                        <div className='questionesInput'>
+                        <div className='questionsInput'>
                             <h3 className="questions-title">PREGUNTAS DE SEGURIDAD</h3>
 
                             <input 
                                 type="text" 
                                 name="securityQuestion1" 
+                                id='form-questions'
                                 className={`form-control ${errors.securityQuestion1 && 'input-error'}`} 
                                 placeholder="¿Cuál es el nombre de tu primera mascota?" 
                                 value={formData.securityQuestion1} 
                                 onChange={handleInputChange} 
                                 required
                             />
+                          
                             {errors.securityQuestion1 && <small className="error-text">{errors.securityQuestion1}</small>}
 
                             <input 
                                 type="text" 
                                 name="securityQuestion2" 
+                                id='form-questions'
                                 className={`form-control ${errors.securityQuestion2 && 'input-error'}`} 
                                 placeholder="¿En qué ciudad naciste?" 
                                 value={formData.securityQuestion2} 
@@ -281,6 +291,7 @@ const UserForm: React.FC = () => {
                             <input 
                                 type="text" 
                                 name="securityQuestion3" 
+                                id='form-questions'
                                 className={`form-control ${errors.securityQuestion3 && 'input-error'}`} 
                                 placeholder="¿Cuál es tu color favorito?" 
                                 value={formData.securityQuestion3} 

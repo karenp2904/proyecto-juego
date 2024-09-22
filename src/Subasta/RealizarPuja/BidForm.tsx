@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './BidForm.css';
-import ConfirmationPanel from './Confirmacion/ConfirmationPanel';
+import ConfirmationPanel from '../Confirmacion/ConfirmationPanel';
 import AuctionProduct from '../../types/AuctionProduct';
 import { useAuth } from "../../hooks/useAuth";
 import axios from 'axios';
+import Environment from "../../shared/Environment";
 
 
 interface BidFormProps {
@@ -20,15 +21,19 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const [bidAmount, setBidAmount] = useState(product.currentBid + 1);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [offerType, setOfferType] = useState('oferta');
+    const [confirmationMessage, setConfirmationMessage]= useState('');
 
 
     const handleBidSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (offerType === 'compra') {
+
             // Si el tipo es 'compra', se toma el valor de la compra inmediata
             console.log(`Compra inmediata: ${product.buyNowPrice}`);
-            
+              // Establecer el mensaje de confirmación
+            setConfirmationMessage(`Compra aprobada por ${product.buyNowPrice}`);
+            setShowConfirmation(true);
             //endpoint para retirar el producto
 
             setShowConfirmation(true)
@@ -38,15 +43,18 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
             // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
             if (bidAmount) {
                 console.log(`Oferta enviada: ${bidAmount}`);
-                const idAuction= product.idAuction
-                const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
-                const ip = config.ip
-                const port = config.port
-                axios.post(`http://${ip}:${port}/api/new/bid`,{ idAuction, bidAmount  }).then(response =>{
+                const idAuction= product.idAuction              
+            
+                axios.post(`${Environment.getDomain()}/api/.... `,{ idAuction, bidAmount  }).then(response =>{
                     if (response.data.answer){
                         //setShowConfirmation(true)
+                        setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
+
                     }
                 })
+                setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
+
+             
                 setShowConfirmation(true)
 
 
@@ -94,6 +102,16 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                             />
                         </>
                 )}
+
+                {showConfirmation && (
+                    <ConfirmationPanel 
+                        type={offerType === 'compra' ? 'COMPRA APROBADA' : 'OFERTA ENVIADA'} 
+                        message={offerType === 'compra' ? `Compra aprobada por ${product.buyNowPrice}` : `Su oferta por ${bidAmount} ha sido aprobada`}
+                        onClose={handleCloseConfirmation} 
+                    />
+                )}
+
+
                 </div>
                
 
@@ -106,19 +124,9 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 </button>
             </form>
 
-            {showConfirmation && (
-                <ConfirmationPanel 
-                    bidAmount={bidAmount} 
-                    name={product.name}
-                    onClose={handleCloseConfirmation} // Función que cierra el panel y el formulario
-                />
-            )}
+            
         </div>
     );
 };
 
 export default BidForm;
-interface ConfigInterface{
-    ip: string;
-    port: string;
-}
