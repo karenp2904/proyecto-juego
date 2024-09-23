@@ -3,7 +3,7 @@ import AuctionProductCard from './TarjetaProducto/AuctionProductCardProps'
 import './Auction.css'
 import NavBar from '../NavBar/NavBar';
 import AuctionProduct from '../types/AuctionProduct';
-import axios from 'axios';
+import Environment from "../shared/Environment";
 
 const Auction: React.FC = () => {
 
@@ -14,7 +14,7 @@ const Auction: React.FC = () => {
     // Método para obtener los productos subastados
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/subastas');
+            const response = await fetch(`${Environment.getDomain()}/api/subastas`);
             
             // Verifica si la respuesta no es ok
             if (!response.ok) throw new Error('Error en la solicitud de subastas');
@@ -210,7 +210,3 @@ const Auction: React.FC = () => {
 
 
 export default Auction;
-interface ConfigInterface{
-    ip: string;
-    port: string;
-}

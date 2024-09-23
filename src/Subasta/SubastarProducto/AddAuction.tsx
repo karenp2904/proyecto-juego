@@ -6,6 +6,8 @@ import { useAuth } from "../../hooks/useAuth";
 import { Router } from "../../Router/Router";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import ConfirmationPanel from '../Confirmacion/ConfirmationPanel';
+import Environment from "../../shared/Environment";
 
 
 const AddAuction: React.FC = () => {
@@ -18,6 +20,9 @@ const AddAuction: React.FC = () => {
         navigate(Router.subasta)
         console.log(user)
     }
+
+    const [confirmationMessage, setConfirmationMessage]= useState('');
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
 
     const [inventory, setInventory] = useState<Product[]>([]); // Estado inicial 
@@ -92,6 +97,7 @@ const AddAuction: React.FC = () => {
 
     const handleAddProduct = () => {
 
+
         console.log(user?.iduser + '-'+ user?.name)
 
         if (selectedProduct) {
@@ -102,15 +108,30 @@ const AddAuction: React.FC = () => {
                 buyNowPrice: auctionDetails.buyNowPrice,
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
+
+            // Verifica que el valor inicial sea menor que el valor de compra inmediata
+            if (Number(productToAdd.currentBid) >= Number(productToAdd.buyNowPrice)) {
+                setConfirmationMessage('El valor inicial debe ser menor que el valor de compra inmediata');
+                setShowConfirmation(true)
+
+                return; // Detiene el envío si no cumple con la validación
+            }else if(Number(productToAdd.buyNowPrice<=Number(productToAdd.currentBid))){
+                setConfirmationMessage('El valor de compra inmediata debe ser mayor al valor inicial');
+                setShowConfirmation(true)
+
+                return; // Detiene el envío si no cumple con la validación
+            }
+
             console.log('Producto añadido:', productToAdd);
-            const config = fetch("../../server-ip-config.json") as unknown as ConfigInterface
-            const ip = config.ip
-            const port = config.port
-            axios.post(`http://localhost:4000/api/new/auction`, productToAdd)
+         
+            axios.post(`${Environment.getDomain()}/api/new/auction`, productToAdd)
 
             handleToSubasta()
-            //ubicacion del endpoint
         }
+    }
+
+    const handleAgain = ()=>{
+        
     }
    
     return (
@@ -181,7 +202,20 @@ const AddAuction: React.FC = () => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                    <button onClick={handleAddProduct} className="btn-auction mt-3">Añadir Producto</button>
+
+                               
+                                {showConfirmation && (
+                                    <ConfirmationPanel 
+                                        type={`NO ES VALIDO`} 
+                                        message={confirmationMessage}
+                                        onClose={() => setShowConfirmation(false)} // Cierra el panel
+                                    />
+                                )}
+
+                                
+
+
+                                <button onClick={handleAddProduct} className="btn-auction mt-3">Añadir Producto</button>
                                 
                             </div>
                             )}
@@ -192,7 +226,4 @@ const AddAuction: React.FC = () => {
     );
 }
 export default AddAuction;
-interface ConfigInterface{
-    ip: string;
-    port: string;
-}
+

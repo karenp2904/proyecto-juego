@@ -14,24 +14,28 @@
 
 .product-list {
     display: flex;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2);
     justify-content: center;
-    margin-top: 2%;
+    margin-top: 1%;
+    background-color: #a9784b;
 }
+
 .search-auction {
     display: flex;
     justify-content: flex-end;
     align-items: center; 
     width: 28%; 
+    height: 8%;
     position: relative;
     right: 0%;
     left: 65%;
-    margin-top: 10%;
+    margin-top: 5%;
     bottom: 10%;
 }
 
 .barra {
     width: 80%;
+    height: 70%;
     border-radius: 10px;
     border: 2px solid #b29053; 
     display: block;

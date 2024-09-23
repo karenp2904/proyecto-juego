@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Router } from "../Router/Router";
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import Environment from "../shared/Environment";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,7 +11,6 @@ function Login() {
   
   const navigate = useNavigate();
   const auth = useAuth(s => s.auth);
-
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     // Prevenir la recarga de la página
     event.preventDefault();
@@ -26,7 +26,7 @@ function Login() {
       console.log("Password:", password);
   
       // Realizar una solicitud GET con Axios
-      const response = await fetch('http://localhost:4000/api/auth', {
+      const response = await fetch(`${Environment.getDomain()}/api/auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
