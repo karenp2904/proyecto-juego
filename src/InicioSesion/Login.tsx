@@ -42,7 +42,7 @@ function Login() {
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           console.log(data.usuario)
           auth();
-          navigate(Router.subasta);
+          navigate(Router.inicio);
   
           //const usuarioJSON = JSON.stringify(data.usuario);
           //console.log('Información del usuario en JSON:', usuarioJSON);

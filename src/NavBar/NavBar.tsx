@@ -19,6 +19,7 @@ export default function NavBar() {
             navigate(Router.login)
         }
     }
+    
     return (
         <nav className='NavBar'>
             <div className='Container'>

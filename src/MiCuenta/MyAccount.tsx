@@ -13,6 +13,7 @@ interface UserData {
   securityQuestion3: string;
 }
 const imgAvatar='../../public/Images/usuario.png';
+
 const MyAccount: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
     name: 'Nombre de ejemplo',
