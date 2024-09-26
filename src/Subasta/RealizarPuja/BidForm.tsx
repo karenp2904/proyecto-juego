@@ -25,7 +25,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
 
 
-    const handleBidSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const   handleBidSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
           // Validación de créditos del usuario
@@ -33,7 +33,10 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
             if (offerType === 'compra') {
 
-                if (user.credits < product.buyNowPrice) {
+                const credits= await getCredits(user.iduser)
+                console.log(credits)
+
+                if (credits<product.buyNowPrice) {
                     setErrorMessage('No tienes suficientes créditos para la compra.');
                    
                     return;
@@ -56,7 +59,9 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
             } else if (offerType === 'oferta') {
                 // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
                 if (bidAmount) {
-                    if (10 < bidAmount) {
+                    const credits= await getCredits(user.iduser)
+
+                    if (credits < bidAmount) {
                         setErrorMessage('No tienes suficientes créditos para la oferta.');
                         
                         return;
@@ -89,6 +94,51 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
         
     };
+
+
+
+    async function setCredits(idUser:number, credits:number){
+        // Realizar una solicitud GET con Axios
+        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ iduser: idUser , credits:credits}),
+        });
+    
+        if (response.ok) {
+          console.log()
+          return response.json()
+    
+        }else{
+          return null
+        }
+    }
+
+    async function getCredits(iduser:number){
+        // Realizar una solicitud GET con Axios
+        console.log(iduser + "ksksk")
+        console.log(JSON.stringify({iduser: iduser}))
+
+        const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({iduser: iduser}),
+        });
+    
+        if (response.ok) {
+        
+          const data= await response.json()
+          console.log(data.usuario)
+          return data.usuario
+    
+        }else{
+          return null
+        }
+    }
 
 
     const handleCloseConfirmation = () => {

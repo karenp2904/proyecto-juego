@@ -38,7 +38,7 @@ export default function NavBar() {
 
                         <div className="show-credits">
                             <span className="credits-user">
-                                {100} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                                {user?.credits} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
                         <img src="/Images/userBar2.png"  className='img-navBar' alt="perfil" onClick={verificarUsuarioActivo}/>
