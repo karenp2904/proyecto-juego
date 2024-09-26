@@ -37,10 +37,13 @@ function Login() {
       console.log(response)
       if (response.ok) {
         const data = await response.json();
+
+     
         console.log('Login exitoso:', data.usuario);
+
         if(data.usuario){
+
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
-          console.log(data.usuario)
           auth();
           navigate(Router.inicio);
   
@@ -55,7 +58,8 @@ function Login() {
       console.error('Error en la solicitud de inicio de sesión:', error);
     }
   };
-  
+
+ 
 
   return (
     <div className="fondo">
