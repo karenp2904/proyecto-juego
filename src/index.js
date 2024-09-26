@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Registro from './Registro/Register.tsx';
-import RecoveryForm from './RecuperarCuenta/RecoveryForm.tsx';
-import MyAccount from './MiCuenta/MyAccount.tsx';
 import reportWebVitals from './reportWebVitals';
-import Login from './InicioSesion/Login.tsx';
-import App from './App.jsx';
+import App from './App.tsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -22,46 +22,72 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [offerType, setOfferType] = useState('oferta');
     const [confirmationMessage, setConfirmationMessage]= useState('');
+    const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
 
 
     const handleBidSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (offerType === 'compra') {
+          // Validación de créditos del usuario
+        if (user) {
 
-            // Si el tipo es 'compra', se toma el valor de la compra inmediata
-            console.log(`Compra inmediata: ${product.buyNowPrice}`);
-              // Establecer el mensaje de confirmación
-            setConfirmationMessage(`Compra aprobada por ${product.buyNowPrice}`);
-            setShowConfirmation(true);
-            //endpoint para retirar el producto
+            if (offerType === 'compra') {
 
-            setShowConfirmation(true)
+                if (user.credits < product.buyNowPrice) {
+                    setErrorMessage('No tienes suficientes créditos para la compra.');
+                   
+                    return;
+                }else{ 
+                    console.log(`Compra inmediata: ${product.buyNowPrice}`);
 
-            console.log(user?.iduser + '-'+ user?.name)
-        } else if (offerType === 'oferta') {
-            // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
-            if (bidAmount) {
-                console.log(`Oferta enviada: ${bidAmount}`);
-                const idAuction= product.idAuction              
-            
-                axios.post(`${Environment.getDomain()}/api/.... `,{ idAuction, bidAmount  }).then(response =>{
-                    if (response.data.answer){
-                        //setShowConfirmation(true)
+                    // Establecer el mensaje de confirmación
+                    setConfirmationMessage(`Compra aprobada por ${product.buyNowPrice}`);
+                  
+
+                    //endpoint para retirar el producto
+
+
+
+                    setShowConfirmation(true)
+                }
+
+                
+    
+            } else if (offerType === 'oferta') {
+                // Si el tipo es 'oferta', se toma el valor de la oferta ingresada
+                if (bidAmount) {
+                    if (10 < bidAmount) {
+                        setErrorMessage('No tienes suficientes créditos para la oferta.');
+                        
+                        return;
+                    }else{
+                        console.log(`Oferta enviada: ${bidAmount}`);
+                        const idAuction= product.idAuction              
+                    
+                        axios.post(`${Environment.getDomain()}/api/.... `,{ idAuction, bidAmount  }).then(response =>{
+                            if (response.data.answer){
+                                //setShowConfirmation(true)
+                                setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
+        
+                            }
+                        })
                         setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
-
+        
+                     
+                        setShowConfirmation(true)
                     }
-                })
-                setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
-
-             
-                setShowConfirmation(true)
-
-
-            } else {
-                console.log('Por favor, ingresa un valor de oferta.');
+    
+                } else {
+                    console.log('Por favor, ingresa un valor de oferta.');
+                }
+            }else{
+                
             }
+            
+        
         }
+
+        
     };
 
 
@@ -111,8 +137,9 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                     />
                 )}
 
-
                 </div>
+
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                
 
 

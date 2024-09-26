@@ -1,7 +1,7 @@
 .auction-window {
     padding: 0px;
     text-align: center;
-    background-image: url(../../public/Images/SUBASTAS.png);
+    background-image: url(../../public/Images/subasta2.jpeg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -14,10 +14,9 @@
 
 .product-list {
     display: flex;
-    grid-template-columns: repeat(2);
+    flex-wrap: wrap;
     justify-content: center;
     margin-top: 1%;
-    background-color: #a9784b;
 }
 
 .search-auction {

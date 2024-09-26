@@ -136,7 +136,7 @@ const AddAuction: React.FC = () => {
    
     return (
         <div className="auction-window">
-            <div className="container mt-5">
+            <div className="container ">
                
                 <div className="card p-4">
                
