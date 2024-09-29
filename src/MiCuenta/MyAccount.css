@@ -1,6 +1,6 @@
 
 .fondo2 {
-  background-image: url('../../public/Images/arbol2.jpg');
+  background-image: url('../assets/Images/arbol2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

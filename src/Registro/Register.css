@@ -1,6 +1,6 @@
 .registro-container {
     display: flex;
-    background-image: url('../../public/Images/fondo.jpeg');
+    background-image: url('../assets/Images/fondo.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 

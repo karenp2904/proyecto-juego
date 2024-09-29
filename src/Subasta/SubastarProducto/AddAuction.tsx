@@ -31,8 +31,24 @@ const AddAuction: React.FC = () => {
      // Método para obtener los productos subastados
      const fetchProducts = async () => {
         try {
+    /*
+            const response = await fetch(`${Environment.getDomainInventory()}/inventary/:${user?.iduser}`, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+          
+              if (response.ok) {
+                console.log(await response.json)
+                const data= await response.json
+                console.log(data)
+          
+              }
+              */
            // const response = await fetch(''); 
            // const data = await response.json();
+       
            const data: Product[] =  [
             {
                 id: '1',
@@ -61,10 +77,11 @@ const AddAuction: React.FC = () => {
                 buyNowPrice: 100,
                 auctionEndTime: 5,
             },
+           
             
         ];
-    
-        setInventory(data); // Actualiza el estado de productos
+        setInventory(data)
+       
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }

@@ -40,11 +40,11 @@ const AppRouter: FC = () => {
         <Route path={Router.registro} element={<Register />} />   
         
         <Route path={Router.recuperarCuenta} element={<RecoveryForm />} />   
-
+        <Route path={Router.inicio} element={<Inicio />} />
         
 
         <Route element={<MainNavBar />}>
-          <Route path={Router.inicio} element={<Inicio />} />
+          
           <Route path={Router.subasta} element={<Auction />} /> 
           <Route path={Router.subastarProducto} element={<AddAuction />} />    
           <Route path={Router.miCuenta} element={<MyAccount />} /> 
