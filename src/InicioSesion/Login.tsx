@@ -67,7 +67,7 @@ function Login() {
         <form onSubmit={handleLogin}>
           <div className="logo-container">
             <h1 className="INICIO">INICIO DE SESIÓN</h1>
-            <img className="logo" src="./Images/LOGO.PNG" alt="Logo" />
+            <img className="logo" src={require("../assets/Images/logo.png")}  alt="Logo" /> 
           </div>
           <label htmlFor="username" className="text">USUARIO / CORREO ELECTRÓNICO</label>
           <input

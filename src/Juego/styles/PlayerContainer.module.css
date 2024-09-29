@@ -1,0 +1,544 @@
+.gameOverMessage {
+  
+  align-items: center; /* Centra el contenedor verticalmente */
+  height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+  text-align: center; /* Centra el texto dentro del contenedor */
+  position: absolute; /* Posición absoluta para superponer sobre otros elementos */
+  display: block;
+  unicode-bidi: isolate;
+  flex-direction: column; 
+
+}
+
+.timerContainer {
+  position: absolute;
+  top: 200px; /* Adjust this value to position the timer above the game area */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.timerCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(to right, #ff0000, #FFC107);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timerContent {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timerNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.timerText {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Add a pulsating animation to draw attention */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.timerCircle {
+  animation: pulse 2s infinite;
+}
+
+/* Add a color change effect when time is running low */
+.timerCircle.lowTime {
+  background: linear-gradient(to right, #FFC107, #FF5722);
+}
+
+.barradeaccion {
+  width: 1525px;
+  height: 267px;
+  position: relative;
+  border-radius: var(--br-xl);
+  background-color: var(--color-gray);
+  display: none;
+  max-width: 100%;
+}
+
+.barradinamicadevidajugador,
+.barraestaticadevida {
+  height: 44px;
+  width: 277px;
+  position: relative;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  display: none;
+}
+
+.barradinamicadevidajugador {
+  height: 37px;
+  width: 269px;
+  background-color: var(--color-mediumseagreen-100);
+}
+
+.porcentajevidajugador {
+  position: relative;
+  font-size: var(--font-size-5xl);
+  display: inline-block;
+  font-family: var(--font-inria-sans);
+  color: var(--color-black);
+  text-align: left;
+  min-width: 56px;
+  z-index: 4;
+}
+
+.barradinamicadevidajugadorParent,
+.playerNameDisplay {
+  flex: 1;
+  border-radius: var(--br-6xl);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.barradinamicadevidajugadorParent {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-9xs) var(--padding-xl);
+  background-color: var(--color-mediumseagreen-100);
+  justify-content: center;
+  z-index: 3;
+}
+
+.barradinamicadevidajugadorParent:hover,
+.enemyHealthDisplay:hover {
+  background-color: var(--color-mediumseagreen-200);
+}
+
+.playerNameDisplay {
+  background-color: var(--color-white);
+  justify-content: flex-start;
+  padding: var(--padding-10xs) var(--padding-9xs) var(--padding-9xs);
+  box-sizing: border-box;
+  min-width: 180px;
+  z-index: 2;
+}
+
+.nombrejugador {
+  position: relative;
+  z-index: 2;
+}
+
+.nombrejugadorWrapper,
+.playerName {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.nombrejugadorWrapper {
+  flex-direction: column;
+  padding: var(--padding-6xs) 0 0;
+}
+
+.playerName {
+  width: 437px;
+  flex-direction: row;
+  gap: var(--gap-2xl);
+  max-width: 100%;
+}
+
+.nombreenemigo {
+  position: relative;
+  z-index: 2;
+}
+
+.enemyName {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-6xs) 0 0;
+}
+
+.barradinamicadevidaenemigo,
+.barraestaticadevida1 {
+  height: 44px;
+  width: 277px;
+  position: relative;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  display: none;
+}
+
+.barradinamicadevidaenemigo {
+  height: 37px;
+  width: 269px;
+  background-color: var(--color-mediumseagreen-100);
+}
+
+.porcentajevidaenemigo {
+  position: relative;
+  font-size: var(--font-size-5xl);
+  display: inline-block;
+  font-family: var(--font-inria-sans);
+  color: var(--color-black);
+  text-align: left;
+  min-width: 56px;
+  z-index: 4;
+}
+
+.enemyHealthDisplay {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-9xs) var(--padding-xl);
+  background-color: var(--color-mediumseagreen-100);
+  flex: 1;
+  border-radius: var(--br-6xl);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 3;
+}
+
+.enemyHealth,
+.enemyInfo,
+.playerInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.enemyHealth {
+  flex: 1;
+  border-radius: var(--br-6xl);
+  background-color: var(--color-white);
+  padding: var(--padding-10xs) var(--padding-9xs) var(--padding-9xs);
+  box-sizing: border-box;
+  min-width: 180px;
+  z-index: 2;
+}
+
+.enemyInfo,
+.playerInfo {
+  width: 463px;
+  gap: var(--gap-mid);
+  max-width: 100%;
+}
+
+.playerInfo {
+  width: 1256px;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+
+.indicadordeturno {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  z-index: 2;
+}
+
+.turnIndicator {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 var(--padding-6xl) 0 var(--padding-xl);
+  text-align: center;
+}
+
+.botonatacar,
+.botonaccion {
+  width: auto;
+  height: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.botonatacar:hover,
+.botonaccion:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(24, 193, 223, 0.8);
+}
+
+.botonatacar:disabled,
+.botonaccion:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.attackButtonImage {
+  max-width: 750px; /* Reduce this value to make the image smaller */
+  max-height: 130px; /* Reduce this value to make the image smaller */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.actionButtonImage {
+  max-width: 130px; /* Ajusta este valor para que todos los botones tengan el mismo ancho */
+  max-height: 130px; /* Ajusta este valor para que todos los botones tengan la misma altura */
+  width: 130px; /* Fuerza un ancho fijo */
+  height: 130px; /* Fuerza una altura fija */
+  object-fit: contain;
+}
+
+
+
+
+
+
+.attackSkillButtons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+
+}
+
+.attackSkillLabels {
+  border-radius: var(--br-xl);
+  background-color: var(--color-gainsboro);
+  flex-direction: row;
+  padding: var(--padding-6xs) var(--padding-56xl);
+  z-index: 2;
+}
+
+.attackSkillButtons {
+  flex-direction: row;
+  padding: 0 var(--padding-mini) 0 0;
+}
+
+.botonhabilidades {
+height: 38px;
+width: 207px;
+font-size: 16px;
+font-weight: bold;
+position: relative;
+background-color: var(--color-gainsboro);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+display: block;
+cursor: pointer;
+border-radius: var(--br-xl);
+flex-direction: row;
+padding: var(--padding-6xs) var(--padding-32xl);
+z-index: 2;
+}
+
+.botonhabilidadesParent {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+
+}
+
+.botonhabilidades:hover {
+  transform: scale(1.1); /* Escala el botón un 10% más grande */
+  box-shadow: 0 0 10px rgba(24, 193, 223, 0.8); /* Añade una sombra roja alrededor */
+  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
+}
+
+.textobotonhabilidades {
+  position: relative;
+  display: inline-block;
+  min-width: 104px;
+  z-index: 3;
+}
+
+.attackSkillButtons1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+
+
+.attackSkillButtons1 {
+  flex-direction: row;
+  padding: 0 var(--padding-mini) 0 0;
+  
+}
+
+
+
+.botonitems {
+height: 38px;
+width: 207px;
+font-size: 16px;
+font-weight: bold;
+position: relative;
+background-color: var(--color-gainsboro);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+display: flex;
+cursor: pointer;
+border-radius: var(--br-xl);
+flex-direction: row;
+border-radius: var(--br-xl);
+  background-color: var(--color-gainsboro);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-6xs) var(--padding-58xl) var(--padding-6xs)
+    var(--padding-59xl);
+  z-index: 2;  z-index: 2;
+}
+
+.botonitems:hover {
+  transform: scale(1.1); /* Escala el botón un 10% más grande */
+  box-shadow: 0 0 10px rgba(24, 193, 223, 0.8); /* Añade una sombra roja alrededor */
+  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
+}
+
+
+
+.cantidadpuntospoder {
+  position: absolute;
+  z-index: 2;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: flex-start;
+}
+
+.powerPoints {
+  position: inherit;
+  padding: var(--padding-6xs) 0 0;
+  color: var(--color-white);
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Espacio uniforme entre todos los botones */
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.gameActions,
+.playerContainer,
+.turnActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.gameActions{
+  margin-top: -20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.turnActions {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-mid);
+}
+
+.gameActions,
+.playerContainer {
+  width: 1256px;
+  flex-direction: row;
+  padding: 0 var(--padding-19xl) 0 var(--padding-16xl);
+  box-sizing: border-box;
+  font-size: var(--font-size-9xl);
+  color: var(--color-mediumseagreen-100);
+}
+
+.playerContainer {
+  display: flex;
+  width: 1525px;
+  border-radius: var(--br-xl);
+  background-color: var(--color-gray);
+  flex-direction: column;
+  align-items: center;
+  padding: var(--padding-20xl) var(--padding-xl) var(--padding-5xl)
+    var(--padding-8xl);
+  gap: var(--gap-52xl);
+  z-index: 1;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inria-sans);
+  padding-bottom: 10px; 
+}
+
+@media screen and (max-width: 1050px) {
+  .actionButtons,
+  .playerInfo {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 725px) {
+  .playerContainer {
+    gap: var(--gap-16xl);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .nombrejugador,
+  .porcentajevidajugador {
+    font-size: var(--font-size-lgi);
+  }
+  .playerName {
+    flex-wrap: wrap;
+  }
+  .nombreenemigo,
+  .porcentajevidaenemigo {
+    font-size: var(--font-size-lgi);
+  }
+  .enemyInfo {
+    flex-wrap: wrap;
+  }
+  .indicadordeturno {
+    font-size: var(--font-size-3xl);
+  }
+  .cantidadpuntospoder,
+  .itemsLabel,
+  .textobotonhabilidades {
+    font-size: var(--font-size-base);
+  }
+  .playerContainer {
+    gap: var(--gap-lg);
+  }
+}
+

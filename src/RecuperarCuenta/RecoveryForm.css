@@ -1,7 +1,7 @@
 
 
 .fondo {
-    background-image: url('../../public/Images/logoInicio.jpeg'); 
+    background-image: url('../assets/Images/logoInicio.jpeg'); 
     background-size: cover; 
     background-position: top; 
     background-repeat: no-repeat;

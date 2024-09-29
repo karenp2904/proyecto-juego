@@ -41,10 +41,11 @@
     cursor: pointer;
     position: absolute; 
     top: 40%; 
-    right: 38%;
+    right: 32%;
     width: 3%; 
     height: 4%; 
     font-weight: bold;
+    padding: 0px;
 }
 
 

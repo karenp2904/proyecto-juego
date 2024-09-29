@@ -46,13 +46,13 @@ const AuctionProductCard: React.FC<AuctionProduct> = ({
                         <div className="bid-info">
                             <span className="label">Oferta actual:</span>
                             <span className="bid-credits">
-                                {currentBid} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                                {currentBid} <img src={require("../../assets/Images/icono-creditos.png")}  alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
                         <div className="buy-info">
                             <span className="label">Venta inmediata:</span>
                             <span className="buy-credits">
-                                {buyNowPrice} <img src="./Images/icono-creditos.png" alt="Moneda" className="coin-icon" />
+                                {buyNowPrice} <img src={require("../../assets/Images/icono-creditos.png")} alt="Moneda" className="coin-icon" />
                             </span>                       
                         </div>
                         <div className="time-info">
