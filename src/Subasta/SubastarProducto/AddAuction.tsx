@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AddAuction.css'
 import Product from '../../types/Product';
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth, useUpdateUserCredits } from "../../hooks/useAuth";
 import { Router } from "../../Router/Router";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -13,6 +13,7 @@ import Environment from "../../shared/Environment";
 const AddAuction: React.FC = () => {
 
     const user = useAuth(s => s.user);
+    useUpdateUserCredits();
 
     const navigate = useNavigate();
 
@@ -99,6 +100,7 @@ const AddAuction: React.FC = () => {
         buyNowPrice: 0,
         auctionEndTime: '',
     });
+    const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
 
     const handleSelectProduct = (product: Product) => {
         setSelectedProduct(product);
@@ -112,7 +114,86 @@ const AddAuction: React.FC = () => {
         });
     };
 
-    const handleAddProduct = () => {
+    async function getCredits(iduser:number){
+        // Realizar una solicitud GET con Axios
+        console.log(iduser + "ksksk")
+        console.log(JSON.stringify({iduser: iduser}))
+
+        const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({iduser: iduser}),
+        });
+    
+        if (response.ok) {
+        
+          const data= await response.json()
+          console.log(data.usuario + 'creditosUser')
+          return data.usuario
+    
+        }else{
+          return null
+        }
+    }
+
+    const changeCredits = async (auctionEndTime: number) => {
+
+        let credits=0
+        if(user){
+           credits = await getCredits(user?.iduser)
+          
+        }
+        let creditsToDeduct = 0;
+      
+     // Determina la cantidad de créditos a restar según los días de subasta
+        if (auctionEndTime === 1) { 
+            creditsToDeduct = 1;  // 1 día => 1 crédito
+        } else if (auctionEndTime === 2) {
+            creditsToDeduct = 3;  // 2 días => 3 créditos
+        } else if (auctionEndTime > 2) {
+            creditsToDeduct = 3 + (auctionEndTime - 2) * 2;  // Cada día adicional suma 2 créditos más
+        }
+
+        // Asegúrate de no tener créditos negativos
+        if(creditsToDeduct>credits){
+            setErrorMessage('No tienes suficientes créditos para la duración de la subasta.');
+            return false
+
+        }else{
+            const updatedCredits = (credits - creditsToDeduct);
+            console.log(Number(user?.iduser), '-',Number(updatedCredits))
+            await setCredits(Number(user?.iduser), Number(updatedCredits))
+            return true
+        }
+  
+    };
+
+    async function setCredits(idUser:number, credits:number){
+        // Realizar una solicitud GET con Axios
+        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ iduser: idUser , credits:credits}),
+        });
+    
+        if (response.ok) {
+            const data = await response.json()
+          console.log(data)
+          return data
+    
+        }else{
+          return null
+        }
+    }
+
+
+    
+
+    const handleAddProduct =async () => {
 
 
         console.log(user?.iduser + '-'+ user?.name)
@@ -126,6 +207,7 @@ const AddAuction: React.FC = () => {
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
 
+            const aprobar= await changeCredits(Number(productToAdd.auctionEndTime))
             // Verifica que el valor inicial sea menor que el valor de compra inmediata
             if (Number(productToAdd.currentBid) >= Number(productToAdd.buyNowPrice)) {
                 setConfirmationMessage('El valor inicial debe ser menor que el valor de compra inmediata');
@@ -137,6 +219,11 @@ const AddAuction: React.FC = () => {
                 setShowConfirmation(true)
 
                 return; // Detiene el envío si no cumple con la validación
+            }else if(!aprobar){
+                setConfirmationMessage('No tiene sufientes créditos');
+                setShowConfirmation(true)
+                return; // Detiene el envío si no cumple con la validación
+
             }
 
             console.log('Producto añadido:', productToAdd);
@@ -219,6 +306,8 @@ const AddAuction: React.FC = () => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
+                                {errorMessage && <p className="error-message">{errorMessage}</p>}
+
 
                                
                                 {showConfirmation && (

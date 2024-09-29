@@ -5,12 +5,35 @@
     "jsx": "react-jsx", // o "react" si es para versiones anteriores de React
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["jest", "node"],
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
     "rootDir": "./src",
-    "outDir": "./build/js"
+    "outDir": "./build/js",
+
+    "resolveJsonModule": true,
+
+
+     /* Bundler mode */
+     "allowImportingTsExtensions": true,
+     "isolatedModules": true,
+     "moduleDetection": "force",
+     "noEmit": true,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /*css*/
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+
+
+
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "eslint.config.js"],
   "exclude": ["node_modules"]
 }

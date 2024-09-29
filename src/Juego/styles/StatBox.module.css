@@ -1,0 +1,50 @@
+.statBox {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 10px 15px;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  top: -140px
+}
+
+.characterInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.name {
+  font-weight: bold;
+  color: #ffd700;
+  font-size: 18px;
+}
+
+.level {
+  color: #00ff00;
+  font-size: 18px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.statLabel {
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.statValue {
+  color: #ffffff;
+}

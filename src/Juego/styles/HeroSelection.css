@@ -1,0 +1,111 @@
+.heroSelectionContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .heroGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .heroCard {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .heroCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .heroCard.selected {
+    background-color: #e0f0ff;
+    border: 2px solid #3498db;
+  }
+  
+  .heroName {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+  
+  .heroInfo p {
+    margin: 0.5rem 0;
+    color: #34495e;
+  }
+  
+  .heroActions {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .actionsTitle {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+  
+  .actionsList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .actionItem {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  .actionItem:last-child {
+    border-bottom: none;
+  }
+  
+  .actionCost {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  
+  .confirmButton {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirmButton:hover:not(:disabled) {
+    background-color: #2980b9;
+  }
+  
+  .confirmButton:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .heroGrid {
+      grid-template-columns: 1fr;
+    }
+  }

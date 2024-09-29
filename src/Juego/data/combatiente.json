@@ -1,0 +1,180 @@
+[
+  {
+    "_id": "64d3402d681948532712a45b",
+    "name": "Taki",
+    "type": "Tanque",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 44,
+    "maxHealth": 44,
+    "defense": 11,
+    "attack": 10,
+    "damage": 200,
+    "experience": 5000,
+    "inventory": [
+      "64d3402d681948532712a45c",
+      "64d3402d681948532712a45d"
+    ],
+    "equippedWeapons": [
+      "64d3402d681948532712a45e",
+      "64d3402d681948532712a45f"
+    ],
+    "equippedArmor": [
+      "64d3402d681948532712a460",
+      "64d3402d681948532712a461",
+      "64d3402d681948532712a462",
+      "64d3402d681948532712a463",
+      "64d3402d681948532712a464",
+      "64d3402d681948532712a465"
+    ],
+    "abilities": [
+      "64d3402d681948532712a466",
+      "64d3402d681948532712a467"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a45z",
+    "name": "Sivel",
+    "type": "Tanque",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 44,
+    "maxHealth": 44,
+    "defense": 11,
+    "attack": 10,
+    "damage": 200,
+    "experience": 5000,
+    "inventory": [
+      "64d3402d681948532712a45c",
+      "64d3402d681948532712a45d"
+    ],
+    "equippedWeapons": [
+      "64d3402d681948532712a45e",
+      "64d3402d681948532712a45f"
+    ],
+    "equippedArmor": [
+      "64d3402d681948532712a460",
+      "64d3402d681948532712a461",
+      "64d3402d681948532712a462",
+      "64d3402d681948532712a463",
+      "64d3402d681948532712a464",
+      "64d3402d681948532712a465"
+    ],
+    "abilities": [
+      "64d3402d681948532712a466",
+      "64d3402d681948532712a467"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a470",
+    "name": "Ragnar",
+    "type": "Armas",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 40,
+    "maxHealth": 40,
+    "defense": 10,
+    "attack": 11,
+    "damage": 180,
+    "experience": 4500,
+    "inventory": [],
+    "equippedWeapons": [],
+    "equippedArmor": [],
+    "abilities": [
+      "64d3402d681948532712a471",
+      "64d3402d681948532712a472",
+      "64d3402d681948532712a473"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a480",
+    "name": "Ignis",
+    "type": "Fuego",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 36,
+    "maxHealth": 36,
+    "defense": 8,
+    "attack": 10,
+    "damage": 160,
+    "experience": 4000,
+    "inventory": [],
+    "equippedWeapons": [],
+    "equippedArmor": [],
+    "abilities": [
+      "64d3402d681948532712a481",
+      "64d3402d681948532712a482",
+      "64d3402d681948532712a483"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a490",
+    "name": "Frostbite",
+    "type": "Hielo",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 36,
+    "maxHealth": 36,
+    "defense": 8,
+    "attack": 10,
+    "damage": 160,
+    "experience": 4000,
+    "inventory": [],
+    "equippedWeapons": [],
+    "equippedArmor": [],
+    "abilities": [
+      "64d3402d681948532712a491",
+      "64d3402d681948532712a492",
+      "64d3402d681948532712a493"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a4a0",
+    "name": "Viper",
+    "type": "Veneno",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 36,
+    "maxHealth": 36,
+    "defense": 8,
+    "attack": 11,
+    "damage": 170,
+    "experience": 4200,
+    "inventory": [],
+    "equippedWeapons": [],
+    "equippedArmor": [],
+    "abilities": [
+      "64d3402d681948532712a4a1",
+      "64d3402d681948532712a4a2",
+      "64d3402d681948532712a4a3"
+    ]
+  },
+  {
+    "_id": "64d3402d681948532712a4b0",
+    "name": "Slash",
+    "type": "Machete",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 36,
+    "maxHealth": 36,
+    "defense": 8,
+    "attack": 11,
+    "damage": 170,
+    "experience": 4200,
+    "inventory": [],
+    "equippedWeapons": [],
+    "equippedArmor": [],
+    "abilities": [
+      "64d3402d681948532712a4b1",
+      "64d3402d681948532712a4b2",
+      "64d3402d681948532712a4b3"
+    ]
+  }
+]

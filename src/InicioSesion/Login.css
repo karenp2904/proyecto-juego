@@ -3,7 +3,7 @@
   background-image: url('../../public/Images/fondo.jpeg'); 
   background-size: cover; 
   background-repeat: no-repeat; 
-  background-position: center center; 
+  background-position: top; 
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;

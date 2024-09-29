@@ -11,6 +11,8 @@ import Inicio from '../Index/Inicio';
 import MainNavBar from '../NavBar/MainNavBar';
 
 
+import Juego from '../Juego/Juego';
+
 // import App from '../AdminInventario/app/App';
 // import InventarioPage from '../AdminInventario/app/pages/admin/inventario/InventarioPage';
 // import NotFoundPage from '../AdminInventario/app/pages/common/NotFoundPage';
@@ -47,8 +49,12 @@ const AppRouter: FC = () => {
           
           <Route path={Router.subasta} element={<Auction />} /> 
           <Route path={Router.subastarProducto} element={<AddAuction />} />    
+
           <Route path={Router.miCuenta} element={<MyAccount />} /> 
         </Route>
+
+        <Route path={Router.juego} element={<Juego />} /> 
+
 
 
 

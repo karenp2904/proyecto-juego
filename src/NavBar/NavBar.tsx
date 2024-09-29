@@ -2,12 +2,14 @@
 import './NavBar.css'
 //import { Link } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { useAuth } from "../hooks/useAuth";
+import { useAuth, useUpdateUserCredits } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Router } from "../Router/Router";
 
 export default function NavBar() {
     const user = useAuth(s => s.user);
+    useUpdateUserCredits();
+
     const navigate = useNavigate();
 
     function verificarUsuarioActivo(){
