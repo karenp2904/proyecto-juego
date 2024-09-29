@@ -51,9 +51,11 @@ const AppRouter: FC = () => {
           <Route path={Router.subastarProducto} element={<AddAuction />} />    
 
           <Route path={Router.miCuenta} element={<MyAccount />} /> 
+
+          <Route path={Router.juego} element={<Juego />} /> 
+
         </Route>
 
-        <Route path={Router.juego} element={<Juego />} /> 
 
 
 
