@@ -9,7 +9,7 @@ import MyAccount from '../MiCuenta/MyAccount';
 import Register from '../Registro/Register';
 import Inicio from '../Index/Inicio';
 import MainNavBar from '../NavBar/MainNavBar';
-
+import ItemBag from '../LobbyBolsa/ItemBag';
 
 import Juego from '../Juego/Juego';
 
@@ -52,7 +52,10 @@ const AppRouter: FC = () => {
 
           <Route path={Router.miCuenta} element={<MyAccount />} /> 
 
+          <Route path={Router.bolsa} element={<ItemBag />} /> 
+
           <Route path={Router.juego} element={<Juego />} /> 
+
 
         </Route>
 

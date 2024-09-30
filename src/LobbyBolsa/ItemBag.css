@@ -1,0 +1,163 @@
+/* Contenedor principal para dividir la pantalla en dos secciones */
+.fondoBag{
+    display: flex;
+    background-image: url(../assets/Images/fondoBolsa.jpeg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    margin: 0%;
+}
+
+.inventory-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 5%;
+    max-width: 90%;
+    max-height: 80%;
+    background-color: rgba(155, 153, 235, 0.5);
+}
+
+
+/* Sección de productos seleccionados a la derecha */
+.selected-section {
+    width: 35%; /* Ocupa el 35% del ancho */
+    padding-left: 20px;
+}
+
+/* Estilos del título */
+.inventory-title, .selected-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+    
+}
+
+/* Sección del inventario a la izquierda */
+.inventory-section {
+    display: flex;
+    flex-direction: column;
+    width: 60%; /* Ocupa el 60% del ancho */
+    padding-right: 20px;
+    border-right: 2px solid #ccc;
+    height: 500px; /* Altura fija para el contenedor del inventario */
+    overflow-y: auto; /* Activa el scroll si el contenido excede la altura */
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #15055a #304156; /* Colores para Firefox */
+}
+
+/* Estilos adicionales para las barras de desplazamiento en Chrome, Edge y Safari */
+.inventory-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.inventory-section::-webkit-scrollbar-thumb {
+    background-color: #B29053; /* Color del scroll */
+    border-radius: 10px;
+}
+
+.inventory-section::-webkit-scrollbar-track {
+    background-color: #2C2F33; /* Color del fondo del scroll */
+}
+
+/* Grid de armas en inventario */
+.weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+    gap: 15px;
+}
+
+/* Estilos de cada tarjeta de arma */
+.weapon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.weapon-card:hover {
+    transform: scale(1.05);
+}
+
+.weapon-selected {
+    border-color: #28a745; /* Color verde para los seleccionados */
+}
+
+
+.weapon-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.weapon-name {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Grid para los productos seleccionados */
+.selected-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para cada producto seleccionado */
+.selected-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    background-color: #eef2f5;
+    border-radius: 10px;
+}
+
+.selected-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-bottom: 5px;
+    border-radius: 50%;
+}
+
+.selected-name {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Botón para guardar selección */
+.action-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #143559;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #5081b7;
+}
+
+.action-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
