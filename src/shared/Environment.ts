@@ -8,7 +8,7 @@ export default class Environment{
     }
     
     public static readonly getDomainInventory=(): string =>{
-        const PORT= process.env['PORT'] ?? 4000
+        const PORT= process.env['PORT'] ?? 5000
         const HOST= process.env['HOST'] ?? 'localhost'
         const PROTOCOL= process.env['PROTOCOL'] ?? 'http'
 

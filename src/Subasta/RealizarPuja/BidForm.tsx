@@ -68,19 +68,29 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                     }else{
                         console.log(`Oferta enviada: ${bidAmount}`);
                         const idAuction= product.idAuction              
-                    
-                        axios.post(`${Environment.getDomain()}/api/.... `,{ idAuction, bidAmount  }).then(response =>{
-                            if (response.data.answer){
-                                //setShowConfirmation(true)
+
+                        console.log( user.iduser, '-',product.idAuction,'-', bidAmount )
+                          // Realizar una solicitud GET con Axios
+                            const response = await fetch(`${Environment.getDomain()}/api/new/bid`, {
+                                method: 'POST',
+                                headers: {
+                                'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ iduser: user.iduser, idauction: product.idAuction, bidAmount: bidAmount }),
+                            });
+
+
+                            if (response.ok) {
+                                const data = await response.json();
                                 setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
-        
+                                setShowConfirmation(true);
+                            } else {
+                                const errorData = await response.json();
+                                console.log('Error:', errorData);
                             }
-                        })
-                        setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
+                            
+                        }
         
-                     
-                        setShowConfirmation(true)
-                    }
     
                 } else {
                     console.log('Por favor, ingresa un valor de oferta.');
