@@ -45,6 +45,7 @@ function Login() {
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
+          setCredits(data.usuario.iduser,200)
           navigate(Router.inicio);
   
           //const usuarioJSON = JSON.stringify(data.usuario);
@@ -58,6 +59,27 @@ function Login() {
       console.error('Error en la solicitud de inicio de sesión:', error);
     }
   };
+
+  
+  async function setCredits(idUser:number, credits:number){
+    // Realizar una solicitud GET con Axios
+    const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ iduser: idUser , credits:credits}),
+    });
+
+    if (response.ok) {
+      console.log(await response.json())
+      return await response.json()
+
+    }else{
+      return null
+   }
+  }
+
 
  
 
