@@ -9,6 +9,7 @@ import MyAccount from '../MiCuenta/MyAccount';
 import Register from '../Registro/Register';
 import Inicio from '../Index/Inicio';
 import MainNavBar from '../NavBar/MainNavBar';
+import Juego from '../Juego/Juego';
 
 
 // import App from '../AdminInventario/app/App';
@@ -47,7 +48,8 @@ const AppRouter: FC = () => {
           <Route path={Router.inicio} element={<Inicio />} />
           <Route path={Router.subasta} element={<Auction />} /> 
           <Route path={Router.subastarProducto} element={<AddAuction />} />    
-          <Route path={Router.miCuenta} element={<MyAccount />} /> 
+          <Route path={Router.miCuenta} element={<MyAccount />} />
+          <Route path={Router.juego} element={<Juego />} />
         </Route>
 
 

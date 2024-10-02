@@ -9,7 +9,7 @@ import Inventario from './components/Inventario';
 import styles from './styles/App.module.css';
 import Combatiente from './interfaces/Combatiente';
 
-const App: React.FC = () => {
+const Juego: React.FC = () => {
   const [gameState, setGameState] = useState<'lobby' | 'playing'>('lobby');
   const [selectedHero, setSelectedHero] = useState<Combatiente | null>(null);
   const [selectedHeroId, setSelectedHeroId] = useState<string>('');
@@ -51,4 +51,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Juego;

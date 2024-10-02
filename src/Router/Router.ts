@@ -7,7 +7,8 @@ export const Router = {
     "miCuenta": "/Usuario/MiCuenta",
     "subasta": "/Subasta",
     "subastarProducto": "/Subasta/NuevoProducto",
-    "inicio": "/Inicio"
+    "inicio": "/Inicio",
+    "juego": "/Juego"
      /*
     "lobby":'/lobby' ,
     "crearpartida":'/crearpartida' ,

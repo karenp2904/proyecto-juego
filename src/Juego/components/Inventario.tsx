@@ -5,7 +5,7 @@ import Combatiente from '../interfaces/Combatiente';
 
 
 // Importaciones de imágenes (asumimos que ya existen)
-import AtaduraCarmesi from '../asset/AtaduraCarmesi.png';
+import AtaduraCarmesi from '../assets/AtaduraCarmesi.png';
 import CaidaDeFuego from '../assets/CaidaDeFuego.png';
 import CoronaDeHielo from '../assets/CoronaDeHielo.png';
 import DefensaDelEnfurecido from '../assets/DefensaDelEnfurecido.png';

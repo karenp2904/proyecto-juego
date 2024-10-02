@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import background from "src/Juego/assets/dungeon-background.png"; //../assets/dungeon-background.png
+import background from "../assets/dungeon-background.png"; //src/Juego/assets/dungeon-background.png
 import Button from '../components/Button';
 import "../styles/CrearPartida.css";
 
