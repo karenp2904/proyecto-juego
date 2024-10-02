@@ -9,7 +9,8 @@ export const Router = {
     "subastarProducto": "/Subasta/NuevoProducto",
     "inicio": "/Inicio",
     "juego": "/Juego",
-    "bolsa": "/bolsa"
+    "bolsa": "/bolsa",
+    "inventario":"/inventario"
      /*
     "lobby":'/lobby' ,
     "crearpartida":'/crearpartida' ,

@@ -1,0 +1,285 @@
+@font-face {
+  font-family: 'OCR A';
+  src: url('../../public/fonts/OCRAEXT.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-image: url('../../public/backgroundC.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  overflow: hidden;
+  font-family: "OCR A", monospace;
+}
+
+.container_inv {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5px;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.section1, .section3 {
+  background-color: rgba(217, 217, 217, 0.7);
+  padding: 10px;
+  margin: 0 15px;
+  display: grid;
+}
+
+.section1 {
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+.estadisticas, .habilidades {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.estadisticas h1, .habilidades h1, .section3 h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.boxestadisticas, .epic-ability {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.section2 {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.sub-section1 {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  margin: 5px 0;
+  text-align: center;
+}
+
+/* Estilo del contenedor principal de los héroes */
+.hero-container {
+  display: flex;
+  justify-content: space-around; /* Distribuye las tarjetas de manera uniforme */
+  align-items: center; /* Alinea verticalmente al centro */
+  margin: 0 auto; /* Centra el contenedor en la página */
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 10px; /* Espacio interno alrededor de las tarjetas */
+}
+
+
+/* Estilo para el título de Héroes */
+.heroes-title {
+  font-size: 24px; /* Tamaño de letra más grande */
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+/* Tarjetas de Héroes */
+.hero-card {
+  width: 122px;
+  height: 196px;
+  background-color: #c9b9b9;
+  border: 2px solid black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ajusta la imagen de los héroes */
+.hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen se ajuste bien */
+}
+
+
+.sub-section2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 10px;
+  box-sizing: border-box;
+  place-items: center;
+}
+
+.sub-sub-section1, .sub-sub-section3 {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.containerC {
+  width: 85%;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px;
+  place-items: center;
+}
+
+.cuadrado {
+  background-color: #D9D9D9;
+  border: 2px solid;
+  width: 53px;
+  height: 53px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mvr {
+  justify-self: right;
+}
+
+.mvl {
+  justify-self: left;
+}
+
+.section3 {
+  place-items: center;
+  grid-template-rows: auto auto auto auto auto;
+}
+
+.inventory-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.inventory-pagination button {
+  background-color: #D9D9D9;
+  border: 1px solid #000;
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-family: "OCR A", monospace;
+}
+
+.inventory-pagination span {
+  font-size: 18px;
+}
+
+.inventario, .bolsa {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.over {
+  background-color: #ff0000;
+}
+
+.habilidades {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.epic-ability {
+  font-size: 16px;
+  color: #333;
+}
+
+.draggable {
+  width: 90%;
+  height: 90%;
+  background-color: #ff9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: move;
+}
+
+.hero-selection {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.hero-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.hero-option:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hero-option.selected {
+  border-color: #ffcc00;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-option img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.hero-option span {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.no-hero-selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 190px;
+  height: 190px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px dashed #ccc;
+  color: #ccc;
+  font-size: 18px;
+  text-align: center;
+}
+
+.ObjDetalle {
+  display: none;
+  position: absolute;
+  width: 353px;
+  height: 616px;
+  left: 0px;
+  top: 0px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../../public/Designer.jpeg);
+  background-size: cover; /* La imagen cubre todo el área del contenedor */
+  background-position: 45% 60%; /* Desplaza la imagen 40% hacia la derecha y 60% hacia abajo */
+}
+
+
+
+
