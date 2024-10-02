@@ -1,0 +1,39 @@
+{
+    "Tanque": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [40, 0, 5, 0, 5, 50],
+      "cantidad_filas": [32000, 0, 4000, 0, 4000, 40000],
+      "efectos_daño": ["100%", "n/a", "80%", "n/a", "20%", "0%"]
+    },
+    "Armas": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [60, 5, 3, 0, 2, 30],
+      "cantidad_filas": [48000, 4000, 2400, 0, 1600, 24000],
+      "efectos_daño": ["100%", "120%-180%", "80%", "n/a", "20%", "0%"]
+    },
+    "Fuego": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [70, 5, 0, 5, 0, 20],
+      "cantidad_filas": [56000, 4000, 0, 4000, 0, 16000],
+      "efectos_daño": ["100%", "120%-180%", "n/a", "60%", "n/a", "0%"]
+    },
+    "Hielo": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [70, 6, 0, 4, 0, 20],
+      "cantidad_filas": [56000, 4800, 0, 3200, 0, 16000],
+      "efectos_daño": ["100%", "120%-180%", "n/a", "60%", "n/a", "0%"]
+    },
+    "Veneno": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [55, 10, 0, 0, 0, 35],
+      "cantidad_filas": [44000, 8000, 0, 0, 0, 28000],
+      "efectos_daño": ["100%", "120%-180%", "n/a", "n/a", "n/a", "0%"]
+    },
+    "Machete": {
+      "efectos": ["causar daño", "causar daño crítico", "evaden el golpe", "resisten el golpe", "escapan al golpe", "no causar daño"],
+      "porcentajes": [60, 8, 0, 0, 2, 30],
+      "cantidad_filas": [48000, 6400, 0, 0, 1600, 24000],
+      "efectos_daño": ["100%", "120%-180%", "n/a", "n/a", "20%", "0%"]
+    }
+  }
+  

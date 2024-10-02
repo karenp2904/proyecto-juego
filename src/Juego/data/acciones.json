@@ -1,0 +1,207 @@
+[
+  {
+    "_id": "64d3402d681948532712a466",
+    "name": "Shield Throw",
+    "heroType": "Tanque",
+    "minLevel": 5,
+    "powerCost": 2,
+    "effects": {
+      "increaseAttack": 2
+    },
+    "cooldown": 25
+  },
+  {
+    "_id": "64d3402d681948532712a467",
+    "name": "Mano de piedra",
+    "heroType": "Tanque",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseDefense": 12
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a468",
+    "name": "Defensa feroz",
+    "heroType": "Tanque",
+    "minLevel": 8,
+    "powerCost": 6,
+    "effects": {
+      "immuneToPhysicalDamage": true,
+      "magicDamageReduction": "3d6"
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a471",
+    "name": "Embate sangriento",
+    "heroType": "Armas",
+    "minLevel": 2,
+    "powerCost": 4,
+    "effects": {
+      "increaseAttack": 2,
+      "increaseDamage": 1
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a472",
+    "name": "Lanza de los dioses",
+    "heroType": "Armas",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseDamage": 2
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a473",
+    "name": "Golpe de tormenta",
+    "heroType": "Armas",
+    "minLevel": 8,
+    "powerCost": 6,
+    "effects": {
+      "increaseAttack": "3d6",
+      "increaseDamage": 2
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a481",
+    "name": "Misiles de magma",
+    "heroType": "Fuego",
+    "minLevel": 2,
+    "powerCost": 2,
+    "effects": {
+      "increaseAttack": 1,
+      "increaseDamage": 2
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a482",
+    "name": "Vulcano",
+    "heroType": "Fuego",
+    "minLevel": 8,
+    "powerCost": 6,
+    "effects": {
+      "increaseAttack": 3,
+      "increaseDamage": "3d9"
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a483",
+    "name": "Pared de fuego",
+    "heroType": "Fuego",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseAttack": 1,
+      "returnDamage": "0dx"
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a491",
+    "name": "Lluvia de hielo",
+    "heroType": "Hielo",
+    "minLevel": 2,
+    "powerCost": 2,
+    "effects": {
+      "increaseAttack": 2,
+      "increaseDamage": 2
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a492",
+    "name": "Cono de hielo",
+    "heroType": "Hielo",
+    "minLevel": 8,
+    "powerCost": 6,
+    "effects": {
+      "increaseDamage": 2,
+      "decreaseEnemyAttack": {
+        "amount": "1d3",
+        "duration": 2
+      }
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a493",
+    "name": "Bola de hielo",
+    "heroType": "Hielo",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseAttack": 2,
+      "decreaseEnemyDamage": "0d4"
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4a1",
+    "name": "Flor de loto",
+    "heroType": "Veneno",
+    "minLevel": 2,
+    "powerCost": 2,
+    "effects": {
+      "increaseDamage": "4d8"
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4a2",
+    "name": "Agonía",
+    "heroType": "Veneno",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseDamage": "2d9",
+      "increaseAttack": {
+        "amount": 1,
+        "duration": 2
+      }
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4a3",
+    "name": "Piquete",
+    "heroType": "Veneno",
+    "minLevel": 8,
+    "powerCost": 4,
+    "effects": {
+      "increaseDamage": {
+        "amount": 2,
+        "duration": 1
+      }
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4b1",
+    "name": "Cortada",
+    "heroType": "Machete",
+    "minLevel": 2,
+    "powerCost": 2,
+    "effects": {
+      "increaseDamage": {
+        "amount": 2,
+        "duration": 2
+      }
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4b2",
+    "name": "Machetazo",
+    "heroType": "Machete",
+    "minLevel": 5,
+    "powerCost": 4,
+    "effects": {
+      "increaseDamage": "2d8",
+      "increaseAttack": 1
+    }
+  },
+  {
+    "_id": "64d3402d681948532712a4b3",
+    "name": "Planazo",
+    "heroType": "Machete",
+    "minLevel": 8,
+    "powerCost": 4,
+    "effects": {
+      "increaseAttack": "2d8",
+      "increaseDamage": 1
+    }
+  }
+]

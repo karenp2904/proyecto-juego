@@ -1,0 +1,73 @@
+.main-container {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 12px;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 56rem;
+}
+
+.back-arrow {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
+.back-arrow img {
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.table-container {
+  width: 100%;
+}
+
+.table-header {
+  background-color: rgba(31, 41, 55, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.table-body {
+  background-color: rgba(17, 24, 39, 0.7);
+  color: white;
+  padding: 0.5rem 2rem;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.header-row, .table-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+.table-row {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #4B5563;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+/* You may need to add styles for the Button component if it's not already styled */
