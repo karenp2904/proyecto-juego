@@ -74,7 +74,7 @@ const RecoveryForm: React.FC = () => {
             <div className="recovery-container">
                 <form className="recovery-form" onSubmit={handleSubmit}>
                     <h2 className="recovery-title">Recuperación de Cuenta</h2>
-                    <div className="questionsInput">
+                    <div className="questionsInput-3">
                         <input
                             type="text"
                             name="securityQuestion1"

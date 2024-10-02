@@ -10,3 +10,20 @@
     padding: 0;
     overflow: hidden; 
 }
+
+
+@media (max-width: 768px) {
+    .registro-container {
+        background-size: contain; /* Ajusta el fondo */
+        flex-direction: column; /* Apila el contenido verticalmente */
+    }
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+    .registro-container {
+        background-size: cover; /* Asegura que el fondo cubra la pantalla */
+        padding: 10px; /* Añade algo de espacio en pantallas pequeñas */
+        height: auto; /* Permite que la altura se ajuste al contenido */
+    }
+}

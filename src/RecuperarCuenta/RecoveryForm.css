@@ -44,7 +44,13 @@
     width: 90%;
     
 }
-
+.questionsInput-3 {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 .form-control {
     width: 100%;
     margin: 10px 0;
