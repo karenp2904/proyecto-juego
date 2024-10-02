@@ -6,6 +6,7 @@
    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["jest","node"],
     "rootDir": "./src",  
