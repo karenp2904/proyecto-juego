@@ -27,15 +27,15 @@ const Auction: React.FC = () => {
             // Mapea los datos a la interfaz `AuctionProduct`
             const mappedData: AuctionProduct[] = data.map((item: any) => ({
 
-                idAuction: item.idauction.toString(),
+                idAuction: item.id,
                 idProduct: item.idproduct?.toString() || '',
                 name: item.name,
                 description: item.description,
-                imageUrl: item.image,
-                initialAmount: item.initialAmount ? parseFloat(item.initialAmount) : 0,
-                currentBid: parseFloat(item.current_bid),
-                buyNowPrice: parseFloat(item.buy_now_price),
-                auctionEndTime: new Date(item.end_time).getTime()
+                imageUrl: item.imageUrl,
+                initialAmount: item.currentBid ? parseFloat(item.initialAmount) : 0,
+                currentBid: parseInt(item.currentBid),
+                buyNowPrice: parseInt(item.buyNowPrice),
+                auctionEndTime:(item.auctionEndTime)
             }));
     
             console.log(mappedData);  // Aquí puedes utilizarlo según tu lógica

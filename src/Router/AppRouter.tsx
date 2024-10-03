@@ -29,20 +29,18 @@ import Juego from '../Juego/Juego';
 // import UnirseapartidaPage from '../AdminInventario/app/pages/user/UnirseAPartidaCreada/UnirseAPartidaPage';
 
 const AppRouter: FC = () => {
-  const basename = process.env.REACT_APP_BASE_URL || '/';
+  const basename = process.env.REACT_APP_BASE_URL || "/";
 
   return (
     <BrowserRouter basename={basename}>
       <Routes>
-   
-        <Route path={Router.login} element={<Login />} />     
-        <Route path='/' element={<Login />} />     
+        <Route path={Router.login} element={<Login />} />
+        <Route path="/" element={<Login />} />
 
-        <Route path={Router.registro} element={<Register />} />   
-        
-        <Route path={Router.recuperarCuenta} element={<RecoveryForm />} />   
+        <Route path={Router.registro} element={<Register />} />
 
-        
+        <Route path={Router.recuperarCuenta} element={<RecoveryForm />} />
+        <Route path={Router.inicio} element={<Inicio />} />
 
         <Route element={<MainNavBar />}>
           <Route path={Router.inicio} element={<Inicio />} />
@@ -51,21 +49,14 @@ const AppRouter: FC = () => {
           <Route path={Router.miCuenta} element={<MyAccount />} />
           <Route path={Router.juego} element={<Juego />} />
         </Route>
-
-
-
-
       </Routes>
-
     </BrowserRouter>
   );
 };
 
-
 export default AppRouter;
 
-
-  /* <Route element={<App />}>
+/* <Route element={<App />}>
   
         <Route element={<NavBar />}>
          

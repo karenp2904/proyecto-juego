@@ -4,10 +4,15 @@ import { Router } from "../Router/Router";
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Environment from "../shared/Environment";
+import ConfirmationPanel from '../Subasta/Confirmacion/ConfirmationPanel';
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationMessage, setConfirmationMessage]= useState('');
   
   const navigate = useNavigate();
   const auth = useAuth(s => s.auth);
@@ -45,6 +50,7 @@ function Login() {
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
+          setCredits(data.usuario.iduser,200)
           navigate(Router.inicio);
   
           //const usuarioJSON = JSON.stringify(data.usuario);
@@ -52,12 +58,35 @@ function Login() {
         
         } 
       } else {
+        setConfirmationMessage('Las credenciales de su usuario no coinciden, intente de nuevo');
+        setShowConfirmation(true)
         console.error('Error en la solicitud de inicio de sesión:', response.statusText);
       }
     } catch (error) {
       console.error('Error en la solicitud de inicio de sesión:', error);
     }
   };
+
+  
+  async function setCredits(idUser:number, credits:number){
+    // Realizar una solicitud GET con Axios
+    const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ iduser: idUser , credits:credits}),
+    });
+
+    if (response.ok) {
+      
+      return await response.json()
+
+    }else{
+      return null
+   }
+  }
+
 
  
 
@@ -67,7 +96,7 @@ function Login() {
         <form onSubmit={handleLogin}>
           <div className="logo-container">
             <h1 className="INICIO">INICIO DE SESIÓN</h1>
-            <img className="logo" src="./Images/LOGO.PNG" alt="Logo" />
+            <img className="logo" src={require("../assets/Images/logo.png")}  alt="Logo" /> 
           </div>
           <label htmlFor="username" className="text">USUARIO / CORREO ELECTRÓNICO</label>
           <input
@@ -93,7 +122,23 @@ function Login() {
           <a href="/RecuperarCuenta">¿Has olvidado tu contraseña? Recupérala</a>
           <a href="/Registro">¿No estás registrado? Regístrate</a>
         </div>
+
+
+     
+        {showConfirmation && (
+          
+            <ConfirmationPanel 
+                type={`Credenciales incorrectas`} 
+                message={confirmationMessage}
+                onClose={() => setShowConfirmation(false)} // Cierra el panel
+            />
+           
+        )}
+      
+        
       </div>
+
+     
     </div>
   );
 }
