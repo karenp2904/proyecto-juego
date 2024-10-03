@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import background from "../assets/dungeon-background.png"; //src/Juego/assets/dungeon-background.png
 import Button from '../components/Button';
 import "../styles/CrearPartida.css";
+import { Router } from '../../Router/Router';
 
 interface ICrearPartidaPageProps {}
 
@@ -10,11 +11,11 @@ const CrearPartidaPage: React.FunctionComponent<ICrearPartidaPageProps> = (props
   const navigate = useNavigate();
 
   const handleNavigateToCrearPartida= () => {
-    navigate('/modosdejuego')
+    navigate(Router.modosdejuego)
   };
 
   const handleNavigateToUnirseAPartida = () => {
-    navigate('/unirseapartida');
+    navigate(Router.crearpartida);
   };
 
   return (
