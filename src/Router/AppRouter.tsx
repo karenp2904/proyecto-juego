@@ -1,18 +1,16 @@
-import { FC } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../InicioSesion/Login";
-import AddAuction from "../Subasta/SubastarProducto/AddAuction";
-import { Router } from "./Router";
-import Auction from "../Subasta/Auction";
-import RecoveryForm from "../RecuperarCuenta/RecoveryForm";
-import MyAccount from "../MiCuenta/MyAccount";
-import Register from "../Registro/Register";
-import Inicio from "../Index/Inicio";
-import MainNavBar from "../NavBar/MainNavBar";
-import ItemBag from "../LobbyBolsa/ItemBag";
+import { FC } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from '../InicioSesion/Login'; 
+import AddAuction from '../Subasta/SubastarProducto/AddAuction';
+import { Router } from './Router';
+import Auction from '../Subasta/Auction';
+import RecoveryForm from '../RecuperarCuenta/RecoveryForm';
+import MyAccount from '../MiCuenta/MyAccount';
+import Register from '../Registro/Register';
+import Inicio from '../Index/Inicio';
+import MainNavBar from '../NavBar/MainNavBar';
+import Juego from '../Juego/Juego';
 
-import Juego from "../Juego/Juego";
-import Inventario from "../inventario/Inventario";
 
 // import App from '../AdminInventario/app/App';
 // import InventarioPage from '../AdminInventario/app/pages/admin/inventario/InventarioPage';
@@ -45,15 +43,10 @@ const AppRouter: FC = () => {
         <Route path={Router.inicio} element={<Inicio />} />
 
         <Route element={<MainNavBar />}>
-          <Route path={Router.subasta} element={<Auction />} />
-          <Route path={Router.subastarProducto} element={<AddAuction />} />
-
+          <Route path={Router.inicio} element={<Inicio />} />
+          <Route path={Router.subasta} element={<Auction />} /> 
+          <Route path={Router.subastarProducto} element={<AddAuction />} />    
           <Route path={Router.miCuenta} element={<MyAccount />} />
-
-          <Route path={Router.inventario} element={<Inventario />} />
-
-          <Route path={Router.bolsa} element={<ItemBag />} />
-
           <Route path={Router.juego} element={<Juego />} />
         </Route>
       </Routes>

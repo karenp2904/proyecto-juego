@@ -1,4 +1,4 @@
-import { FunctionComponent, Dispatch, SetStateAction, useState, useEffect, MouseEvent  } from "react";
+import { FunctionComponent, Dispatch, SetStateAction, useState, useEffect, MouseEvent, useRef    } from "react";
 import styles from "../styles/PlayerContainer.module.css";
 import Acciones from "../interfaces/Acciones";
 import Combatiente from "../interfaces/Combatiente";
@@ -7,6 +7,8 @@ import combatienteData from '../data/combatiente.json';
 import accionesData from '../data/acciones.json';
 import efectosHeroeData from '../data/Efectosheroe.json'
 import EfectosHeroe from "../interfaces/EfectosHeroe";
+import { useNavigate } from 'react-router-dom';
+
 
 
 type PlayerContainerProps = {
@@ -19,6 +21,10 @@ type PlayerContainerProps = {
   setEnemigo: Dispatch<SetStateAction<Combatiente | null>>;
   isOpponentSelected: boolean;
   onTurnEnd: () => void;
+  selectedHeroId: string; // Nuevo prop para recibir el ID del héroe seleccionado
+  onExitGame: () => void; // New prop for handling exit game action
+
+  
   
 
 
@@ -32,8 +38,6 @@ type ActionMessageType = {
 
 
 // IDs de combatientes
-const JUGADOR_ID = "64d3402d681948532712a45b";
-const ENEMIGO_ID = "64d3402d681948532712a45z";
 
 const TURN_TIME = 120; // 120 seconds per turn
 
@@ -47,15 +51,22 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   setJugador,
   setEnemigo,
   isOpponentSelected,
-  onTurnEnd
+  onTurnEnd,
+  selectedHeroId, // Nuevo prop
+  onExitGame // Add this new prop
+
 
 
 }) => {
 
+  
+
   const [habilidades, setHabilidades] = useState<Acciones[]>([]);
   const [showSkills, setShowSkills] = useState(false);
   const [isJugadorTurn, setIsJugadorTurn] = useState(true);
-  const [powerPointsLeft, setPowerPointsLeft] = useState<number>(0); // Estado para los puntos de poder restantes
+  const [powerPointsLeft, setPowerPointsLeft] = useState<number>(jugador?.powerPoints || 0); // Estado para los puntos de poder restantes
+  const lastPowerPointsRef = useRef<number>(0);
+  const powerPointsRef = useRef<number>(0);
   const [gameOver, setGameOver] = useState(false); // Estado para verificar si el juego ha terminado
   const [habilitado, setHabilitado] = useState(true);
   const [efectosTemporales, setEfectosTemporales] = useState<{ [key: string]: number }>({});
@@ -66,23 +77,90 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [actionUsed, setActionUsed] = useState(false);
   const [shieldThrowUsed, setShieldThrowUsed] = useState(false);
   const [currentEffects, setCurrentEffects] = useState<{ [key: string]: number }>({});
+  const [effectsTimer, setEffectsTimer] = useState<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
+
+
+
   
+const getSelectedHeroId = () => {
+  return selectedHeroId;
+};
 
-  useEffect(() => {
-    const jugadorData = combatienteData.find(c => c._id === JUGADOR_ID) || null;
-    const enemigoData = combatienteData.find(c => c._id === ENEMIGO_ID) || null;
+const [equippedItems, setEquippedItems] = useState<Combatiente['equippedItems']>({
+  armor1: null,
+  armor2: null,
+  weapon: null
+});
 
-    if (jugadorData) {
-      setJugador(jugadorData);
-      setJugadorVidaActual(jugadorData.health);
-      setPowerPointsLeft(jugadorData.powerPointsLeft);
-      setOriginalStats({ attack: jugadorData.attack, defense: jugadorData.defense });
+
+const JUGADOR_ID = "64d3402d681948532712a480";
+const ENEMIGO_ID = "64d3402d681948532712a45z";
+
+console.log("PlayerContainer renderizando. selectedHeroId:", selectedHeroId);
+
+useEffect(() => {
+  if (selectedHeroId) {
+    const selectedHero = combatienteData.find(c => c._id === selectedHeroId) as Combatiente | undefined;
+    if (selectedHero) {
+      const updatedHero: Combatiente = {
+        ...selectedHero,
+        equippedItems: selectedHero.equippedItems || { armor1: null, armor2: null, weapon: null }
+      };
+      setJugador(updatedHero);
+      setJugadorVidaActual(updatedHero.health);
+      setPowerPointsLeft(updatedHero.powerPointsLeft);
+      setEquippedItems(updatedHero.equippedItems);
+      setOriginalStats({ 
+        attack: updatedHero.attack, 
+        defense: updatedHero.defense 
+      });
+
+      // Filtramos y mapeamos habilidades
+      const habilidadesData = accionesData
+        .filter(a => a.heroType === updatedHero.type && updatedHero.level >= a.minLevel)
+        .map(habilidad => ({
+          ...habilidad,
+          effects: Object.fromEntries(
+            Object.entries(habilidad.effects).filter(([, value]) => value !== undefined)
+          )
+        }));
+
+      setHabilidades(habilidadesData);
     }
+  }
+}, [selectedHeroId, setJugador]);
 
-    if (enemigoData) {
-      setEnemigo(enemigoData);
-    }
-  }, []);
+const updateHeroStats = () => {
+  if (jugador) {
+    let totalAttack = jugador.attack;
+    let totalDefense = jugador.defense;
+    let totalHealth = jugador.health;
+
+    Object.values(equippedItems).forEach(item => {
+      if (item) {
+        totalAttack += item.effects.attack || 0;
+        totalDefense += item.effects.defense || 0;
+        totalHealth += item.effects.health || 0;
+      }
+    });
+
+    const updatedJugador: Combatiente = {
+      ...jugador,
+      attack: totalAttack,
+      defense: totalDefense,
+      health: totalHealth,
+      equippedItems
+    };
+
+    setJugador(updatedJugador);
+    setJugadorVidaActual(totalHealth);
+  }
+};
+
+useEffect(() => {
+  updateHeroStats();
+}, [equippedItems]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -138,29 +216,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   }, [jugador?.health, enemigo?.health, gameOver]);
 
 
-  useEffect(() => {
-    const jugadorData = combatienteData.find(c => c._id === JUGADOR_ID) || null;
-    const enemigoData = combatienteData.find(c => c._id === ENEMIGO_ID) || null;
-
-    if (jugadorData) {
-      setJugador(jugadorData);
-      // Filtramos y mapeamos habilidades
-      const habilidadesData = accionesData
-  .filter(a => a.heroType === jugadorData.type && jugadorData.level >= a.minLevel)
-  .map(habilidad => ({
-    ...habilidad,
-    effects: Object.fromEntries(
-      Object.entries(habilidad.effects).filter(([, value]) => value !== undefined) // Cambiado _ a key
-    )
-  }));
-
-      setHabilidades(habilidadesData);
-    }
-
-    if (enemigoData) {
-      setEnemigo(enemigoData);
-    }
-  }, []);
+ 
 
   const calcularAtaque = (combatiente: Combatiente): number => {
     let dado: number;
@@ -380,17 +436,17 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
 
   const resetearEfectos = () => {
     if (jugador && originalStats && jugadorVidaActual !== null) {
-      const updatedJugador = { 
+      const updatedJugador = {
         ...jugador,
         attack: originalStats.attack,
         defense: originalStats.defense,
-        health: jugadorVidaActual // Mantener la vida actual
-
+        health: jugadorVidaActual
       };
       
       setJugador(updatedJugador);
       setCurrentEffects({});
       setEfectosTemporales({});
+      updateHeroStats();
     }
   };
 
@@ -503,6 +559,7 @@ const iniciarTurnoJugador = () => {
 };
 
 
+
   
 
   const getBarraVidaStyle = (health: number, maxHealth: number) => {
@@ -531,6 +588,27 @@ const iniciarTurnoJugador = () => {
   const getJugadorVidaActual = (): number => {
     return jugadorVidaActual !== null ? jugadorVidaActual : (jugador?.health || 0);
   };
+
+  const handleSurrender = () => {
+    if (jugador) {
+      setJugador(prevJugador => {
+        if (prevJugador) {
+          return { ...prevJugador, health: 0 };
+        }
+        return prevJugador;
+      });
+      setGameOver(true);
+      onActionMessage({
+        message: "¡Te has rendido! La batalla ha terminado.",
+        defenderType: null
+      });
+    }
+  };
+
+  const handleExitGame = () => {
+    navigate('/crearpartida');
+  };
+  
   
 
   // Obtener las recompensas del primer objeto de batallaData
@@ -538,6 +616,23 @@ const iniciarTurnoJugador = () => {
 
   return (
     <footer className={styles.playerContainer}>
+      {!gameOver && (
+          <button
+            className={styles.surrenderButton}
+            onClick={handleSurrender}
+          >
+            Rendirse
+          </button>
+        )}
+           
+           {gameOver && (
+        <button
+          className={styles.exitButton}
+          onClick={onExitGame} // Use the new prop here
+        >
+          Salir
+        </button>
+      )}
        <div className={styles.timerContainer}>
         <div className={styles.timerCircle}>
           <div className={styles.timerContent}>
@@ -592,11 +687,15 @@ const iniciarTurnoJugador = () => {
         </div>
         <div className={styles.gameActions}>
           <div className={styles.turnActions}>
+       
+          {!gameOver && (
             <div className={styles.turnIndicator}>
               <h3 className={styles.indicadordeturno}>
                 {isJugadorTurn ? "¡Es tu turno!" : "¡Turno del enemigo!"}
               </h3>
             </div>
+          )}
+          {gameOver && (<br />)}
             <div className={styles.actionButtons}>
               <div className={styles.attackSkillButtons}>
                 

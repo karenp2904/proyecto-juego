@@ -1,73 +1,276 @@
 .lobbyContent {
-  text-align: center;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ajuste en el tamaño de la sombra */
+  border-radius: 12px; /* Ajuste del radio de borde */
+  min-height: 75vh; /* Ajuste de la altura mínima */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 15px; /* Reducción del padding */
+  box-sizing: border-box;
+  color: #fff;
+  font-family: 'Arial-Bold', sans-serif;
+  font-size: 0.75em; /* Disminuye el tamaño del texto al 75% */
+  backdrop-filter: blur(1.5px);
 }
 
-.menuOptions button {
-  padding: 10px 20px;
-  background-color: #e74c3c;
+
+
+
+.lobbyWrapper {
+  width: 142.86%; /* 100% / 0.7 */
+  height: 142.86%; /* 100% / 0.7 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gameTitle {
+  font-size: 3rem;
+  text-shadow: 0 0 10px #ff6b6b, 0 0 20px #ff6b6b;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.selectHeroText {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffd700;
+  text-shadow: 0 0 5px #ffd700;
+}
+
+.heroesArena {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+  max-width: 800px;
+  width: 100%;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.heroCard {
+  width: 100%;
+  max-width: 200px;
+  height: 180px;
+  perspective: 1000px;
+  cursor: pointer;
+  justify-self: center;
+}
+
+.heroCard.selected {
+  box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.8); /* Efecto de iluminación */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño para dar énfasis */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.heroCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.heroCard.flipped .heroCardInner {
+  transform: rotateY(180deg);
+}
+
+.heroCardFront, .heroCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.heroCardFront {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  padding-bottom: 20px;
+}
+
+.heroCardBack {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 5px;
+}
+
+.heroImage {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-bottom: 2px solid #ff6b6b;
+}
+
+.heroInfo {
+  padding: 10px;
+  text-align: center;
+}
+
+.heroName {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.heroType {
+  font-size: 0.9rem;
+  color: #ff6b6b;
+}
+
+.heroCardBack h3 {
+  font-size: 1.2rem;
+  color: #ffd700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.heroStats {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.statItem {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statLabel {
+  color: #bdc3c7;
+  font-weight: bold;
+}
+
+.statValue {
+  color: #ecf0f1;
+  font-weight: bold;
+}
+
+.heroType {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.battleButton, .equipButton {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
   border: none;
   color: white;
-  font-size: 18px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 5px;
-  margin: 10px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.menuOptions button:hover {
-  background-color: #c0392b;
+.equipButton {
+  background: linear-gradient(45deg, #4e54c8, #8f94fb);
 }
 
-.menuOptions button:disabled {
-  background-color: #7f8c8d;
+.battleButton:hover, .equipButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.5);
+}
+
+.battleButton:disabled, .equipButton:disabled {
+  background: #888;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.heroSelection {
-  margin-top: 20px;
+@media (max-width: 768px) {
+  .gameTitle {
+    font-size: 2rem;
+  }
+
+  .heroesArena {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+  }
+
+  .heroCard {
+    max-width: 160px;
+    height: 240px;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+  }
 }
 
-.heroes {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
+@media (max-width: 480px) {
+  .heroesArena {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, auto);
+  }
 
-.hero {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 10px;
-  border-radius: 5px;
-}
+  .heroCard {
+    max-width: 200px;
+  }
 
-.hero img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  transition: all 0.3s ease;
+  @media (max-width: 1200px) {
+    .lobbyContent {
+      transform: scale(0.8);
+    }
+    .lobbyWrapper {
+      width: 125%; /* 100% / 0.8 */
+      height: 125%; /* 100% / 0.8 */
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .lobbyContent {
+      transform: scale(0.9);
+    }
+    .lobbyWrapper {
+      width: 111.11%; /* 100% / 0.9 */
+      height: 111.11%; /* 100% / 0.9 */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .lobbyContent {
+      transform: scale(1);
+    }
+    .lobbyWrapper {
+      width: 100%;
+      height: 100%;
+    }
 }
-
-.hero p {
-  color: white;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.hero:hover {
-  transform: scale(1.05);
-}
-
-.hero:hover img {
-  border-color: #e74c3c;
-}
-
-.selectedHero img {
-  border-color: #2ecc71;
-  box-shadow: 0 0 15px #2ecc71;
 }

@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "64d3402d681948532712a45z",
+    "name": "Sivel",
+    "type": "Tanque",
+    "level": 5,
+    "powerPoints": 8,
+    "powerPointsLeft": 8,
+    "health": 44,
+    "maxHealth": 44,
+    "defense": 11,
+    "attack": 10,
+    "damage": 200,
+    "experience": 5000,
+    "inventory": [
+      "64d3402d681948532712a45c",
+      "64d3402d681948532712a45d"
+    ],
+    "equippedItems": {
+      "armor1": null,
+      "armor2": null,
+      "weapon": null
+    },
+    "abilities": [
+      "64d3402d681948532712a466",
+      "64d3402d681948532712a467"
+    ],
+    "baseAttack": 10,
+    "baseDefense": 11,
+    "baseHealth": 44,
+    "baseMaxHealth": 44,
+    "image": "src/assets/BarbaroTanque.png"
+  }
+]
