@@ -8,9 +8,7 @@ export const Router = {
     "subasta": "/Subasta",
     "subastarProducto": "/Subasta/NuevoProducto",
     "inicio": "/Inicio",
-    "juego": "/Juego",
-    "bolsa": "/bolsa",
-    "inventario":"/inventario"
+    "juego": "/Juego"
      /*
     "lobby":'/lobby' ,
     "crearpartida":'/crearpartida' ,

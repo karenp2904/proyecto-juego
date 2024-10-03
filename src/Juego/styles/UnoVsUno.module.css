@@ -1,16 +1,33 @@
-*html, body {
+.unovsuno {
+  width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: url('../assets/fondoCombate.jpg');
+  background: url('../assets/fondoCombate.jpg') no-repeat center center; /*src/assets/fondoCombate.jpg*/
   background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-.escenariodefondoIcon {
+.gameContent {
+  transform: scale(0.67);
+  transform-origin: center top;
+  width: 149.25%;
+  height: 149.25%;
+  position: absolute;
+  top: 0%; /* Ajusta este valor para subir o bajar el contenido */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 477px var(--padding-xl) 97px;
+  box-sizing: border-box;
+}
+
+.unovsuno .escenariodefondoIcon {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -20,7 +37,8 @@
   z-index: -1;
 }
 
-.enemigoIcon, .jugadorIcon {
+.unovsuno .enemigoIcon,
+.unovsuno .jugadorIcon {
   align-self: stretch;
   width: 162px;
   position: relative;
@@ -28,16 +46,24 @@
   object-fit: cover;
   min-height: 181px;
   z-index: 1;
+  margin-bottom: 40px;
 }
 
-.enemigoIcon {
+
+
+/* Excluir a los magos del efecto */
+.magoImage {
+  transform: scaleX(1); /* O simplemente elimínalo, ya que es el valor por defecto */
+}
+
+.unovsuno .enemigoIcon  {
   transform: scaleX(-1);
 }
 
 @keyframes playerAttackMove {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(100px); }
-  100% { transform: translateX(0); }
+  0% { transform: translateX(0) scaleX(1);; }
+  50% { transform: translateX(100px)  scaleX(1);}
+  100% { transform: translateX(0) scaleX(1);; }
 }
 
 @keyframes enemyAttackMove {
@@ -46,19 +72,19 @@
   100% { transform: translateX(0) scaleX(-1); }
 }
 
-.jugadorIcon {
+.unovsuno .jugadorIcon {
   transition: all 0.3s ease;
 }
 
-.jugadorIconAttack {
+.unovsuno .jugadorIconAttack {
   animation: playerAttackMove 0.5s ease forwards;
 }
 
-.enemigoIconAttack {
+.unovsuno .enemigoIconAttack {
   animation: enemyAttackMove 0.5s ease forwards;
 }
 
-.jugadorParent {
+.unovsuno .jugadorParent {
   width: 1141px;
   display: flex;
   flex-direction: row;
@@ -68,37 +94,18 @@
   max-width: 100%;
 }
 
-.enemyContainer, .unovsuno {
-  display: flex;
-  box-sizing: border-box;
-}
-
-.enemyContainer {
+.unovsuno .enemyContainer {
   width: 1526px;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
   padding: 0 0 0 var(--padding-6xs);
   max-width: 100%;
-}
-
-.unovsuno {
-  transform: scale(0.67);
-  transform-origin: top left;
-  width: 149.25%;
-  height: 149.25%;
-  position: relative;
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 477px var(--padding-xl) 97px;
-  gap: 58px;
-  margin-top: -110px;
+  box-sizing: border-box;
 }
 
-.actionMessage {
+.unovsuno .actionMessage {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -111,12 +118,12 @@
   text-align: center;
 }
 
-.characterContainer {
+.unovsuno .characterContainer {
   position: relative;
   transition: all 0.3s ease;
 }
 
-.selectedOpponent {
+.unovsuno .selectedOpponent {
   animation: glowing 1.5s infinite alternate;
   box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
 }
@@ -130,7 +137,8 @@
   }
 }
 
-.selectedOpponent::before {
+.unovsuno .selectedOpponent::before {
+  content: '';
   position: absolute;
   top: -5px;
   left: -5px;
@@ -141,7 +149,7 @@
   z-index: 0;
 }
 
-.shieldEffect {
+.unovsuno .shieldEffect {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -174,7 +182,7 @@
 }
 
 @media screen and (max-width: 450px) {
-  .jugadorParent {
+  .unovsuno .jugadorParent {
     flex-wrap: wrap;
   }
 }

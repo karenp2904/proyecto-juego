@@ -1,0 +1,537 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+  --main-bg-color: rgba(0, 0, 0, 0.7);
+  --border-color: #ffd700;
+  --text-color: #ffffff;
+  --highlight-color: #ffd700;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+  background-color: #111;
+  color: var(--text-color);
+  
+}
+
+
+
+.inventarioContainer {
+  background-image: url('../assets/FondoInventario.jpeg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  height: 100vh;
+  padding: 20px;
+  gap: 20px;
+  overflow-y: hidden; /* Evitar doble scroll en contenedor principal */
+
+}
+
+.leftPanel, .rightPanel {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+}
+
+.leftPanel {
+  flex: 1;
+  max-width: 400px;
+}
+
+.rightPanel {
+  flex: 2;
+  overflow-y: auto; /* Permitir scroll en el panel derecho */
+
+}
+
+.heroSection, .statsSection, .inventorySection, .bagSection {
+  background: var(--main-bg-color);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.heroSection {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroImage {
+  width: 150px;
+  height: 225px;
+  background: radial-gradient(circle, rgba(64,64,64,1) 0%, rgba(32,32,32,1) 100%);
+  border: 3px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.heroSection, .statsSection, .inventorySection, .bagSection {
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.leftPanel, .rightPanel {
+  background: rgba(0, 0, 0, 0.8);
+
+  border-radius: 15px;
+  padding: 20px;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.heroImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.equippedItems {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.equipSlot {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden; /* Añadido para asegurar que la imagen no se salga del contenedor */
+
+}
+
+.equipSlot img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Cambiado de 'cover' a 'contain' para mantener la proporción de la imagen */
+}
+
+.equipSlot:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px var(--border-color);
+}
+
+.equipSlot.armor1 { border-color: #ff6b6b; }
+.equipSlot.armor2 { border-color: #4ecdc4; }
+.equipSlot.weapon { border-color: #ffd93d; }
+
+.statsSection {
+  flex: 1;
+}
+
+.statsSection ul {
+  list-style-type: none;
+}
+
+.statsSection li {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.statsSection h2 {
+  color: #ffd700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.statsList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.statItem:hover {
+  background: rgba(255, 215, 0, 0.1);
+  transform: translateX(5px);
+}
+
+.statLabel {
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.statValue {
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 2px 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.inventorySection, .bagSection {
+  position: relative;
+  background: var(--main-bg-color);
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: auto; /* Ajustar la altura del inventario */
+  overflow-y: auto; /* Asegurarse de que el scroll esté habilitado */  align-items: center;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-family: 'Cinzel', serif;
+  color: var(--highlight-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.paginationArrow {
+  background: none;
+  border: none;
+  color: var(--highlight-color);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: all 0.2s ease;
+}
+
+.paginationArrow:hover {
+  transform: scale(1.2);
+}
+
+.paginationArrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+.itemGrid, .bagGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 55px;
+  justify-content: center;
+  align-content: start; /* Cambiar a "start" para que las filas se ajusten correctamente */
+  padding: 10px;
+  overflow-y: auto;
+  max-height: calc(100% - 40px); /* Ajusta esto según el espacio que necesites para el título */
+}
+
+
+.item, .bagSlot {
+  width: 60px;
+  height: 60px;
+  background: rgba(32, 32, 32, 0.8);
+  border: 2px solid #4a2c0f;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden; /* Añadido para asegurar que la imagen no se salga del contenedor */
+
+}
+
+.item:hover, .bagSlot:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.item img, .bagSlot img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.common { border-color: #a8a8a8; }
+.rare { border-color: #4169e1; }
+.epic { border-color: #9932cc; }
+
+.item, .bagSlot { 
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  animation: legendaryPulse 2s infinite alternate;
+}
+
+@keyframes bagSlot {
+  0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+  100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 5px #fff; }
+}
+
+@keyframes item {
+  0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+  100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 5px #fff; }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px var(--border-color); }
+  to { box-shadow: 0 0 15px var(--border-color); }
+}
+
+.saveButton {
+  font-size: 22px;
+  font-family: 'Cinzel', serif;
+  color: black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: var(--highlight-color);
+  border: 2px black;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+}
+
+.saveButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);}
+
+.paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.paginationControls button {
+  background: var(--highlight-color);
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.paginationControls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationControls button:hover:not(:disabled) {
+  background: #ffe666;
+}
+
+.bagSlot:empty {
+  background: rgba(32, 32, 32, 0.4);
+  border: 2px dashed #666;
+}
+
+.itemDetailsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.itemDetailsCard {
+  background: rgba(32, 32, 32, 0.95);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+}
+
+.itemDetailsCard h3 {
+  color: var(--highlight-color);
+  font-family: 'Cinzel', serif;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.itemDetailsCard p {
+  margin-bottom: 10px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actionButtons button {
+  padding: 8px 16px;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actionButtons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #ffd700;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 15%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--highlight-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1001;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+h2 {
+  text-align: center;
+  color: var(--highlight-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-family: 'Cinzel', serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffe666;
+}
+
+@media (max-width: 1200px) {
+  .inventarioContainer {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .leftPanel, .rightPanel {
+    width: 100%;
+    max-width: none;
+    height: auto;
+  }
+
+  .heroSection, .statsSection {
+    margin-bottom: 20px;
+  }
+
+ 
+}
+
+@media (max-width: 768px) {
+  .inventarioContainer {
+    padding: 10px;
+  }
+
+  .itemGrid, .bagGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .heroImage {
+    width: 120px;
+    height: 180px;
+  }
+
+  .equipSlot, .item, .bagSlot {
+    width: 45px;
+    height: 45px;
+  }
+
+  .statsSection li {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inventarioContainer {
+    padding: 5px;
+  }
+
+  .itemGrid, .bagGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .heroImage {
+    width: 100px;
+    height: 150px;
+  }
+
+  .equipSlot, .item, .bagSlot {
+    width: 40px;
+    height: 40px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .itemDetailsCard {
+    width: 90%;
+    max-width: 250px;
+  }
+}
+

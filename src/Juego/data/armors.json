@@ -1,0 +1,134 @@
+[
+    {
+      "id": "armor1",
+      "name": "Defensa del enfurecido",
+      "type": "Armadura",
+      "slot": "Pecho",
+      "image": "DefensaDelEnfurecido.png",
+      "effects": { "defense": 2, "health": 2 },
+      "dropChance": 5,
+      "compatibleHeroes": ["Tanque"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "armor2",
+      "name": "Puño lúcido",
+      "type": "Armadura",
+      "slot": "Guantes",
+      "image": "PunoLucido.png",
+      "effects": { "defense": 2, "health": 1 },
+      "dropChance": 2,
+      "compatibleHeroes": ["Armas"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "armor3",
+      "name": "Túnica arcana",
+      "type": "Armadura",
+      "slot": "Pecho",
+      "image": "TunicaArcana.png",
+      "effects": { "defense": 1, "health": 2 },
+      "dropChance": 3,
+      "compatibleHeroes": ["Fuego"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "armor4",
+      "name": "Corona de hielo",
+      "type": "Armadura",
+      "slot": "Casco",
+      "image": "CoronaDeHielo.png",
+      "effects": { "defense": 1, "health": 1 },
+      "dropChance": 5,
+      "compatibleHeroes": ["Hielo"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "armor5",
+      "name": "Mano del desterrado",
+      "type": "Armadura",
+      "slot": "Guantes",
+      "image": "ManoDelDesterrado.png",
+      "effects": { "defense": 2, "health": 1 },
+      "dropChance": 4,
+      "compatibleHeroes": ["Veneno"],
+      "Heroe": "Picaro"
+    },
+    {
+      "id": "armor6",
+      "name": "Pie de atleta",
+      "type": "Armadura",
+      "slot": "Zapatos",
+      "image": "PieDeAtleta.png",
+      "effects": { "defense": 2, "health": 1 },
+      "dropChance": 1,
+      "compatibleHeroes": ["Machete"],
+      "Heroe": "Picaro"
+    },
+    {
+      "id": "armor7",
+      "name": "Magma Ardiente",
+      "type": "Armadura",
+      "slot": "Casco",
+      "image": "MagmaArdiente.png",
+      "effects": { "defense": 2, "health": 1 },
+      "dropChance": 5,
+      "compatibleHeroes": ["Tanque"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "armor8",
+      "name": "Puños en llamas",
+      "type": "Armadura",
+      "slot": "Brazaletes",
+      "image": "PunosEnLlamas.png",
+      "effects": { "defense": 1, "health": 1 },
+      "dropChance": 2,
+      "compatibleHeroes": ["Armas"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "armor9",
+      "name": "Caída de fuego",
+      "type": "Armadura",
+      "slot": "Pantalón",
+      "image": "CaidaDeFuego.png",
+      "effects": { "defense": 1, "health": 1 },
+      "dropChance": 3,
+      "compatibleHeroes": ["Fuego"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "armor10",
+      "name": "Ventisca",
+      "type": "Armadura",
+      "slot": "Pecho",
+      "image": "Ventisca.png",
+      "effects": { "defense": 1, "health": 2 },
+      "dropChance": 5,
+      "compatibleHeroes": ["Hielo"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "armor11",
+      "name": "Atadura carmesí",
+      "type": "Armadura",
+      "slot": "Pecho",
+      "image": "AtaduraCarmesi.png",
+      "effects": { "defense": 1, "health": 2 },
+      "dropChance": 4,
+      "compatibleHeroes": ["Veneno"],
+      "Heroe": "Picaro"
+    },
+    {
+      "id": "armor12",
+      "name": "Sangre cruel",
+      "type": "Armadura",
+      "slot": "Brazaletes",
+      "image": "SangreCruel.png",
+      "effects": { "defense": 1, "health": 1 },
+      "dropChance": 1,
+      "compatibleHeroes": ["Machete"],
+      "Heroe": "Picaro"
+    }
+  ]
