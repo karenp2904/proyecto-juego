@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import GameManager from './components/GameManager';
 import UnoVsUno from './components/UnoVsUno';
-import CrearPartidaPage from './components/CrearPartida';
-import ModosDeJuego from './components/ModosDejuego';
-import UnirseapartidaPage from './components/UnirseAPartida';
-import Inventario from './components/Inventario';
+
 import styles from './styles/App.module.css';
 import Combatiente from './interfaces/Combatiente';
 
@@ -25,13 +21,6 @@ const Juego: React.FC = () => {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/crearpartida" />} />
-        <Route path="/crearpartida" element={<CrearPartidaPage />} />
-        <Route path="/modosdejuego" element={<ModosDeJuego />} />
-        <Route path="/unirseapartida" element={<UnirseapartidaPage />} />
-        <Route path="/lobby" element={
           gameState === 'lobby' ? (
             <div className={styles.appContainer}>
               <div className={styles.lobbyBackground}>
@@ -44,10 +33,7 @@ const Juego: React.FC = () => {
           ) : (
             selectedHero && <UnoVsUno jugador={selectedHero} selectedHeroId={selectedHeroId} />
           )
-        } />
-        <Route path="/inventario" element={<Inventario />} />
-      </Routes>
-    </Router>
+
   );
 };
 

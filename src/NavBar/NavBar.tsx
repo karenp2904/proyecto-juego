@@ -32,7 +32,7 @@ export default function NavBar() {
         <ul>
           
           <li>
-            <a href="/">Misiones</a>
+            <a href="">Misiones</a>
           </li>
           <li>
             <a href="">Torneos</a>

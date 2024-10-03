@@ -9,8 +9,15 @@ import MyAccount from '../MiCuenta/MyAccount';
 import Register from '../Registro/Register';
 import Inicio from '../Index/Inicio';
 import MainNavBar from '../NavBar/MainNavBar';
-import Juego from '../Juego/Juego';
 
+
+
+import CrearPartidaPage from '../Juego/components/CrearPartida';
+import ModosDeJuego from '../Juego/components/ModosDejuego';
+import UnirseapartidaPage from '../Juego/components/UnirseAPartida';
+import InventarioBolsa from '../Juego/components/Inventario';
+import Juego from '../Juego/Juego';
+import Inventario from '../inventario/Inventario';
 
 // import App from '../AdminInventario/app/App';
 // import InventarioPage from '../AdminInventario/app/pages/admin/inventario/InventarioPage';
@@ -27,6 +34,8 @@ import Juego from '../Juego/Juego';
 // import CrearPartidaPage from '../AdminInventario/app/pages/user/CrearPartida/CrearPartidaPage';
 // import ModosDeJuego from '../AdminInventario/app/pages/user/ModosDeJuego/ModosDeJuegoPage';
 // import UnirseapartidaPage from '../AdminInventario/app/pages/user/UnirseAPartidaCreada/UnirseAPartidaPage';
+
+
 
 const AppRouter: FC = () => {
   const basename = process.env.REACT_APP_BASE_URL || "/";
@@ -48,7 +57,17 @@ const AppRouter: FC = () => {
           <Route path={Router.subastarProducto} element={<AddAuction />} />    
           <Route path={Router.miCuenta} element={<MyAccount />} />
           <Route path={Router.juego} element={<Juego />} />
+          <Route path={Router.inventario} element={<Inventario />} />
+
+
+          <Route path={Router.bolsa} element={<InventarioBolsa />} />
+          <Route path={Router.crearpartida} element={<CrearPartidaPage />} />
+          <Route path={Router.modosdejuego} element={<ModosDeJuego />} />
+          <Route path={Router.unirseapartida} element={<UnirseapartidaPage />} />
         </Route>
+
+       
+       
       </Routes>
     </BrowserRouter>
   );
