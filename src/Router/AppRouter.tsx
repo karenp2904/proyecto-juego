@@ -18,18 +18,19 @@ import UnirseapartidaPage from '../Juego/components/UnirseAPartida';
 import InventarioBolsa from '../Juego/components/Inventario';
 import Juego from '../Juego/Juego';
 import Inventario from '../inventario/Inventario';
+import UnoVsUno from '../Juego/components/UnoVsUno';
 
-// import App from '../AdminInventario/app/App';
-// import InventarioPage from '../AdminInventario/app/pages/admin/inventario/InventarioPage';
-// import NotFoundPage from '../AdminInventario/app/pages/common/NotFoundPage';
-// import { CrearHeroePage } from '../AdminInventario/app/pages/admin/inventarioDetalle/CrearHeorePage';
-// import { CrearArmaPage } from '../AdminInventario/app/pages/admin/crearArma/CrearArmaPage';
-// import { CrearArmaduraPage } from '../AdminInventario/app/pages/admin/crearArmadura/CrearArmaduraPage';
-// import { CrearItemPage } from '../AdminInventario/app/pages/admin/crearItem/CrearItemPage';
-// import { CrearEpicaPage } from '../AdminInventario/app/pages/admin/crearEpica/CrearEpicaPage';
+import InventarioPage from '../AdminInventario/app/pages/admin/inventario/InventarioPage';
+import NotFoundPage from '../AdminInventario/app/pages/common/NotFoundPage';
+import { CrearHeroePage } from '../AdminInventario/app/pages/admin/inventarioDetalle/CrearHeorePage';
+import { CrearArmaPage } from '../AdminInventario/app/pages/admin/crearArma/CrearArmaPage';
+import { CrearArmaduraPage } from '../AdminInventario/app/pages/admin/crearArmadura/CrearArmaduraPage';
+import { CrearItemPage } from '../AdminInventario/app/pages/admin/crearItem/CrearItemPage';
+import { CrearEpicaPage } from '../AdminInventario/app/pages/admin/crearEpica/CrearEpicaPage';
+ import AdminApp from '../AdminInventario/app/AdminApp';
+import Lobby from '../Juego/components/Lobby';
 
 // import Lobby from '../AdminInventario/app/pages/user/lobby/LobbyPage';
-// import AdminApp from '../AdminInventario/app/AdminApp';
 // //import InventarioCrearProductoPage from '../pages/admin/inventarioCrearProducto/InventarioCrearProducto';
 // import CrearPartidaPage from '../AdminInventario/app/pages/user/CrearPartida/CrearPartidaPage';
 // import ModosDeJuego from '../AdminInventario/app/pages/user/ModosDeJuego/ModosDeJuegoPage';
@@ -63,7 +64,23 @@ const AppRouter: FC = () => {
           <Route path={Router.bolsa} element={<InventarioBolsa />} />
           <Route path={Router.crearpartida} element={<CrearPartidaPage />} />
           <Route path={Router.modosdejuego} element={<ModosDeJuego />} />
+         
           <Route path={Router.unirseapartida} element={<UnirseapartidaPage />} />
+        </Route>
+
+        <Route element={<AdminApp />}>
+          <Route path='/admin/inventario' element={<InventarioPage />} />
+          
+          <Route path='/admin/inventario/crearheroe' element={<CrearHeroePage />} /> //cambie la URL para que tenga sentido
+
+          <Route path='/admin/inventario/creararma' element={<CrearArmaPage />} />
+
+          <Route path='/admin/inventario/creararmadura' element={<CrearArmaduraPage />} />
+
+          <Route path='/admin/inventario/crearitem' element={<CrearItemPage />} />
+
+          <Route path='/admin/inventario/crearepica' element={<CrearEpicaPage />} />
+
         </Route>
 
        

@@ -25,7 +25,7 @@
 .confirmation-panel h2 {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #28a745;
+    color: #d35f12;
 }
 
 .confirmation-panel p {
@@ -50,6 +50,7 @@
 
 
 .confirmar-p{
+    color: black;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 300;
 }
