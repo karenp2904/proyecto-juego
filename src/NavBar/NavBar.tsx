@@ -30,16 +30,17 @@ export default function NavBar() {
     <nav className="NavBar">
       <div className="Container">
         <ul>
-          <li>
-            <a href="#" onClick={irjuego}>
-              Jugar Online
-            </a>
-          </li>
+          
           <li>
             <a href="/">Misiones</a>
           </li>
           <li>
             <a href="">Torneos</a>
+          </li>
+          <li>
+            <a href="#" onClick={irjuego}>
+              Jugar Online
+            </a>
           </li>
           <li>
             <a href="#" onClick={irSubasta}>
