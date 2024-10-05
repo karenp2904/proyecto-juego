@@ -11,7 +11,6 @@ import Inicio from '../Index/Inicio';
 import MainNavBar from '../NavBar/MainNavBar';
 
 
-
 import CrearPartidaPage from '../Juego/components/CrearPartida';
 import ModosDeJuego from '../Juego/components/ModosDejuego';
 import UnirseapartidaPage from '../Juego/components/UnirseAPartida';
@@ -27,6 +26,7 @@ import { CrearArmaPage } from '../AdminInventario/app/pages/admin/crearArma/Crea
 import { CrearArmaduraPage } from '../AdminInventario/app/pages/admin/crearArmadura/CrearArmaduraPage';
 import { CrearItemPage } from '../AdminInventario/app/pages/admin/crearItem/CrearItemPage';
 import { CrearEpicaPage } from '../AdminInventario/app/pages/admin/crearEpica/CrearEpicaPage';
+import AuctionWinner from '../Subasta/Ganador/AuctionWinner';
  import AdminApp from '../AdminInventario/app/AdminApp';
 import Lobby from '../Juego/components/Lobby';
 

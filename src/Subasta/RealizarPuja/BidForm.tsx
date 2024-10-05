@@ -4,7 +4,6 @@ import ConfirmationPanel from '../Confirmacion/ConfirmationPanel';
 import AuctionProduct from '../../types/AuctionProduct';
 import { useAuth } from "../../hooks/useAuth";
 import Environment from "../../shared/Environment";
-import AuctionWinner from '../Ganador/AuctionWinner';
 
 interface BidFormProps {
     product: AuctionProduct;
@@ -23,10 +22,6 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const [confirmationMessage, setConfirmationMessage]= useState('');
     const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
 
-    const [winnerData, setWinnerData] = useState<{
-        winnerName: string;
-        productName: string;
-    } | null>(null); // Estado para almacenar los datos del ganador
 
 
     const   handleBidSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -61,7 +56,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                         console.log(data)
                         setConfirmationMessage(`Su compra por ${product.buyNowPrice} ha sido aprobada`);
                         setShowConfirmation(true);
-                        anunciarGanador(product.idAuction, user.name , product.name)
+                        setCredits(user.iduser,(user.credits-product.buyNowPrice))
 
 
                     } else {
@@ -101,9 +96,8 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                                 const data = await response.json();
                                 setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
                                 setShowConfirmation(true);
-                                if(bidAmount>=product.buyNowPrice){
-                                    anunciarGanador(product.idAuction, user.name , product.name)
-                                }
+                                setCredits(user.iduser,(user.credits-product.buyNowPrice))
+
                             } else {
                                 const errorData = await response.json();
                                 console.log('Error:', errorData);
@@ -125,30 +119,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
         
     };
 
-    async function anunciarGanador(idAuction:string, winnerName: string, productName: string){
-        const response = await fetch(`${Environment.getDomain()}/api/winnerAuction`, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ idauction: idAuction }),
-        });
-
-
-        if (response.ok) {
-            const data = await response.json();
-             // Guardamos los datos en el estado para mostrar el componente AuctionWinner
-             setWinnerData({
-                winnerName,
-                productName
-            });
-
-
-        } else {
-            const errorData = await response.json();
-            console.log('Error:', errorData);
-        }
-    }
+   
 
     async function setCredits(idUser:number, credits:number){
         // Realizar una solicitud GET con Axios
@@ -245,13 +216,8 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
 
 
-                {winnerData && (
-                <AuctionWinner
-                    winnerName={winnerData.winnerName}
-                    productName={winnerData.productName}
-                    onAcknowledge={() => setWinnerData(null)} // Ocultamos el componente al cerrar
-                />
-            )}
+               
+           
                
 
 

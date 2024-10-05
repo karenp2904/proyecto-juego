@@ -33,7 +33,7 @@
     font-size: 18px;
 }
 
-.btn2-close {
+.btn2-closer {
     color: #ff4d4d;
     background-color: #efa0a0;
     font-size: 18px; 
@@ -41,11 +41,12 @@
     cursor: pointer;
     position: absolute; 
     top: 40%; 
-    right: 32%;
+    right: 37.5%;
     width: 3%; 
     height: 4%; 
     font-weight: bold;
     padding: 0px;
+    border-radius: 5px;
 }
 
 
