@@ -30,6 +30,7 @@ import FuegoFatuo from '../assets/FuegoFatuo.png';
 import VenasHeladas from '../assets/VenasHeladas.png';
 import VisionBorrosa from '../assets/Vision Borrosa.png';
 import SierraSangrienta from '../assets/SierraSangrienta.png';
+import { Router } from "../../Router/Router";
 
 interface Equipment {
   id: string;
@@ -245,7 +246,7 @@ const Inventario: React.FC = () => {
         baseMaxHealth: baseStats.maxHealth,
       };
       
-      navigate('/lobby', { 
+      navigate(Router.juego, { 
         state: { 
           selectedHero: updatedHero,
           heroesData: location.state?.heroesData?.map((hero: Combatiente) => 

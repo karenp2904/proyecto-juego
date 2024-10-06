@@ -11,8 +11,9 @@ const ModosDeJuego: React.FunctionComponent<IModosDeJuegoProps> = (props) => {
   const navigate = useNavigate();
 
   const handleJugadorVsMaquina = () => {
-    navigate(Router.lobby);
+    navigate(Router.juego);
   };
+
 
   return (
     <div

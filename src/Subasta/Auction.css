@@ -78,7 +78,36 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
   }
   
+  .nofound-products {
+    font-size: 1.5rem;          /* Texto más grande */
+    color: #555555;             /* Color gris oscuro para el texto */
+    text-align: center;         /* Centrar el texto */
+    margin: 50px 0;             /* Añadir espacio alrededor */
+    padding: 20px;              /* Espacio interno */
+    background-color: #c98362;  /* Fondo claro */
+    border-radius: 10px;        /* Bordes redondeados */
+    border: 2px dashed #ac5126; /* Borde con estilo punteado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 600px;           /* Limitar el ancho máximo */
+   
+  }
 
+  .top-bar{
+    display: flex;
+    position: absolute;
+    left: 2%;
+    margin-top: 4%;
+    width: 20%;
+    height: 80%;
+    
+  }
+  
+  .notification-button{
+    display: flex;
+    margin-top: 0%;
+    color: black;
+    
+  }
 
 /* Responsividad para pantallas más pequeñas */
 @media (max-width: 768px) {

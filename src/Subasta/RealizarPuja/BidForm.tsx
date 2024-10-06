@@ -3,9 +3,8 @@ import './BidForm.css';
 import ConfirmationPanel from '../Confirmacion/ConfirmationPanel';
 import AuctionProduct from '../../types/AuctionProduct';
 import { useAuth } from "../../hooks/useAuth";
-import axios from 'axios';
 import Environment from "../../shared/Environment";
-
+import Notificaciones from '../Notificacion/Notificaciones';
 
 interface BidFormProps {
     product: AuctionProduct;
@@ -23,6 +22,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
     const [offerType, setOfferType] = useState('oferta');
     const [confirmationMessage, setConfirmationMessage]= useState('');
     const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
+
 
 
     const   handleBidSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -43,15 +43,29 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 }else{ 
                     console.log(`Compra inmediata: ${product.buyNowPrice}`);
 
-                    // Establecer el mensaje de confirmación
-                    setConfirmationMessage(`Compra aprobada por ${product.buyNowPrice}`);
-                  
+                    const response = await fetch(`${Environment.getDomain()}/api/buyInmediatly`, {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ iduser: user.iduser, idauction: product.idAuction, bidAmount: product.buyNowPrice }),
+                    });
 
-                    //endpoint para retirar el producto
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(data)
+                        Notificaciones.anunciarGanador(product.idAuction)
+                        setConfirmationMessage(`Su compra por ${product.buyNowPrice} ha sido aprobada`);
+                        setShowConfirmation(true);
+                        setCredits(user.iduser,(user.credits-product.buyNowPrice))
 
 
-
-                    setShowConfirmation(true)
+                    } else {
+                        const errorData = await response.json();
+                        console.log('Error:', errorData);
+                    }
+                    
                 }
 
                 
@@ -67,7 +81,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                         return;
                     }else{
                         console.log(`Oferta enviada: ${bidAmount}`);
-                        const idAuction= product.idAuction              
+                               
 
                         console.log( user.iduser, '-',product.idAuction,'-', bidAmount )
                           // Realizar una solicitud GET con Axios
@@ -81,9 +95,11 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
 
                             if (response.ok) {
-                                const data = await response.json();
+                               
                                 setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
                                 setShowConfirmation(true);
+                                setCredits(user.iduser,(user.credits-product.buyNowPrice))
+
                             } else {
                                 const errorData = await response.json();
                                 console.log('Error:', errorData);
@@ -105,7 +121,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
         
     };
 
-
+   
 
     async function setCredits(idUser:number, credits:number){
         // Realizar una solicitud GET con Axios
@@ -200,8 +216,9 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 </div>
 
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
-               
 
+
+            
 
                 <button type="submit" className="btn-offer">
                     {offerType === 'compra' ? 'Comprar ahora' : 'Enviar oferta'}

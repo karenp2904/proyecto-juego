@@ -1,0 +1,60 @@
+/* Auction.css */
+.notification-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #150c0c;
+    margin-left: 0%;
+    margin-top: 5%;
+    width: 15%;
+    transition: color 0.3s ease-in-out;
+}
+
+.notification-button:hover {
+    color: #f1ebe6; /* Slightly bolder hover color */
+    background-color: transparent;
+}
+
+.notification-panel {
+    color: #f1ebe6; /* Darker text for better readability */
+    margin-top: 5%;
+    left: 0px;
+    background-color: #06495ddd  ; /* Softer background */
+    border: 1px solid #ccc; /* Softer border */
+    border-radius: 10px; /* More rounded corners for a modern look */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+    padding: 20px;
+    width: 300px;
+    z-index: 200;
+    font-family: 'Arial', sans-serif; /* Clean and simple font */
+    position: relative; /* Ensures it stays relative to its parent */
+}
+
+.notification-panel h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #f1ebe6; /* Add a warm auction-themed accent color */
+    text-align: center;
+    font-weight: bold;
+}
+
+.notification-panel ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notification-panel ul li {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: #1b1616; /* Subtle text color for better contrast */
+    background-color: #fff4e6; /* Light, warm background for the list items */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    transition: background-color 0.3s ease-in-out;
+}
+
+.notification-panel ul li:hover {
+    background-color: #ffe0b3; /* Slight hover effect */
+}

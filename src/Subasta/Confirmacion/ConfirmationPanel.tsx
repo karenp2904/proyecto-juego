@@ -10,7 +10,7 @@ const ConfirmationPanel: React.FC<{ type:string, message: string, onClose: () =>
             <div className="confirmation-panel">
                 <h2>¡{type}!</h2>
                 <p className='confirmar-p'> {message}.</p>
-                <button className="btn2-close" onClick={onClose}>✖</button>
+                <button className="btn2-closer" onClick={onClose}>✖</button>
             </div>
         </div>
     );

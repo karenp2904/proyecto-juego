@@ -40,8 +40,11 @@ const UserForm: React.FC = () => {
         securityQuestion3: '',
     });
 
-    const existingNicknames = ['coolguy', 'techmaster', 'codewizard', 'quicklearner', 'designguru', 'smartcookie', 'creativebee', 'logichacker', 'brightmind', 'sharpthinker'];
-
+    const existingNicknames = [
+        'coolguy', 'techmaster', 'codewizard', 'quicklearner', 'designguru', 'smartcookie', 
+        'creativebee', 'logichacker', 'brightmind', 'sharpthinker',
+    ];
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
@@ -68,6 +71,36 @@ const UserForm: React.FC = () => {
             setAvatarPreview(defaultAvatar);
         }
     };
+
+    const containsInvalidTerms = (nickname: string) => {
+        const forbiddenWords = [
+            // Groserías colombianas
+            'hijueputa', 'gonorrea', 'carechimba', 'marica', 'pendejo', 'guevon', 'mamon', 'pirobo', 'culicagao', 'zorra',
+            'caremondá', 'culicagado', 'malparido', 'careverga', 'chimba', 'verraco', 'cojudo', 'careculo', 'careguevo',
+            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp',
+    
+            // Groserías y términos ofensivos de otros países de Latinoamérica
+            'chingado', 'culero', 'verga', 'boludo', 'pelotudo', 'pajero', 'cabrón', 'pendeja', 'culiao', 'gilipollas', 
+            'mierda', 'carajo', 'cabronazo', 'putazo', 'forro', 'tarado', 'baboso', 'mequetrefe', 'mamaguevo', 'coño', 
+            'carapicha', 'maldito',
+    
+            // Nombres de celebridades
+            'shakira', 'maluma', 'jbalvin', 'messi', 'cristiano', 'badbunny', 'thalia', 'ricky', 'daddyyankee', 'jlo', 
+            'sofiavergara', 'karolg', 'camilo', 'luisfonsi', 'beckham', 'kardashian', 'kendall', 'kanye', 'rihanna', 
+            'beyonce', 'drake',
+    
+            // Nombres de políticos
+            'uribe', 'santos', 'petro', 'maduro', 'chavez', 'duque', 'obama', 'trump', 'biden', 'pinochet', 'castro', 
+            'bolsonaro', 'lula', 'fernandez', 'kirchner', 'boric', 'ortega', 'morales', 'lopezobrador', 'guzman',
+    
+           
+        ];
+    
+        // Verifica si el apodo contiene alguna de las palabras prohibidas
+        return forbiddenWords.some(word => nickname.toLowerCase().includes(word));
+    };
+    
+    
 
     const validateForm = () => {
         const newErrors = {
@@ -107,9 +140,13 @@ const UserForm: React.FC = () => {
             newErrors.nickname = 'El apodo es requerido.';
             isValid = false;
         } else if (existingNicknames.includes(formData.nickname.toLowerCase())) {
-            newErrors.nickname = 'El apodo ya existe. Por favor, elija un apodo diferente.';
+            newErrors.nickname = 'El apodo ya existe o no es válido. Por favor, elija uno diferente.';
+            isValid = false;
+        } else if (containsInvalidTerms(formData.nickname)) {
+            newErrors.nickname = 'El apodo contiene términos no permitidos.';
             isValid = false;
         }
+        
 
         if (!formData.email) {
             newErrors.email = 'El correo electrónico es requerido.';

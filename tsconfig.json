@@ -5,8 +5,6 @@
     "jsx": "react-jsx", // o "react" si es para versiones anteriores de React
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["jest", "node"],
     "useDefineForClassFields": true,

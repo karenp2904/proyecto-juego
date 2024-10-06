@@ -23,7 +23,7 @@ export default function NavBar() {
     navigate(Router.subasta);
   };
   const irjuego = () => {
-    navigate(Router.juego);
+    navigate(Router.crearpartida);
   };
 
   return (

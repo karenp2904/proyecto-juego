@@ -32,9 +32,10 @@
 
   
   .account-title {
-    text-align: center;
+    text-align: left;
     font-size: 36px;
     margin-bottom: 20px;
+    width: 60%;
   }
   
   .avatar-section {
@@ -147,7 +148,38 @@
     border-radius: 5px;
     margin-top: 5px;
   }
-  
+  .shared-cont{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-between;
+
+  }
+  .return-button3 {
+    display: flex;
+    background-repeat: no-repeat;
+    height: 10%;
+    width: 17%; 
+    margin-left: 0%;
+    background-color: transparent; /* Cambia 'none' por 'transparent' para evitar errores */
+    background: none;
+    border: none;
+    
+}
+
+.return-button3 img {
+    width: 80%; 
+    height: 100%;
+    cursor: pointer;
+    background: none;
+}
+
+.return-button3:hover {
+    background-color: transparent; /* Cambia 'none' por 'transparent' */
+    background: none;
+}
+
+
   .btn-update {
     width: 50%;
     padding: 15px;

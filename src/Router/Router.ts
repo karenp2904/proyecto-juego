@@ -15,6 +15,7 @@ export const Router = {
     "crearpartida":'/crearpartida' ,
     "modosdejuego":'/modosdejuego' ,
     "unirseapartida":'/unirseapartida' ,
+    
    /*
     "inventario":'/admin/inventario' ,
     "crearheroe":     '/admin/inventario/crearheroe' ,
