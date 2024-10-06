@@ -20,7 +20,7 @@
     color: #f1ebe6; /* Darker text for better readability */
     margin-top: 5%;
     left: 0px;
-    background-color: #06495dbe  ; /* Softer background */
+    background-color: #06495ddd  ; /* Softer background */
     border: 1px solid #ccc; /* Softer border */
     border-radius: 10px; /* More rounded corners for a modern look */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
@@ -47,7 +47,7 @@
 .notification-panel ul li {
     margin-bottom: 12px;
     font-size: 1.1rem;
-    color: #555; /* Subtle text color for better contrast */
+    color: #1b1616; /* Subtle text color for better contrast */
     background-color: #fff4e6; /* Light, warm background for the list items */
     padding: 10px;
     border-radius: 8px;

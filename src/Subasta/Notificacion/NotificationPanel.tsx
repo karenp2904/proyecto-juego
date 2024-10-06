@@ -5,7 +5,7 @@ import Notificaciones from './Notificaciones';
 
 const NotificationPanel: React.FC = () => {
     // Call the method to get the message
-    const mensaje = Notificaciones.getMessage();
+    const mensaje = Notificaciones.obtenerMensajeGanador();
 
     return (
         <div className="notification-panel">

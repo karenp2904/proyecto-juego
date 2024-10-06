@@ -26,8 +26,7 @@ const Auction: React.FC = () => {
             
             // Verifica si la respuesta no es ok
             if (!response.ok) throw new Error('Error en la solicitud de subastas');
-            
-        
+
             
             // Intenta analizar la respuesta como JSON
             const data = await response.json()
@@ -57,9 +56,18 @@ const Auction: React.FC = () => {
 
 
    
+    
     useEffect(() => {
+        // Ejecuta fetchProducts al cargar el componente
         fetchProducts();
-    }, []); // Solo se ejecuta una vez
+        
+        // Establece el intervalo para ejecutar la función periódicamente
+        const intervalId = setInterval(fetchProducts, 5000); // 5000 ms = 5 segundos
+
+        // Limpia el intervalo cuando se desmonte el componente
+        return () => clearInterval(intervalId);
+    }, []); // El array vacío asegura que useEffect se ejecute solo una vez
+
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value); // Actualiza el valor de búsqueda en el estado

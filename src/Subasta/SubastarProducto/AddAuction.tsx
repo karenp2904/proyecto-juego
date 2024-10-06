@@ -32,7 +32,7 @@ const AddAuction: React.FC = () => {
      // Método para obtener los productos subastados
      const fetchProducts = async () => {
         try {
-    /*
+    
             const response = await fetch(`${Environment.getDomainInventory()}/inventary/:${user?.iduser}`, {
                 method: 'GET',
                 headers: {
@@ -41,15 +41,16 @@ const AddAuction: React.FC = () => {
               });
           
               if (response.ok) {
-                console.log(await response.json)
-                const data= await response.json
+                console.log(await response.json())
+                const data= await response.json()
                 console.log(data)
+                setInventory(data)
           
               }
-              */
+            
            // const response = await fetch(''); 
            // const data = await response.json();
-       
+       /*
            const data: Product[] =  [
             {
                 id: '1',
@@ -81,8 +82,7 @@ const AddAuction: React.FC = () => {
            
             
         ];
-        setInventory(data)
-       
+        */
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }
@@ -234,10 +234,6 @@ const AddAuction: React.FC = () => {
         }
     }
 
-    const handleAgain = ()=>{
-        
-    }
-   
     return (
         <div className="auction-window">
             <div className="container ">
@@ -249,14 +245,19 @@ const AddAuction: React.FC = () => {
                             <h4>Inventario del Jugador</h4>
                             
                             <div className="inventory-grid d-flex flex-wrap"  >
-                                {inventory.map((item) => (
+                            {inventory.length > 0 ? (
+                                inventory.map((item) => (
                                     <div key={item.id} className="card inventory-card m-3" onClick={() => handleSelectProduct(item)}>
-                                            <img src={item.imageUrl} className="card-img-top" alt={item.name}  />                    
-                                            <div className="card-body text-center">
-                                            <h5 className="card-title-auction ">{item.name}</h5>
+                                        <img src={item.imageUrl} className="card-img-top" alt={item.name} />
+                                        <div className="card-body text-center">
+                                            <h5 className="card-title-auction">{item.name}</h5>
                                         </div>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <p className='nofound-products'>No se encontraron productos en el inventario.</p>
+                            )}
+
                             </div>
                         </div>
                     </div>

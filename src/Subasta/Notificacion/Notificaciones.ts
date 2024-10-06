@@ -1,6 +1,5 @@
 import Environment from "../../shared/Environment";
 export default class Notificaciones {
-    // Make mensaje static
     private static mensaje: string = '';
 
     public static anunciarGanador = async (idAuction: string) => {
@@ -11,22 +10,21 @@ export default class Notificaciones {
             },
             body: JSON.stringify({ idauction: idAuction }),
         });
-
+    
         if (response.ok) {
             const data = await response.json();
-            // Now you can access the static property
-            this.mensaje = data.toString();
+            this.mensaje = data.answer;
+            console.log(data)
+            // Guardar el mensaje en memoria local (localStorage)
+            localStorage.setItem('mensajeGanador', this.mensaje);
         } else {
             const errorData = await response.json();
             console.log('Error:', errorData);
         }
-    }
-
-    public static readonly getMessage = (): string => {
-        if (this.mensaje) {
-            return this.mensaje;
-        } else {
-            return 'Aún no has ganado ninguna subasta';
-        }
+    };
+    
+    // Método adicional para obtener el mensaje desde localStorage
+    public static obtenerMensajeGanador(): string | null {
+        return localStorage.getItem('mensajeGanador');
     }
 }
