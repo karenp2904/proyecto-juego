@@ -1,6 +1,6 @@
 import { FunctionComponent, Dispatch, SetStateAction, useState, useEffect, MouseEvent, useRef    } from "react";
 import styles from "../styles/PlayerContainer.module.css";
-import Acciones from "../interfaces/Acciones";
+import { Acciones } from "../interfaces/Acciones";
 import Combatiente from "../interfaces/Combatiente";
 //import batallaData from '../data/batalla.json';
 import combatienteData from '../data/combatiente.json';
@@ -9,7 +9,14 @@ import efectosHeroeData from '../data/Efectosheroe.json'
 import EfectosHeroe from "../interfaces/EfectosHeroe";
 import { useNavigate } from 'react-router-dom';
 
+interface ActiveEffect {
+  value: number;
+  duration: number;
+}
 
+interface ActiveEffects {
+  [key: string]: ActiveEffect;
+}
 
 type PlayerContainerProps = {
   onActionMessage: (actionMessage: ActionMessageType) => void;
@@ -37,6 +44,8 @@ type ActionMessageType = {
 
 
 
+
+
 // IDs de combatientes
 
 const TURN_TIME = 120; // 120 seconds per turn
@@ -46,7 +55,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   onActionMessage,
   onPlayerAttack,
   onEnemyAttack,
-  jugador,
+  jugador ,
   enemigo,
   setJugador,
   setEnemigo,
@@ -71,96 +80,158 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [habilitado, setHabilitado] = useState(true);
   const [efectosTemporales, setEfectosTemporales] = useState<{ [key: string]: number }>({});
   const [timeLeft, setTimeLeft] = useState(TURN_TIME);
-  const [originalStats, setOriginalStats] = useState<{ attack: number; defense: number } | null>(null);
+  const [originalStats, setOriginalStats] = useState<{ attack: number; defense: number; damage: number; } | null>(null);
   const [jugadorVidaActual, setJugadorVidaActual] = useState<number | null>(null);
   const [turnEnded, setTurnEnded] = useState(false);
   const [actionUsed, setActionUsed] = useState(false);
   const [shieldThrowUsed, setShieldThrowUsed] = useState(false);
   const [currentEffects, setCurrentEffects] = useState<{ [key: string]: number }>({});
   const [effectsTimer, setEffectsTimer] = useState<NodeJS.Timeout | null>(null);
+  const [activeEffects, setActiveEffects] = useState<ActiveEffects>({});
   const navigate = useNavigate();
+  const [baseStats, setBaseStats] = useState({
+    attack: jugador?.baseAttack || jugador?.attack || 0, 
+    defense: jugador?.baseDefense || jugador?.defense || 0, 
+    health: jugador?.baseHealth || jugador?.health || 100, // Cambia 100 por un valor predeterminado razonable
+    maxHealth: jugador?.baseMaxHealth || jugador?.maxHealth || 100, // Cambia 100 por un valor predeterminado
+  });
+  
+  
 
 
 
   
-const getSelectedHeroId = () => {
-  return selectedHeroId;
-};
+  const getSelectedHeroId = () => {
+    return selectedHeroId;
+  };
+  
+  const [equippedItems, setEquippedItems] = useState<Combatiente['equippedItems']>({
+    armor1: null,
+    armor2: null,
+    weapon: null,
+    item: null,
+  });
+  
+  
+  console.log("jugadorContainer renderizando. selectedHeroId:", selectedHeroId);
+  
+  const initializePlayerStats = (jugador: Combatiente) => {
+    console.log("Inicializando estadísticas del jugador");
+    const newBaseStats = {
+      attack: jugador.baseAttack || jugador.attack,
+      defense: jugador.baseDefense || jugador.defense,
+      health: jugador.baseHealth || jugador.health,
+      maxHealth: jugador.baseMaxHealth || jugador.maxHealth
+    };
+    console.log("Nuevas estadísticas base:", newBaseStats);
 
-const [equippedItems, setEquippedItems] = useState<Combatiente['equippedItems']>({
-  armor1: null,
-  armor2: null,
-  weapon: null
-});
+    setBaseStats(newBaseStats);
+    setJugadorVidaActual(newBaseStats.health);
 
+    const updatedPlayer = applyEquipmentEffects(jugador, newBaseStats);
+    console.log("Jugador actualizado:", updatedPlayer);
 
-const JUGADOR_ID = "64d3402d681948532712a480";
-const ENEMIGO_ID = "64d3402d681948532712a45z";
+    setJugador(updatedPlayer);
+    setPowerPointsLeft(updatedPlayer.powerPoints);
+    setEquippedItems(updatedPlayer.equippedItems);
+    setOriginalStats({
+      attack: updatedPlayer.attack,
+      defense: updatedPlayer.defense,
+      damage: updatedPlayer.damage || 0,
+    });
+  };
+  
+  useEffect(() => {
+    if (jugador) {
+      console.log("Jugador inicial:", jugador);
 
-console.log("PlayerContainer renderizando. selectedHeroId:", selectedHeroId);
-
-useEffect(() => {
-  if (selectedHeroId) {
-    const selectedHero = combatienteData.find(c => c._id === selectedHeroId) as Combatiente | undefined;
-    if (selectedHero) {
-      const updatedHero: Combatiente = {
-        ...selectedHero,
-        equippedItems: selectedHero.equippedItems || { armor1: null, armor2: null, weapon: null }
+      const base = {
+        attack: jugador.baseAttack || jugador.attack,
+        defense: jugador.baseDefense || jugador.defense,
+        health: jugador.baseHealth || jugador.health,
+        maxHealth: jugador.baseMaxHealth || jugador.maxHealth
       };
-      setJugador(updatedHero);
-      setJugadorVidaActual(updatedHero.health);
-      setPowerPointsLeft(updatedHero.powerPointsLeft);
-      setEquippedItems(updatedHero.equippedItems);
+      setBaseStats(base);
+      console.log("Estadísticas base establecidas:", base);
+      initializePlayerStats(jugador);
+
+      const updatedJugador = applyEquipmentEffects(jugador, base);
+      setJugador(updatedJugador);
+      setPowerPointsLeft(updatedJugador.powerPointsLeft);
+      setEquippedItems(updatedJugador.equippedItems);
       setOriginalStats({ 
-        attack: updatedHero.attack, 
-        defense: updatedHero.defense 
+        attack: updatedJugador.attack, 
+        defense: updatedJugador.defense, 
+        damage: updatedJugador.damage || 0, 
       });
-
-      // Filtramos y mapeamos habilidades
+  
+      console.log("Jugador actualizado con efectos de equipamiento:", updatedJugador);
+  
       const habilidadesData = accionesData
-        .filter(a => a.heroType === updatedHero.type && updatedHero.level >= a.minLevel)
-        .map(habilidad => ({
-          ...habilidad,
-          effects: Object.fromEntries(
-            Object.entries(habilidad.effects).filter(([, value]) => value !== undefined)
-          )
-        }));
+      .filter(a => a.heroType === updatedJugador.type && updatedJugador.level >= a.minLevel)
+      .map(habilidad => ({
+        ...habilidad,
+        effects: Object.fromEntries(
+          Object.entries(habilidad.effects).filter(([, value]) => value !== undefined)
+        )
+      }));
 
-      setHabilidades(habilidadesData);
-    }
+    setHabilidades(habilidadesData);
   }
-}, [selectedHeroId, setJugador]);
-
-const updateHeroStats = () => {
-  if (jugador) {
-    let totalAttack = jugador.attack;
-    let totalDefense = jugador.defense;
-    let totalHealth = jugador.health;
-
-    Object.values(equippedItems).forEach(item => {
+  }, [jugador]);
+  
+  const applyEquipmentEffects = (hero: Combatiente, baseStats: { attack: number; defense: number; health: number; maxHealth: number }): Combatiente => {
+    let updatedHero = { 
+      ...hero,
+      attack: baseStats.attack,
+      defense: baseStats.defense,
+      health: baseStats.health,
+      maxHealth: baseStats.maxHealth
+    };
+    let additionalHealth = 0;
+  
+    console.log("Aplicando efectos de equipamiento. Vida base:", updatedHero.health);
+  
+    // Aplicar efectos de los ítems equipados
+    Object.values(hero.equippedItems).forEach(item => {
       if (item) {
-        totalAttack += item.effects.attack || 0;
-        totalDefense += item.effects.defense || 0;
-        totalHealth += item.effects.health || 0;
+        updatedHero.attack += item.effects.attack || 0;
+        updatedHero.defense += item.effects.defense || 0;
+        additionalHealth += item.effects.health || 0;
+        console.log(`Efecto de ítem equipado: +${item.effects.health || 0} salud`);
       }
     });
-
-    const updatedJugador: Combatiente = {
-      ...jugador,
-      attack: totalAttack,
-      defense: totalDefense,
-      health: totalHealth,
-      equippedItems
-    };
-
-    setJugador(updatedJugador);
-    setJugadorVidaActual(totalHealth);
-  }
-};
-
-useEffect(() => {
-  updateHeroStats();
-}, [equippedItems]);
+  
+    // Aplicar efectos de los ítems en la bolsa
+    hero.bagItems.forEach(item => {
+      updatedHero.attack += item.effects.attack || 0;
+      updatedHero.defense += item.effects.defense || 0;
+      additionalHealth += item.effects.health || 0;
+      console.log(`Efecto de ítem en bolsa: +${item.effects.health || 0} salud`);
+    });
+  
+    updatedHero.maxHealth += additionalHealth;
+    updatedHero.health += additionalHealth;
+  
+    console.log(`Salud adicional de ítems: ${additionalHealth}`);
+    console.log(`Salud final: ${updatedHero.health}/${updatedHero.maxHealth}`);
+  
+    return updatedHero;
+  };
+  
+  const updateHeroStats = () => {
+    if (jugador && baseStats) {
+      console.log("Actualizando estadísticas del héroe. Base stats:", baseStats);
+      const updatedJugador = applyEquipmentEffects(jugador, baseStats);
+      setJugador(updatedJugador);
+      setJugadorVidaActual(updatedJugador.health);
+      console.log("Estadísticas actualizadas del héroe:", updatedJugador);
+    }
+  };
+  
+  useEffect(() => {
+    updateHeroStats();
+  }, [equippedItems, jugador?.bagItems]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -178,6 +249,17 @@ useEffect(() => {
     }
     return () => clearInterval(timer);
   }, [isJugadorTurn, gameOver, turnEnded]);
+
+  useEffect(() => {
+    if (jugador && originalStats) {
+      const updatedJugador = { ...jugador };
+      updatedJugador.attack = originalStats.attack + (activeEffects.increaseAttack?.value || 0);
+      updatedJugador.defense = originalStats.defense + (activeEffects.increaseDefense?.value || 0);
+      updatedJugador.damage = originalStats.damage + (activeEffects.increaseDamage?.value || 0);
+      setJugador(updatedJugador);
+      console.log("Estadísticas actualizadas:", updatedJugador);
+    }
+  }, [activeEffects, originalStats]);
 
   const handleTurnEnd = () => {
     if (isJugadorTurn) {
@@ -283,10 +365,15 @@ useEffect(() => {
 
 
   const calcularDañoFinal = (atacante: Combatiente, defensor: Combatiente) => {
-    const ataqueTotal = calcularAtaque(atacante);
+    let ataqueTotal = calcularAtaque(atacante);
     const { efecto, daño } = seleccionarEfecto(atacante.type);
 
-    if (ataqueTotal <= defensor.defense) {
+    // Aplicar efectos activos
+    ataqueTotal += activeEffects.increaseAttack?.value || 0;
+
+    let defensaTotal = defensor.defense + (activeEffects.increaseDefense?.value || 0);
+
+    if (ataqueTotal <= defensaTotal) {
       return {
         dañoFinal: 0,
         efecto: "ataque fallido",
@@ -320,15 +407,26 @@ useEffect(() => {
         dañoFinal = dañoBase;
     }
 
+    // Aplicar efectos adicionales al daño
+    if (activeEffects.increaseDamage) {
+      dañoFinal += activeEffects.increaseDamage.value;
+    }
+
     return {
       dañoFinal: Math.round(dañoFinal),
       efecto,
       ataqueExitoso: true
     };
   };
-
   const finalizarTurnoJugador = () => {
-    resetearEfectos();
+    const updatedActiveEffects: ActiveEffects = {};
+    Object.entries(activeEffects).forEach(([key, effect]) => {
+      if (effect.duration > 1) {
+        updatedActiveEffects[key] = { ...effect, duration: effect.duration - 1 };
+      }
+    });
+    setActiveEffects(updatedActiveEffects);
+
     setIsJugadorTurn(false);
     onTurnEnd();
     setActionUsed(false);
@@ -472,23 +570,48 @@ const recuperarPuntosPoder = () => {
   
 
 const aplicarEfectos = (habilidad: Acciones) => {
-  if (habilidad.effects && jugador && originalStats) {
-    setCurrentEffects(habilidad.effects);
-
-    const updatedJugador = { ...jugador };
+  if (habilidad.effects && jugador) {
+    console.log(`Aplicando efectos de ${habilidad.name}:`, habilidad.effects);
+    const newActiveEffects: ActiveEffects = { ...activeEffects };
     
-    if (habilidad.effects.increaseAttack) {
-      updatedJugador.attack = originalStats.attack + habilidad.effects.increaseAttack;
-    }
-    if (habilidad.effects.increaseDefense) {
-      updatedJugador.defense = originalStats.defense + habilidad.effects.increaseDefense;
-    }
+    Object.entries(habilidad.effects).forEach(([key, value]) => {
+      if (typeof value === 'number') {
+        newActiveEffects[key] = { value, duration: 2 };
+      } else if (typeof value === 'object' && 'amount' in value) {
+        const amount = typeof value.amount === 'string' ? parseInt(value.amount) : value.amount;
+        newActiveEffects[key] = { 
+          value: amount || 0, 
+          duration: value.duration || 2 
+        };
+      }
+      console.log(`Efecto ${key} aplicado:`, newActiveEffects[key]);
+    });
 
+    setActiveEffects(newActiveEffects);
+
+    // Aplicar inmediatamente el efecto a las estadísticas del jugador
+    const updatedJugador = { ...jugador };
+    if (newActiveEffects.increaseAttack) {
+      updatedJugador.attack += newActiveEffects.increaseAttack.value;
+      console.log(`Ataque aumentado en ${newActiveEffects.increaseAttack.value}. Nuevo ataque: ${updatedJugador.attack}`);
+    }
+    if (newActiveEffects.increaseDefense) {
+      updatedJugador.defense += newActiveEffects.increaseDefense.value;
+      console.log(`Defensa aumentada en ${newActiveEffects.increaseDefense.value}. Nueva defensa: ${updatedJugador.defense}`);
+    }
+    if (newActiveEffects.increaseDamage) {
+      updatedJugador.damage += newActiveEffects.increaseDamage.value;
+      console.log(`Daño aumentado en ${newActiveEffects.increaseDamage.value}. Nuevo daño: ${updatedJugador.damage}`);
+    }
     setJugador(updatedJugador);
+    console.log("Estadísticas del jugador actualizadas:", updatedJugador);
   }
 };
 
 const handleSkillSelect = (habilidad: Acciones) => {
+  console.log("Habilidad seleccionada:", habilidad);
+  console.log("Estadísticas del jugador antes de aplicar la habilidad:", jugador);
+
   if (jugador && habilitado && isOpponentSelected && !actionUsed) {
     if (powerPointsLeft >= habilidad.powerCost) {
       const updatedPowerPointsLeft = powerPointsLeft - habilidad.powerCost;
@@ -499,17 +622,30 @@ const handleSkillSelect = (habilidad: Acciones) => {
         defenderType: null
       });
 
-      if (habilidad.name === "Shield Throw") {
-        setShieldThrowUsed(true);
-        aplicarEfectos(habilidad);
+      aplicarEfectos(habilidad);
+
+      console.log("Estadísticas del jugador después de aplicar la habilidad:", jugador);
+
+      if (habilidad.name === "Shield Throw" || habilidad.name === "Embate sangriento" || habilidad.name === "Lanza de los dioses") {
+        if (habilidad.name === "Shield Throw") {
+          setShieldThrowUsed(true);
+        } else {
+          // Para Embate sangriento y Lanza de los dioses
+          console.log(`Aplicando ${habilidad.name}. Ataque antes:`, jugador.attack, "Daño antes:", jugador.damage);
+        }
         onActionMessage({
-          message: "¡Shield Throw activado! Ahora puedes atacar con el efecto aplicado.",
+          message: `¡${habilidad.name} activado! Ahora puedes atacar con el efecto aplicado.`,
           defenderType: null
         });
       } else {
-        aplicarEfectos(habilidad);
         setActionUsed(true);
         finalizarTurnoJugador();
+      }
+
+      if (habilidad.name === "Mano de piedra") {
+        console.log("Aplicando Mano de piedra. Defensa antes:", jugador.defense);
+        aplicarEfectos(habilidad);
+        console.log("Mano de piedra aplicada. Defensa después:", jugador.defense);
       }
 
       if (updatedPowerPointsLeft <= 0) {
@@ -540,7 +676,17 @@ const handleSkillSelect = (habilidad: Acciones) => {
 
 
 const iniciarTurnoJugador = () => {
-  resetearEfectos();
+  // Resetear efectos al inicio del turno del jugador
+  setActiveEffects({});
+  if (originalStats) {
+    const updatedJugador = {
+      ...jugador!,
+      attack: originalStats.attack,
+      defense: originalStats.defense,
+    };
+    setJugador(updatedJugador);
+  }
+
   setIsJugadorTurn(true);
   setHabilitado(true);
   setActionUsed(false);
@@ -586,17 +732,26 @@ const iniciarTurnoJugador = () => {
   };
 
   const getJugadorVidaActual = (): number => {
-    return jugadorVidaActual !== null ? jugadorVidaActual : (jugador?.health || 0);
+    return jugadorVidaActual !== null ? jugadorVidaActual : baseStats.health;
   };
-
+  
   const handleSurrender = () => {
     if (jugador) {
+      // Actualizar el estado del jugador con salud a 0
       setJugador(prevJugador => {
         if (prevJugador) {
           return { ...prevJugador, health: 0 };
         }
         return prevJugador;
       });
+  
+      // Actualizar también baseStats con salud a 0
+      setBaseStats(prevBaseStats => ({
+        ...prevBaseStats,
+        health: 0
+      }));
+  
+      // Marcar el juego como terminado y enviar el mensaje de rendición
       setGameOver(true);
       onActionMessage({
         message: "¡Te has rendido! La batalla ha terminado.",
@@ -608,6 +763,7 @@ const iniciarTurnoJugador = () => {
   const handleExitGame = () => {
     navigate('/crearpartida');
   };
+  
   
   
 
