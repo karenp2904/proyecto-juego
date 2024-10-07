@@ -77,7 +77,7 @@ const UserForm: React.FC = () => {
             // Groserías colombianas
             'hijueputa', 'gonorrea', 'carechimba', 'marica', 'pendejo', 'guevon', 'mamon', 'pirobo', 'culicagao', 'zorra',
             'caremondá', 'culicagado', 'malparido', 'careverga', 'chimba', 'verraco', 'cojudo', 'careculo', 'careguevo',
-            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp',
+            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 
     
             // Groserías y términos ofensivos de otros países de Latinoamérica
             'chingado', 'culero', 'verga', 'boludo', 'pelotudo', 'pajero', 'cabrón', 'pendeja', 'culiao', 'gilipollas', 
@@ -126,6 +126,9 @@ const UserForm: React.FC = () => {
         } else if (!nameSurnameRegex.test(formData.name)) {
             newErrors.name = 'El nombre solo puede contener letras.';
             isValid = false;
+        }else if (containsInvalidTerms(formData.name)) {
+            newErrors.name = 'El nombre contiene términos no permitidos.';
+            isValid = false;
         }
 
         if (!formData.surname) {
@@ -133,6 +136,9 @@ const UserForm: React.FC = () => {
             isValid = false;
         } else if (!nameSurnameRegex.test(formData.surname)) {
             newErrors.surname = 'El apellido solo puede contener letras.';
+            isValid = false;
+        }else if (containsInvalidTerms(formData.surname)) {
+            newErrors.surname = 'El apellido contiene términos no permitidos.';
             isValid = false;
         }
 
