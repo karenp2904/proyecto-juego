@@ -31,10 +31,17 @@ import VenasHeladas from '../assets/VenasHeladas.png';
 import VisionBorrosa from '../assets/Vision Borrosa.png';
 import SierraSangrienta from '../assets/SierraSangrienta.png';
 
+import AnilloParaPiroExplosion from '../assets/AnilloParaPiro-Explosion.png';
+import EmpunaduraDeFuria from '../assets/EmpunaduraDeFuria.png';
+import LibroDeLaVentiscaHelada from '../assets/LibroDeLaVentiscaHelada.png';
+import MancuernaYugular from '../assets/MancuernaYugular.png';
+import PinchosDeEscudo from '../assets/PinchosDeEscudo.png';
+import VenenoLacerante from '../assets/VenenoLacerante.png';
+
 interface Equipment {
   id: string;
   name: string;
-  type: 'Armadura' | 'Arma';
+  type: 'Armadura' | 'Arma' | 'Item';
   slot: string;
   image: string;
   effects: {
@@ -46,6 +53,7 @@ interface Equipment {
     opponentCriticalChance?: number;
     damageOverTime?: number;
     duration?: number;
+    specialEffect?: string;
   };
   dropChance: number;
   compatibleHeroes: string[];
@@ -80,17 +88,28 @@ const equipments: Equipment[] = [
   { id: 'weapon10', name: 'Venas heladas', type: 'Arma', slot: 'Arma', image: VenasHeladas, effects: { damageOverTime: 2, duration: 2 }, dropChance: 2, compatibleHeroes: ['Hielo'], Heroe: 'Mago' },
   { id: 'weapon11', name: 'Visión borrosa', type: 'Arma', slot: 'Arma', image: VisionBorrosa, effects: { opponentAttack: -1, opponentCriticalChance: -2 }, dropChance: 1, compatibleHeroes: ['Veneno'], Heroe: 'Picaro' },
   { id: 'weapon12', name: 'Sierra sangrienta', type: 'Arma', slot: 'Arma', image: SierraSangrienta, effects: { attack: 2, criticalChance: 2 }, dropChance: 1, compatibleHeroes: ['Machete'], Heroe: 'Picaro' },
+
+  //Items
+  { id: 'item1', name: 'Pinchos de escudo', type: 'Item', slot: 'Item', image: PinchosDeEscudo, effects: { specialEffect: "Si el ataque del oponente es menor que la defensa del guerrero, el oponente recibe +1 de daño" }, dropChance: 20, compatibleHeroes: ['Tanque'], Heroe: 'Guerrero' },
+  { id: 'item2', name: 'Empuñadura de Furia', type: 'Item', slot: 'Item', image: EmpunaduraDeFuria, effects: { damageOverTime: 1, duration: 2, health: -1 }, dropChance: 10, compatibleHeroes: ['Armas'], Heroe: 'Guerrero' },
+  { id: 'item3', name: 'Anillo para Piro-explosión', type: 'Item', slot: 'Item', image: AnilloParaPiroExplosion, effects: { attack: 3 }, dropChance: 7, compatibleHeroes: ['Fuego'], Heroe: 'Mago' },
+  { id: 'item4', name: 'Libro de la ventisca helada', type: 'Item', slot: 'Item', image: LibroDeLaVentiscaHelada, effects: { attack: 2 }, dropChance: 10, compatibleHeroes: ['Hielo'], Heroe: 'Mago' },
+  { id: 'item5', name: 'Veneno lacerante', type: 'Item', slot: 'Item', image: VenenoLacerante, effects: { specialEffect: "-1 al poder de oponente. Solo aplica cada dos turnos." }, dropChance: 9, compatibleHeroes: ['Veneno'], Heroe: 'Picaro' },
+  { id: 'item6', name: 'Mancuerna yugular', type: 'Item', slot: 'Item', image: MancuernaYugular, effects: { specialEffect: "Explota por 2 el valor en turno causado por la cierra sangrienta en el oponente" }, dropChance: 8, compatibleHeroes: ['Machete'], Heroe: 'Picaro' },
 ];
 
 const ITEMS_PER_PAGE = 16;
+const MAX_BAG_ITEMS = 6;
+
 
 const Inventario: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedHero = location.state?.hero as Combatiente | undefined;
   
+  
   const [equippedItems, setEquippedItems] = useState<Combatiente['equippedItems']>(
-    selectedHero?.equippedItems || { armor1: null, armor2: null, weapon: null }
+    selectedHero?.equippedItems || { armor1: null, armor2: null, weapon: null, item: null }
   );
 
   
@@ -102,6 +121,7 @@ const Inventario: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [inventoryPage, setInventoryPage] = useState(0);
   const [bagPage, setBagPage] = useState(0);
+  
   
   const [baseStats, setBaseStats] = useState({
     attack: 0,
@@ -130,9 +150,19 @@ const Inventario: React.FC = () => {
         health: selectedHero.baseHealth || selectedHero.health,
         maxHealth: selectedHero.baseMaxHealth || selectedHero.maxHealth,
       });
-      setEquippedItems(selectedHero.equippedItems || { armor1: null, armor2: null, weapon: null });
+      setEquippedItems(selectedHero.equippedItems || { armor1: null, armor2: null, weapon: null, item: null });
+      setBagItems(selectedHero.bagItems || []);
+      
+      // Filtrar los items compatibles con el héroe seleccionado, excluyendo los que están en la bolsa
+      const filteredItems = equipments.filter(item => 
+        (item.compatibleHeroes.includes(selectedHero.type) || item.Heroe === selectedHero.type) &&
+        !selectedHero.bagItems?.some(bagItem => bagItem.id === item.id)
+      );
+      setInventoryItems(filteredItems);
     }
   }, [selectedHero]);
+
+
 
   const calculateStats = (base: typeof baseStats, equipped: typeof equippedItems) => {
     let totalAttack = base.attack;
@@ -168,16 +198,31 @@ const Inventario: React.FC = () => {
       let totalDefense = baseStats.defense;
       let totalHealth = baseStats.health;
       let totalCriticalChance = 0;
-
-      Object.values(equippedItems).forEach(item => {
-        if (item) {
+  
+      // Aplicar efectos de ítems equipados
+      Object.entries(equippedItems).forEach(([slot, item]) => {
+        if (item && slot !== 'item') {
           totalAttack += item.effects.attack || 0;
           totalDefense += item.effects.defense || 0;
           totalHealth += item.effects.health || 0;
           totalCriticalChance += item.effects.criticalChance || 0;
         }
       });
-
+  
+      // Aplicar efectos de ítems en la bolsa
+      bagItems.forEach(item => {
+        totalAttack += item.effects.attack || 0;
+        totalDefense += item.effects.defense || 0;
+        totalHealth += item.effects.health || 0;
+        totalCriticalChance += item.effects.criticalChance || 0;
+        
+        if (item.effects.specialEffect) {
+          // Aquí puedes manejar los efectos especiales si es necesario
+          console.log(`Efecto especial de ${item.name}: ${item.effects.specialEffect}`);
+          // Implementa la lógica para aplicar el efecto especial
+        }
+      });
+  
       setHeroStats({
         attack: totalAttack,
         defense: totalDefense,
@@ -190,7 +235,7 @@ const Inventario: React.FC = () => {
 
   useEffect(() => {
     updateHeroStats();
-  }, [equippedItems, baseStats]);
+  }, [equippedItems, bagItems, baseStats]);
 
  
   
@@ -200,7 +245,7 @@ const Inventario: React.FC = () => {
       showNotification(`${item.name} no es compatible con ${selectedHero?.name || 'este héroe'}`);
       return;
     }
-
+  
     if (item.type === 'Armadura') {
       const emptySlot = equippedItems.armor1 === null ? 'armor1' : 'armor2';
       if (equippedItems[emptySlot] === null) {
@@ -219,35 +264,49 @@ const Inventario: React.FC = () => {
         setInventoryItems(prev => [...prev, previousItem]);
       }
       showNotification(`¡${item.name} equipado como arma!`);
+    } else if (item.type === 'Item') {
+      addToBag(item);
     }
     setIsHeroExcited(true);
     setTimeout(() => setIsHeroExcited(false), 1000);
   };
 
-  const unequipItem = (slot: 'armor1' | 'armor2' | 'weapon') => {
+  const unequipItem = (slot: 'armor1' | 'armor2' | 'weapon' | 'item') => {
     const item = equippedItems[slot];
     if (item) {
       setEquippedItems(prev => ({ ...prev, [slot]: null }));
       setInventoryItems(prev => [...prev, item]);
       showNotification(`${item.name} desequipado de ${slot}`);
+      updateHeroStats(); // Añade esta línea
+
     }
   };
-
   const saveEquipment = () => {
     if (selectedHero) {
       const updatedHero: Combatiente = {
         ...selectedHero,
         ...heroStats,
         equippedItems,
+        bagItems,
         baseAttack: baseStats.attack,
         baseDefense: baseStats.defense,
         baseHealth: baseStats.health,
         baseMaxHealth: baseStats.maxHealth,
       };
       
+      // Crear una lista de todos los IDs de ítems equipados y en la bolsa
+      const equippedAndBagItemIds = [
+        ...Object.values(equippedItems).filter(item => item !== null).map(item => item!.id),
+        ...bagItems.map(item => item.id)
+      ];
+  
+      // Filtrar el inventario para excluir los ítems equipados y en la bolsa
+      const updatedInventoryItems = inventoryItems.filter(item => !equippedAndBagItemIds.includes(item.id));
+      
       navigate('/lobby', { 
         state: { 
           selectedHero: updatedHero,
+          inventoryItems: updatedInventoryItems,
           heroesData: location.state?.heroesData?.map((hero: Combatiente) => 
             hero._id === updatedHero._id ? updatedHero : hero
           )
@@ -259,21 +318,28 @@ const Inventario: React.FC = () => {
   };
 
   const addToBag = (item: Equipment) => {
-    if (bagItems.length < 6 * ITEMS_PER_PAGE) {
+    if (item.type !== 'Item') {
+      showNotification("Solo los ítems pueden ser añadidos a la bolsa");
+      return;
+    }
+    
+    if (bagItems.length < MAX_BAG_ITEMS) {
       setBagItems(prev => [...prev, item]);
       setInventoryItems(prev => prev.filter(i => i.id !== item.id));
       showNotification(`${item.name} añadido a la bolsa`);
+      updateHeroStats();
     } else {
       showNotification("La bolsa está llena");
     }
   };
-
   const removeFromBag = (item: Equipment) => {
     setBagItems(prev => prev.filter(i => i.id !== item.id));
-    setInventoryItems(prev => [...prev, item]);
+    if (!inventoryItems.some(i => i.id === item.id)) {
+      setInventoryItems(prev => [...prev, item]);
+    }
     showNotification(`${item.name} removido de la bolsa`);
+    updateHeroStats();
   };
-
   const showNotification = (message: string) => {
     setNotification(message);
     setTimeout(() => setNotification(null), 3000);
@@ -296,17 +362,22 @@ const Inventario: React.FC = () => {
           <div className={`${styles.heroImage} ${isHeroExcited ? styles.excited : ''}`}>
             <img src={selectedHero?.image} alt={selectedHero?.name} />
           </div>
-          <div className={styles.equippedItems}>
-            {Object.entries(equippedItems).map(([slot, item]) => (
-              <div
-                key={slot}
-                className={`${styles.equipSlot} ${styles[slot]}`}
-                onClick={() => item && unequipItem(slot as 'armor1' | 'armor2' | 'weapon')}
-              >
-                {item && <img src={item.image} alt={item.name} />}
-              </div>
-            ))}
-          </div>
+         <div className={styles.equippedItems}>
+  {['armor1', 'armor2', 'weapon'].map((slot) => (
+    <div
+      key={slot}
+      className={`${styles.equipSlot} ${styles[slot]}`}
+      onClick={() => equippedItems[slot as keyof typeof equippedItems] && unequipItem(slot as 'armor1' | 'armor2' | 'weapon')}
+    >
+      {equippedItems[slot as keyof typeof equippedItems] && (
+        <img 
+          src={equippedItems[slot as keyof typeof equippedItems]!.image} 
+          alt={equippedItems[slot as keyof typeof equippedItems]!.name} 
+        />
+      )}
+    </div>
+  ))}
+</div>
         </div>
         <div className={styles.statsSection}>
           <h2>Estadísticas</h2>
