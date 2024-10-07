@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import PlayerContainer from "../components/PlayerContainer";
 import { useLocation } from 'react-router-dom';
 import StatBox from "../components/StatBox";
@@ -29,6 +29,7 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
   const [isPlayerShielding, setIsPlayerShielding] = useState(false);
   const [isEnemyShielding, setIsEnemyShielding] = useState(false);
   const navigate = useNavigate();
+  
   
 
 
@@ -77,6 +78,8 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
     }, 2000);
   };
 
+  
+
   const handlePlayerAttack = () => {
     setIsPlayerAttacking(true);
     setTimeout(() => {
@@ -103,6 +106,8 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
     // Realiza cualquier limpieza necesaria aquí
     navigate('/crearpartida');
   };
+
+  
 
   if (!updatedJugador) return null;
 
