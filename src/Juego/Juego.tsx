@@ -21,20 +21,19 @@ const Juego: React.FC = () => {
   };
 
   return (
-          gameState === 'lobby' ? (
-            <div className={styles.appContainer}>
-              <div className={styles.lobbyBackground}>
+    <div className={styles.appContainer}>
+        {gameState === 'lobby' ? (
+            <div className={styles.lobbyBackground}>
                 <GameManager 
-                  onStartGame={handleStartGame}
-                  onHeroSelect={handleHeroSelect}
+                    onStartGame={handleStartGame}
+                    onHeroSelect={handleHeroSelect}
                 />
-              </div>
             </div>
-          ) : (
+        ) : (
             selectedHero && <UnoVsUno jugador={selectedHero} selectedHeroId={selectedHeroId} />
-          )
-
-  );
-};
+        )}
+    </div>
+);
+}
 
 export default Juego;

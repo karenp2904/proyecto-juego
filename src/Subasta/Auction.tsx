@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Importa el icono de campana para notificaciones
 import NotificationPanel from './Notificacion/NotificationPanel';
+import { constants } from 'buffer';
 
 const Auction: React.FC = () => {
 
@@ -32,19 +33,30 @@ const Auction: React.FC = () => {
             const data = await response.json()
             console.log(data)
             // Mapea los datos a la interfaz `AuctionProduct`
-            const mappedData: AuctionProduct[] = data.map((item: any) => ({
+            const mappedData: AuctionProduct[] = data.map((item: any) => {
+                // Depuración: verifica el valor de `description`
+                    console.log("Description:", item.description);
+                    console.log("Image URL before:", item.imageUrl);
 
-                idAuction: item.id,
-                idProduct: item.idproduct?.toString() || '',
-                name: item.name,
-                description: item.description,
-                imageUrl: item.imageUrl,
-                initialAmount: item.currentBid ? parseFloat(item.initialAmount) : 0,
-                currentBid: parseInt(item.currentBid),
-                buyNowPrice: parseInt(item.buyNowPrice),
-                auctionEndTime:(item.auctionEndTime)
-            }));
-    
+                    const imageUrl = item.description?.toLowerCase() === 'item'
+                        ? `/${item.imageUrl}` // Agregar '/' solo si description es 'item'
+                        : item.imageUrl;
+
+                    // Si 'imageUrl' ya comienza con '/', eliminar el duplicado
+                    const finalImageUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+                    return {
+                        idAuction: item.id,
+                        idProduct: item.idproduct?.toString() || '',
+                        name: item.name,
+                        description: item.description,
+                        imageUrl: finalImageUrl, // Usa la URL final procesada
+                        initialAmount: item.currentBid ? parseFloat(item.initialAmount) : 0,
+                        currentBid: parseInt(item.currentBid, 10), // Base 10 para evitar errores
+                        buyNowPrice: parseInt(item.buyNowPrice, 10), // Base 10 para evitar errores
+                        auctionEndTime: item.auctionEndTime
+                    };  
+                });
+ 
             console.log(mappedData);  // Aquí puedes utilizarlo según tu lógica
     
             setProducts(mappedData)

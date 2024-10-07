@@ -45,7 +45,7 @@ function Inventario() {
     const obtenerInventario = async () => {
       try {
         const response = await axios.get(
-          `${Environment.getDomainInventory()}/inventary/${user?.iduser}`
+          `${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`
         );
         const formattedItems = response.data.inventario.reduce(
           (
@@ -72,9 +72,10 @@ function Inventario() {
     const obtenerInventario_game = async () => {
       try {
         const response = await axios.get(
-          `${Environment.getDomainInventory()}/inventary_game/${user?.iduser}`
+          `${Environment.getDomainInventory()}/inventary_game/${user?.iduser.toString()}`
         );
-        const formattedItems = response.data.inventario.reduce(
+       console.log(await response.data)
+        const formattedItems = await response.data.inventario.reduce(
           (
             acc: { [key: string]: InventoryItem },
             item: { objetoId: InventoryItem; active: boolean },

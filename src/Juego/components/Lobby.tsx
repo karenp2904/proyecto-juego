@@ -72,7 +72,7 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
     if (selectedHero) {
       onStartGame(selectedHero);
     }
-    navigate(Router.modosdejuego)
+    navigate(Router.juego)
   };
 
   const handleEquipHero = () => {

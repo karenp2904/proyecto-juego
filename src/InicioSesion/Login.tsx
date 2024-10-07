@@ -50,8 +50,14 @@ function Login() {
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
-          setCredits(data.usuario.iduser,200)
-          navigate(Router.inicio);
+          //setCredits(data.usuario.iduser,200)
+          if(data.usuario.surname=='admin' ||data.usuario.name=='Admin'){
+            console.log('admin')
+            navigate(Router.adminInventario);
+          }else{
+            navigate(Router.inicio);
+
+          }
   
           //const usuarioJSON = JSON.stringify(data.usuario);
           //console.log('Información del usuario en JSON:', usuarioJSON);

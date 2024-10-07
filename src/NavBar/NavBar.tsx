@@ -60,7 +60,7 @@ export default function NavBar() {
             </button>
           </form>
 
-          <div className="show-credits">
+          <div className="show-credits1">
             <span className="credits-user">
               {user?.credits}{" "}
               <img
