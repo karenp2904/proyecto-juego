@@ -34,13 +34,15 @@ const Auction: React.FC = () => {
             console.log(data)
             // Mapea los datos a la interfaz `AuctionProduct`
             const mappedData: AuctionProduct[] = data.map((item: any) => {
-            
+
                     return {
                         idAuction: item.id,
                         idProduct: item.idproduct?.toString() || '',
                         name: item.name,
                         description: item.description,
+
                         imageUrl: item.imageUrl, // Usa la URL final procesada
+
                         initialAmount: item.currentBid ? parseFloat(item.initialAmount) : 0,
                         currentBid: parseInt(item.currentBid, 10), // Base 10 para evitar errores
                         buyNowPrice: parseInt(item.buyNowPrice, 10), // Base 10 para evitar errores
@@ -48,7 +50,6 @@ const Auction: React.FC = () => {
                     };  
                 });
  
-           
     
             setProducts(mappedData)
         } catch (error) {
