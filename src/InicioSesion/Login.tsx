@@ -47,7 +47,7 @@ function Login() {
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
-          //setCredits(data.usuario.iduser,200)
+          setCredits(data.usuario.iduser,200)
           if(data.usuario.surname=='admin' ||data.usuario.name=='Admin'){
             navigate(Router.adminInventario);
           }else{

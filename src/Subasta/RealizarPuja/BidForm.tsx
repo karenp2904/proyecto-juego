@@ -58,7 +58,7 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                         Notificaciones.anunciarGanador(product.idAuction)
                         setConfirmationMessage(`Su compra por ${product.buyNowPrice} ha sido aprobada`);
                         setShowConfirmation(true);
-                        setCredits(user.iduser,(user.credits-product.buyNowPrice))
+                        setCredits(user.iduser,product.buyNowPrice)
 
 
                     } else {
@@ -98,7 +98,12 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                                
                                 setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
                                 setShowConfirmation(true);
-                                setCredits(user.iduser,(user.credits-product.buyNowPrice))
+                                setCredits(user.iduser,bidAmount)
+
+                                if(bidAmount>=product.buyNowPrice){
+                                    Notificaciones.anunciarGanador(product.idAuction)
+                                }
+
 
                             } else {
                                 const errorData = await response.json();

@@ -1,15 +1,17 @@
 .auction-window {
-    padding: 0px;
-    text-align: center;
-    background-image: url(../assets/Images/subasta2.jpeg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    min-height: 100vh; /* Asegura que ocupe al menos toda la ventana */
-    width: 100vw;
-    box-sizing: border-box;
-    overflow: auto; /* Si el contenido es mayor que la ventana */
+  padding: 0px;
+  text-align: center;
+  background-image: url(../assets/Images/subasta2.jpeg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto; /* Permite desplazamiento vertical */
+  overflow-x: hidden;  
+
 }
 
 .product-list {
@@ -19,7 +21,7 @@
     margin-top: 1%;
     width: 50%;
     margin: 0 auto;
-}
+  }
 
 .search-auction {
     display: flex;
