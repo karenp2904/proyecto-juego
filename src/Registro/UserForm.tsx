@@ -199,7 +199,6 @@ const UserForm: React.FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validateForm()) {
-            console.log('Formulario enviado correctamente:', formData);
             axios.post( `${Environment.getDomain()}/api/registro`, formData )
             handleToLogin()
         }

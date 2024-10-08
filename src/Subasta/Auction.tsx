@@ -34,22 +34,13 @@ const Auction: React.FC = () => {
             console.log(data)
             // Mapea los datos a la interfaz `AuctionProduct`
             const mappedData: AuctionProduct[] = data.map((item: any) => {
-                // Depuración: verifica el valor de `description`
-                    console.log("Description:", item.description);
-                    console.log("Image URL before:", item.imageUrl);
-
-                    const imageUrl = item.description?.toLowerCase() === 'item'
-                        ? `/${item.imageUrl}` // Agregar '/' solo si description es 'item'
-                        : item.imageUrl;
-
-                    // Si 'imageUrl' ya comienza con '/', eliminar el duplicado
-                    const finalImageUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+            
                     return {
                         idAuction: item.id,
                         idProduct: item.idproduct?.toString() || '',
                         name: item.name,
                         description: item.description,
-                        imageUrl: finalImageUrl, // Usa la URL final procesada
+                        imageUrl: item.imageUrl, // Usa la URL final procesada
                         initialAmount: item.currentBid ? parseFloat(item.initialAmount) : 0,
                         currentBid: parseInt(item.currentBid, 10), // Base 10 para evitar errores
                         buyNowPrice: parseInt(item.buyNowPrice, 10), // Base 10 para evitar errores
@@ -57,7 +48,7 @@ const Auction: React.FC = () => {
                     };  
                 });
  
-            console.log(mappedData);  // Aquí puedes utilizarlo según tu lógica
+           
     
             setProducts(mappedData)
         } catch (error) {
