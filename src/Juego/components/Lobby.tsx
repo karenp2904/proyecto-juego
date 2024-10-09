@@ -23,23 +23,27 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
   const [selectedHero, setSelectedHero] = useState<Combatiente | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [flippedCards, setFlippedCards] = useState<{ [key: string]: boolean }>({});
+
 
   useEffect(() => {
-    // Inicializar héroes con equippedItems y estadísticas base
+    // Inicializar héroes con equippedItems, bagItems y estadísticas base
     const initialHeroes: Combatiente[] = combatientesData.map(hero => ({
       ...hero,
       equippedItems: {
         armor1: null,
         armor2: null,
-        weapon: null
+        weapon: null,
+        item: null  // Añade esto si no está ya incluido
       },
+      bagItems: [], // Añadir esta línea
       baseAttack: hero.attack,
       baseDefense: hero.defense,
       baseHealth: hero.health,
       baseMaxHealth: hero.maxHealth
     }));
     setHeroes(initialHeroes);
-
+  
     // Verificar si hay un héroe seleccionado en el estado de la ubicación
     if (location.state?.selectedHero) {
       setSelectedHero(location.state.selectedHero);
@@ -56,14 +60,26 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
   };
 
   const handleHeroSelect = (hero: Combatiente) => {
-    const updatedHero = {
-      ...hero,
-      baseAttack: hero.attack,
-      baseDefense: hero.defense,
-      baseHealth: hero.health,
-      baseMaxHealth: hero.maxHealth
-    };
-    setSelectedHero(prevHero => prevHero && prevHero._id === hero._id ? null : updatedHero);
+    if (selectedHero && selectedHero._id === hero._id) {
+      // Deseleccionar héroe
+      setSelectedHero(null);
+    } else {
+      // Seleccionar nuevo héroe
+      const updatedHero = {
+        ...hero,
+        baseAttack: hero.baseAttack || hero.attack,
+        baseDefense: hero.baseDefense || hero.defense,
+        baseHealth: hero.baseHealth || hero.health,
+        baseMaxHealth: hero.baseMaxHealth || hero.maxHealth,
+        attack: hero.baseAttack || hero.attack,
+        defense: hero.baseDefense || hero.defense,
+        health: hero.baseHealth || hero.health,
+        maxHealth: hero.baseMaxHealth || hero.maxHealth,
+        equippedItems: hero.equippedItems || { armor1: null, armor2: null, weapon: null, item: null },
+        bagItems: hero.bagItems || []
+      };
+      setSelectedHero(updatedHero);
+    }
     onHeroSelect(hero._id);
   };
 
@@ -97,6 +113,11 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
     }
   }, [location.state]);
 
+  const handleFlipCard = (heroId: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setFlippedCards(prev => ({ ...prev, [heroId]: !prev[heroId] }));
+  };
+
   return (
     <div className={styles.lobbyContent}>
       <h1 className={styles.gameTitle}>The Nexus Battle III</h1>
@@ -105,9 +126,15 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
         {heroes.map((hero) => (
           <div
             key={hero._id}
-            className={`${styles.heroCard} ${selectedHero && selectedHero._id === hero._id ? styles.flipped : ''}`}
+            className={`${styles.heroCard} ${selectedHero && selectedHero._id === hero._id ? styles.selected : ''} ${flippedCards[hero._id] ? styles.flipped : ''}`}
             onClick={() => handleHeroSelect(hero)}
           >
+            <button
+              className={styles.flipButton}
+              onClick={(e) => handleFlipCard(hero._id, e)}
+            >
+              ↺
+            </button>
             <div className={styles.heroCardInner}>
               <div className={styles.heroCardFront}>
                 <img className={styles.heroImage} src={heroImages[hero.type]} alt={hero.name} />
