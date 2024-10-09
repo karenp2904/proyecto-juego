@@ -55,6 +55,35 @@
   justify-content: center;
 }
 
+.heroCard.flipped .heroCardInner {
+  transform: rotateY(180deg);
+}
+
+.flipButton {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.flipButton:hover {
+  transform: scale(1.1) rotate(180deg);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
 .heroCard {
   width: 100%;
   max-width: 200px;
@@ -65,9 +94,8 @@
 }
 
 .heroCard.selected {
-  box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0.8); /* Efecto de iluminación */
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño para dar énfasis */
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 30px 15px rgba(255, 215, 0, 0.8);
+  transform: scale(1.05);
 }
 
 .heroCardInner {

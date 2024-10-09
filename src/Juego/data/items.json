@@ -1,0 +1,82 @@
+[
+    {
+      "id": "item1",
+      "name": "Pinchos de escudo",
+      "type": "Item",
+      "slot": "Item",
+      "image": "PinchosDeEscudo.png",
+      "effects": {
+        "specialEffect": "Si el ataque del oponente es menor que la defensa del guerrero, el oponente recibe +1 de daño"
+      },
+      "dropChance": 20,
+      "compatibleHeroes": ["Tanque"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "item2",
+      "name": "Empuñadura de Furia",
+      "type": "Item",
+      "slot": "Item",
+      "image": "EmpunaduraDeFuria.png",
+      "effects": {
+        "damageOverTime": 1,
+        "duration": 2,
+        "health": -1
+      },
+      "dropChance": 10,
+      "compatibleHeroes": ["Armas"],
+      "Heroe": "Guerrero"
+    },
+    {
+      "id": "item3",
+      "name": "Anillo para Piro-explosión",
+      "type": "Item",
+      "slot": "Item",
+      "image": "AnilloParaPiro-Explosion.png",
+      "effects": {
+        "attack": 3
+      },
+      "dropChance": 7,
+      "compatibleHeroes": ["Fuego"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "item4",
+      "name": "Libro de la ventisca helada",
+      "type": "Item",
+      "slot": "Item",
+      "image": "LibroDeLaVentiscaHelada.png",
+      "effects": {
+        "attack": 2
+      },
+      "dropChance": 10,
+      "compatibleHeroes": ["Hielo"],
+      "Heroe": "Mago"
+    },
+    {
+      "id": "item5",
+      "name": "Veneno lacerante",
+      "type": "Item",
+      "slot": "Item",
+      "image": "VenenoLacerante.png",
+      "effects": {
+        "specialEffect": "-1 al poder de oponente. Solo aplica cada dos turnos."
+      },
+      "dropChance": 9,
+      "compatibleHeroes": ["Veneno"],
+      "Heroe": "Picaro"
+    },
+    {
+      "id": "item6",
+      "name": "Mancuerna yugular",
+      "type": "Item",
+      "slot": "Item",
+      "image": "MancuernaYugular.png",
+      "effects": {
+        "specialEffect": "Explota por 2 el valor en turno causado por la cierra sangrienta en el oponente"
+      },
+      "dropChance": 8,
+      "compatibleHeroes": ["Machete"],
+      "Heroe": "Picaro"
+    }
+  ]
