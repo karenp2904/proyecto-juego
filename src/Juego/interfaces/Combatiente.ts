@@ -3,7 +3,7 @@
 export interface Equipment {
   id: string;
   name: string;
-  type: 'Armadura' | 'Arma';  // Cambiado de 'Armadura' | 'Arma'
+  type: 'Armadura' | 'Arma' | 'Item';
   slot: string;
   image: string;
   effects: {
@@ -15,6 +15,7 @@ export interface Equipment {
     opponentCriticalChance?: number;
     damageOverTime?: number;
     duration?: number;
+    specialEffect?: string;
   };
   dropChance: number;
   compatibleHeroes: string[];
@@ -39,7 +40,10 @@ export default interface Combatiente {
     armor1: Equipment | null;
     armor2: Equipment | null;
     weapon: Equipment | null;
+    item: Equipment | null; // Nuevo slot para ítems
   };
+  bagItems: Equipment[]; // Add this line
+ 
 
   baseAttack: number;
   baseDefense: number;
@@ -48,3 +52,4 @@ export default interface Combatiente {
   abilities: string[];
   image: string;
 }
+
