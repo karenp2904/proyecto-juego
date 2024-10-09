@@ -11,6 +11,7 @@ import barbaroTanque from '../assets/BarbaroTanque.png';
 import picaroVeneno from '../assets/PicaroVeneno.png';
 import barbaroArmas from '../assets/Barbaro.png';
 import magoHielo from '../assets/MagoHielo.png';
+import { Router } from '../../Router/Router';
 
 interface LobbyProps {
   onStartGame: (selectedHero: Combatiente) => void;
@@ -87,12 +88,13 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
     if (selectedHero) {
       onStartGame(selectedHero);
     }
+    navigate(Router.juego)
   };
 
   const handleEquipHero = () => {
     if (selectedHero) {
       onEquipHero(selectedHero);
-      navigate('/inventario', { 
+      navigate(Router.bolsa, { 
         state: { 
           hero: selectedHero,
           heroesData: heroes // Pasar todos los héroes al inventario

@@ -34,11 +34,9 @@
 }
 
 
-
-
-
 .product-image {
     width: 50%;
+    height: 20%;
     margin-top: 4%;
     object-fit: cover;
     border-radius: 10px;
@@ -84,20 +82,24 @@
   .bid-credits , .buy-credits{
     width: 80px;
     background-color: #256d75 ;
-    padding: 5px 10px;
+    padding: 10px 10px;
     border-radius: 5px;
     font-size: 15px;
     font-weight: bold;
     color: #0f0e0e;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     margin:2%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
    
   }
   .bid-credits{
     margin-right: 1%;
   }
   .buy-credits{
-    margin-right: 8%;
+    margin-right: 7%;
   }
   .time-remaining {
     width: 80px;
@@ -131,6 +133,7 @@
   .coin-icon {
     width: 25px; /* Ajusta el tamaño de la moneda */
     height: 25px;
+    
   }
   @keyframes pulse {
     0% {

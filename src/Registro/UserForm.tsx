@@ -40,8 +40,11 @@ const UserForm: React.FC = () => {
         securityQuestion3: '',
     });
 
-    const existingNicknames = ['coolguy', 'techmaster', 'codewizard', 'quicklearner', 'designguru', 'smartcookie', 'creativebee', 'logichacker', 'brightmind', 'sharpthinker'];
-
+    const existingNicknames = [
+        'coolguy', 'techmaster', 'codewizard', 'quicklearner', 'designguru', 'smartcookie', 
+        'creativebee', 'logichacker', 'brightmind', 'sharpthinker',
+    ];
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
@@ -69,6 +72,37 @@ const UserForm: React.FC = () => {
         }
     };
 
+    const containsInvalidTerms = (nickname: string) => {
+        const forbiddenWords = [
+            // Groserías colombianas
+            'hijueputa', 'gonorrea', 'carechimba', 'marica', 'pendejo', 'guevon', 'mamon', 'pirobo', 'culicagao', 'zorra',
+            'caremondá', 'culicagado', 'malparido', 'careverga', 'chimba', 'verraco', 'cojudo', 'careculo', 'careguevo',
+            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 'jueputa','sapo', 'bigdick',
+            'dick','pussy','gay', 'gays','sapo perro','manacido','loparieroncagando','homosexual','malparida','gordo','gordofobico',
+            'gayelquelolea', 'gay el que lo lea', 'como', 'ojo que te cojo',
+            // Groserías y términos ofensivos de otros países de Latinoamérica
+            'chingado', 'culero', 'verga', 'boludo', 'pelotudo', 'pajero', 'cabrón', 'pendeja', 'culiao', 'gilipollas', 
+            'mierda', 'carajo', 'cabronazo', 'putazo', 'forro', 'tarado', 'baboso', 'mequetrefe', 'mamaguevo', 'coño', 
+            'carapicha', 'maldito', 'destroyerpussy','triplehijueputa','tripplejueputa','triplehp',
+    
+            // Nombres de celebridades
+            'shakira', 'maluma', 'jbalvin', 'messi', 'cristiano', 'badbunny', 'thalia', 'ricky', 'daddyyankee', 'jlo', 
+            'sofiavergara', 'karolg', 'camilo', 'luisfonsi', 'beckham', 'kardashian', 'kendall', 'kanye', 'rihanna', 
+            'beyonce', 'drake',
+    
+            // Nombres de políticos
+            'uribe', 'juan manuel santos','Juan Mauel Santo','santos', 'gustavo petro','petro', 'maduro', 'chavez', 'duque', 'obama', 'trump', 'biden', 'pinochet', 'castro', 
+            'bolsonaro', 'lula', 'fernandez', 'kirchner', 'boric', 'ortega', 'morales', 'lopezobrador', 'guzman',
+    
+           
+        ];
+    
+        // Verifica si el apodo contiene alguna de las palabras prohibidas
+        return forbiddenWords.some(word => nickname.toLowerCase().includes(word));
+    };
+    
+    
+
     const validateForm = () => {
         const newErrors = {
             name: '',
@@ -82,24 +116,34 @@ const UserForm: React.FC = () => {
             securityQuestion3: '',
         };
         const nameSurnameRegex = /^[A-Za-z]+$/;
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/; // Al menos una mayúscula, un carácter especial, un número y longitud mínima de 8
+
+        const trimmedName = formData.name.replace(/\s+/g, ''); // Elimina todos los espacios
+        const trimmedSurname = formData.name.replace(/\s+/g, ''); // Elimina todos los espacios
 
         let isValid = true;
 
         if (!formData.name) {
             newErrors.name = 'El nombre es requerido.';
             isValid = false;
-        } else if (!nameSurnameRegex.test(formData.name)) {
+        } else if (!nameSurnameRegex.test(trimmedName)) {
             newErrors.name = 'El nombre solo puede contener letras.';
+            isValid = false;
+        }else if (containsInvalidTerms(formData.name)) {
+            newErrors.name = 'El nombre contiene términos no permitidos.';
             isValid = false;
         }
 
         if (!formData.surname) {
             newErrors.surname = 'El apellido es requerido.';
             isValid = false;
-        } else if (!nameSurnameRegex.test(formData.surname)) {
+        } else if (!nameSurnameRegex.test(trimmedSurname)) {
             newErrors.surname = 'El apellido solo puede contener letras.';
+            isValid = false;
+        }else if (containsInvalidTerms(formData.surname)) {
+            newErrors.surname = 'El apellido contiene términos no permitidos.';
             isValid = false;
         }
 
@@ -107,15 +151,22 @@ const UserForm: React.FC = () => {
             newErrors.nickname = 'El apodo es requerido.';
             isValid = false;
         } else if (existingNicknames.includes(formData.nickname.toLowerCase())) {
-            newErrors.nickname = 'El apodo ya existe. Por favor, elija un apodo diferente.';
+            newErrors.nickname = 'El apodo ya existe o no es válido. Por favor, elija uno diferente.';
+            isValid = false;
+        } else if (containsInvalidTerms(formData.nickname)) {
+            newErrors.nickname = 'El apodo contiene términos no permitidos.';
             isValid = false;
         }
+        
 
         if (!formData.email) {
             newErrors.email = 'El correo electrónico es requerido.';
             isValid = false;
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = 'El correo electrónico no es válido.';
+            isValid = false;
+        }else if (containsInvalidTerms(formData.email)) {
+            newErrors.email = 'Contiene términos no permitidos.';
             isValid = false;
         }
 
@@ -134,13 +185,22 @@ const UserForm: React.FC = () => {
         if (!formData.securityQuestion1) {
             newErrors.securityQuestion1 = 'Esta respuesta es requerida.';
             isValid = false;
+        }else if (containsInvalidTerms(formData.securityQuestion1)) {
+            newErrors.securityQuestion1 = 'Contiene términos no permitidos.';
+            isValid = false;
         }
         if (!formData.securityQuestion2) {
             newErrors.securityQuestion2 = 'Esta respuesta es requerida.';
             isValid = false;
+        }else if (containsInvalidTerms(formData.securityQuestion2)) {
+            newErrors.securityQuestion2 = 'Contiene términos no permitidos.';
+            isValid = false;
         }
         if (!formData.securityQuestion3) {
             newErrors.securityQuestion3 = 'Esta respuesta es requerida.';
+            isValid = false;
+        }else if (containsInvalidTerms(formData.securityQuestion3)) {
+            newErrors.securityQuestion3 = 'Contiene términos no permitidos.';
             isValid = false;
         }
 
@@ -156,7 +216,6 @@ const UserForm: React.FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validateForm()) {
-            console.log('Formulario enviado correctamente:', formData);
             axios.post( `${Environment.getDomain()}/api/registro`, formData )
             handleToLogin()
         }
@@ -266,7 +325,7 @@ const UserForm: React.FC = () => {
                             <input 
                                 type="text" 
                                 name="securityQuestion1" 
-                                id='form-questions'
+                                id='form-questions1'
                                 className={`form-control ${errors.securityQuestion1 && 'input-error'}`} 
                                 placeholder="¿Cuál es el nombre de tu primera mascota?" 
                                 value={formData.securityQuestion1} 
@@ -279,7 +338,7 @@ const UserForm: React.FC = () => {
                             <input 
                                 type="text" 
                                 name="securityQuestion2" 
-                                id='form-questions'
+                                id='form-questions2'
                                 className={`form-control ${errors.securityQuestion2 && 'input-error'}`} 
                                 placeholder="¿En qué ciudad naciste?" 
                                 value={formData.securityQuestion2} 
@@ -291,7 +350,7 @@ const UserForm: React.FC = () => {
                             <input 
                                 type="text" 
                                 name="securityQuestion3" 
-                                id='form-questions'
+                                id='form-questions3'
                                 className={`form-control ${errors.securityQuestion3 && 'input-error'}`} 
                                 placeholder="¿Cuál es tu color favorito?" 
                                 value={formData.securityQuestion3} 

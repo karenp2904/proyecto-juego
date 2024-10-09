@@ -57,7 +57,7 @@ export const useUpdateUserCredits = () => {
     React.useEffect(() => {
         const intervalId = setInterval(() => {
             updateUserData(); // Actualizar los datos del usuario
-        }, 30000); 
+        }, 10000); 
 
         
         return () => clearInterval(intervalId);

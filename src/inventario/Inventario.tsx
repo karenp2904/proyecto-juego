@@ -10,6 +10,8 @@ import "./Style.css";
 import BoxEstadisticas from "./componentes/estadisticas";
 import ObjDetalle from "./componentes/objetoDetalle";
 import axios from "axios";
+import Environment from "../shared/Environment";
+import { useAuth } from "../hooks/useAuth";
 
 interface DroppableCuadradoProps {
   id: UniqueIdentifier;
@@ -37,11 +39,13 @@ function Inventario() {
   const [inventoryPage, setInventoryPage] = useState(1);
   //const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
 
+  const user = useAuth(s => s.user);
+
   useEffect(() => {
     const obtenerInventario = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/inventary/66fd53b9eb98e9e84e53ef04`
+          `${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`
         );
         const formattedItems = response.data.inventario.reduce(
           (
@@ -68,9 +72,10 @@ function Inventario() {
     const obtenerInventario_game = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/inventary_game/66fd53b9eb98e9e84e53ef04`
+          `${Environment.getDomainInventory()}/inventary_game/${user?.iduser.toString()}`
         );
-        const formattedItems = response.data.inventario.reduce(
+       console.log(await response.data)
+        const formattedItems = await response.data.inventario.reduce(
           (
             acc: { [key: string]: InventoryItem },
             item: { objetoId: InventoryItem; active: boolean },

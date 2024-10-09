@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './MyAccount.css';
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { Router } from "../Router/Router";
 import User from '../types/User';
-
+import { Router } from '../Router/Router';
+import { useNavigate } from "react-router-dom";
 
 
 const MyAccount: React.FC = () => {
 
   const imgAvatar=require('../assets/Images/usuario.png');
+  const imgBoton=require('../assets/Images/atras.png');
   const user = useAuth(s => s.user);
   const navigate = useNavigate();
 
@@ -26,15 +26,21 @@ const MyAccount: React.FC = () => {
 
 
 
-  const handleUpdate = () => {
-    // enviar datos actualizados.
-    alert('Información actualizada con éxito.');
+  const handleReturn = () => {
+    navigate(Router.inicio)
   };
 
   return (
     <div className="fondo2">
       <div className="account-container">
-        <h2 className="account-title">Mi Cuenta</h2>
+        <div className='shared-cont'>
+        <button className="return-button3" type="button" onClick={handleReturn}>
+                      <img src={imgBoton} alt="volver" />
+            </button>
+            <h2 className="account-title">Mi Cuenta</h2>
+        </div>
+           
+
         <div className="avatar-section">
           <div className='cont-smallGroup'>
             <div className="avatar-circle">

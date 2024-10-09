@@ -9,6 +9,14 @@ import axios from 'axios';
 import ConfirmationPanel from '../Confirmacion/ConfirmationPanel';
 import Environment from "../../shared/Environment";
 
+interface ProductData {
+    _id: string;
+    objetoId: {
+      name: string;
+      type: string;
+      image: string;
+    };
+  }
 
 const AddAuction: React.FC = () => {
 
@@ -32,8 +40,8 @@ const AddAuction: React.FC = () => {
      // Método para obtener los productos subastados
      const fetchProducts = async () => {
         try {
-    /*
-            const response = await fetch(`${Environment.getDomainInventory()}/inventary/:${user?.iduser}`, {
+    
+            const response = await fetch(`${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`, {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
@@ -41,21 +49,45 @@ const AddAuction: React.FC = () => {
               });
           
               if (response.ok) {
-                console.log(await response.json)
-                const data= await response.json
+                const data= await response.json()
+              
                 console.log(data)
+                const products: Product[] = data.inventario.map((productData: ProductData) => {
+                    // Aquí asignamos la URL de la imagen dependiendo de la descripción
+                    const imageUrl = productData.objetoId.type?.toLowerCase() === 'item' // Cambié 'item.description' por 'productData.objetoId.type'
+                        ? `/${productData.objetoId.image}` // Agregar '/' solo si la descripción es 'item'
+                        : productData.objetoId.image;
+                
+                    // Si 'imageUrl' ya comienza con '/', eliminar el duplicado
+                    const finalImageUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+                
+                    return {
+                        id: productData._id,
+                        name: productData.objetoId.name,
+                        description: productData.objetoId.type, // Asegúrate de que esto es correcto
+                        imageUrl: finalImageUrl, // Usa la URL final procesada
+                        buyNowPrice: 0, // Ajusta según sea necesario
+                        auctionEndTime: 0 // Ajusta según sea necesario
+                    };
+                });
+                
+                console.log("Mapped Products:", products);
+                
+                console.log(products)
+              
+                setInventory(products)
           
               }
-              */
+            
            // const response = await fetch(''); 
            // const data = await response.json();
-       
+       /*
            const data: Product[] =  [
             {
                 id: '1',
-                name: 'Espada Épica',
+                name: 'Espada De Una Mano',
                 description: 'Una espada legendaria con poderosos encantamientos.',
-                imageUrl: '/Images/imagenPruebaSubasta.jpg',
+                imageUrl: '/Images/Armas/EspadaDeUnaMano.png',
                 currentBid: 100,
                 buyNowPrice: 500,
                 auctionEndTime: 2,
@@ -80,14 +112,18 @@ const AddAuction: React.FC = () => {
             },
            
             
-        ];
-        setInventory(data)
-       
+        ];*/
+        
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }
     };
 
+    const getImagePath = (itemName: string): string => {
+        const formattedName = itemName.toLowerCase().replace(/\s+/g, '-');
+        return `/Images/${formattedName}.png`; // Ruta directa a la carpeta 'public'
+    };
+    
    
     useEffect(() => {
         fetchProducts();
@@ -201,11 +237,16 @@ const AddAuction: React.FC = () => {
         if (selectedProduct) {
             const productToAdd = {
                 idproduct: selectedProduct.id,
+                name:selectedProduct.name,
+                image:selectedProduct.imageUrl,
+                description:selectedProduct.description,
                 iduser: user?.iduser,
                 currentBid: auctionDetails.currentBid,
                 buyNowPrice: auctionDetails.buyNowPrice,
                 auctionEndTime: auctionDetails.auctionEndTime,
             };
+
+            console.log(productToAdd)
 
             const aprobar= await changeCredits(Number(productToAdd.auctionEndTime))
             // Verifica que el valor inicial sea menor que el valor de compra inmediata
@@ -234,29 +275,30 @@ const AddAuction: React.FC = () => {
         }
     }
 
-    const handleAgain = ()=>{
-        
-    }
-   
     return (
         <div className="auction-window">
             <div className="container ">
                
                 <div className="card p-4">
                
-                    <div className="row">
-                        <div className="col-md-8">
+                    <div className="row " id='fila'>
+                        <div className="col-md-10" id='inventario-panel1'>
                             <h4>Inventario del Jugador</h4>
                             
                             <div className="inventory-grid d-flex flex-wrap"  >
-                                {inventory.map((item) => (
+                            {inventory.length > 0 ? (
+                                inventory.map((item) => (
                                     <div key={item.id} className="card inventory-card m-3" onClick={() => handleSelectProduct(item)}>
-                                            <img src={item.imageUrl} className="card-img-top" alt={item.name}  />                    
-                                            <div className="card-body text-center">
-                                            <h5 className="card-title-auction ">{item.name}</h5>
+                                        <img src={item.imageUrl} className="card-img-top" alt={item.name} />
+                                        <div className="card-body text-center">
+                                            <h5 className="card-title-auction">{item.name}</h5>
                                         </div>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <p className='nofound-products'>No se encontraron productos en el inventario.</p>
+                            )}
+
                             </div>
                         </div>
                     </div>

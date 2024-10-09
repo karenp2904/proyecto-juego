@@ -4,6 +4,7 @@ import background from "../assets/dungeon-background.png";
 import flechaAtras2 from '../assets/flechaAtras2.png';
 import Button from '../components/Button';
 import "../styles/UnirseAPartida.css";
+import { Router } from '../../Router/Router';
 
 interface IUnirseaPartidaPageProps {}
 
@@ -11,7 +12,7 @@ const UnirseapartidaPage: React.FunctionComponent<IUnirseaPartidaPageProps> = (p
   const navigate = useNavigate();
 
   const handleNavigateToCrearPartida = () => {
-    navigate('/crearpartida');
+    navigate(Router.crearpartida);
   };
 
   const matchData = [

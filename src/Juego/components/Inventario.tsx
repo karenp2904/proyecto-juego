@@ -30,6 +30,7 @@ import FuegoFatuo from '../assets/FuegoFatuo.png';
 import VenasHeladas from '../assets/VenasHeladas.png';
 import VisionBorrosa from '../assets/Vision Borrosa.png';
 import SierraSangrienta from '../assets/SierraSangrienta.png';
+import { Router } from "../../Router/Router";
 
 import AnilloParaPiroExplosion from '../assets/AnilloParaPiro-Explosion.png';
 import EmpunaduraDeFuria from '../assets/EmpunaduraDeFuria.png';
@@ -294,6 +295,7 @@ const Inventario: React.FC = () => {
         baseMaxHealth: baseStats.maxHealth,
       };
       
+
       // Crear una lista de todos los IDs de ítems equipados y en la bolsa
       const equippedAndBagItemIds = [
         ...Object.values(equippedItems).filter(item => item !== null).map(item => item!.id),
@@ -303,7 +305,9 @@ const Inventario: React.FC = () => {
       // Filtrar el inventario para excluir los ítems equipados y en la bolsa
       const updatedInventoryItems = inventoryItems.filter(item => !equippedAndBagItemIds.includes(item.id));
       
-      navigate('/lobby', { 
+    
+      navigate(Router.juego, { 
+
         state: { 
           selectedHero: updatedHero,
           inventoryItems: updatedInventoryItems,

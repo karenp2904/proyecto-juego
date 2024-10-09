@@ -27,8 +27,6 @@ function Login() {
         return;
       }
   
-      console.log("Username:", email);
-      console.log("Password:", password);
   
       // Realizar una solicitud GET con Axios
       const response = await fetch(`${Environment.getDomain()}/api/auth`, {
@@ -39,19 +37,24 @@ function Login() {
         body: JSON.stringify({ email: email, password }),
       });
   
-      console.log(response)
       if (response.ok) {
         const data = await response.json();
 
      
-        console.log('Login exitoso:', data.usuario);
+      
 
         if(data.usuario){
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
-          setCredits(data.usuario.iduser,200)
-          navigate(Router.inicio);
+          //setCredits(data.usuario.iduser,200)
+          if(data.usuario.surname=='admin' ||data.usuario.name=='Admin'){
+
+            navigate(Router.adminInventario);
+          }else{
+            navigate(Router.inicio);
+
+          }
   
           //const usuarioJSON = JSON.stringify(data.usuario);
           //console.log('Información del usuario en JSON:', usuarioJSON);

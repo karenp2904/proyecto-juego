@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import background from "../assets/dungeon-background.png";
 import Button from '../components/Button';
 import "../styles/ModosDeJuego.css";
+import { Router } from '../../Router/Router';
 
 interface IModosDeJuegoProps {}
 
@@ -10,8 +11,9 @@ const ModosDeJuego: React.FunctionComponent<IModosDeJuegoProps> = (props) => {
   const navigate = useNavigate();
 
   const handleJugadorVsMaquina = () => {
-    navigate('/lobby');
+    navigate(Router.juego);
   };
+
 
   return (
     <div

@@ -23,23 +23,24 @@ export default function NavBar() {
     navigate(Router.subasta);
   };
   const irjuego = () => {
-    navigate(Router.juego);
+    navigate(Router.crearpartida);
   };
 
   return (
     <nav className="NavBar">
       <div className="Container">
         <ul>
+          
+          <li>
+            <a href="">Misiones</a>
+          </li>
+          <li>
+            <a href="">Torneos</a>
+          </li>
           <li>
             <a href="#" onClick={irjuego}>
               Jugar Online
             </a>
-          </li>
-          <li>
-            <a href="/">Misiones</a>
-          </li>
-          <li>
-            <a href="">Torneos</a>
           </li>
           <li>
             <a href="#" onClick={irSubasta}>
@@ -59,7 +60,7 @@ export default function NavBar() {
             </button>
           </form>
 
-          <div className="show-credits">
+          <div className="show-credits1">
             <span className="credits-user">
               {user?.credits}{" "}
               <img
