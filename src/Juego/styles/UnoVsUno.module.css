@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: url('../assets/fondoCombate.jpg') no-repeat center center; /*src/assets/fondoCombate.jpg*/
+  background: url('src/assets/fondoCombate.jpg') no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -186,3 +186,4 @@
     flex-wrap: wrap;
   }
 }
+
