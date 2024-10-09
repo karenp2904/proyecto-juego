@@ -129,7 +129,7 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                   isPlayerAttacking ? styles.jugadorIconAttack : ""
                 } ${updatedJugador.type === 'Fuego' || updatedJugador.type === 'Hielo' ? styles.magoImage : ''}`}
                 alt="Jugador"
-                src={updatedJugador.image}
+                src={`/Images/${updatedJugador.image}`}
               />
               {isPlayerShielding && (
                 <div className={styles.shieldEffect}>🛡️</div>
@@ -150,7 +150,7 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                   isEnemyAttacking ? styles.enemigoIconAttack : ""
                 }`}
                 alt="Enemigo"
-                src={enemigo?.image || "src/assets/BarbaroTanque.png"}
+                src={`/Images/${enemigo?.image}` || "./Juego/assets/BarbaroTanque.png"}
               />
               {isEnemyShielding && (
                 <div className={styles.shieldEffect}>🛡️</div>

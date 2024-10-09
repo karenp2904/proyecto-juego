@@ -723,11 +723,11 @@ const iniciarTurnoJugador = () => {
   const getActionImage = (actionName: string) => {
     switch (actionName) {
       case "Shield Throw":
-        return "src/assets/AccionPlus.png";
+        return "/Images/AccionPlus.png";
       case "Mano de piedra":
-        return "src/assets/Escudo.png";
+        return "/Images/Escudo.png";
       default:
-        return "src/assets/default-action.png"; // You might want to add a default image
+        return "/Images/default-action.png"; // You might want to add a default image
     }
   };
 
@@ -860,7 +860,7 @@ const iniciarTurnoJugador = () => {
                   onClick={(e) => handleAtaque(e)}
                   disabled={!isJugadorTurn || !isOpponentSelected || turnEnded}
                 >
-                  <img src="src/assets/ataque.png" alt="Atacar" className={styles.attackButtonImage} />
+                  <img  src={`/Images/Ataque.png}`} alt="Atacar" className={styles.attackButtonImage} />
                 </button>
               </div>
               <div className={styles.attackSkillButtons1}>
@@ -873,7 +873,7 @@ const iniciarTurnoJugador = () => {
                   disabled={!isJugadorTurn || !isOpponentSelected || powerPointsLeft < habilidad.powerCost || actionUsed || shieldThrowUsed}
                   >
                   <img 
-                    src={getActionImage(habilidad.name)} 
+                    src={`/Images/${getActionImage(habilidad.name)}`} 
                     alt={habilidad.name} 
                     className={styles.actionButtonImage} 
                   />

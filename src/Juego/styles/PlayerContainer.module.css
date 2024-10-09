@@ -101,9 +101,9 @@
 }
 
 .timerContainer {
-  position: absolute;
-  top: 200px; /* Adjust this value to position the timer above the game area */
-  left: 50%;
+  position: relative;
+  top: -130%; /* Adjust this value to position the timer above the game area */
+  left: 4%;
   transform: translateX(-50%);
   z-index: 10;
 }

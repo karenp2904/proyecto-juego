@@ -57,33 +57,37 @@ export const useUpdateUserCredits = () => {
     React.useEffect(() => {
         const intervalId = setInterval(() => {
             updateUserData(); // Actualizar los datos del usuario
-        }, 10000); 
+        }, 8000); 
 
         
         return () => clearInterval(intervalId);
     }, [updateUserData]);
 };
 
-async function getCredits(iduser:number){
+async function getCredits(iduser: number) {
+    console.log(iduser + "creditosUser");
+    console.log(JSON.stringify({ iduser: iduser }));
 
-    console.log(iduser + "creditosUser")
-    console.log(JSON.stringify({iduser: iduser}))
+    try {
+        const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ iduser: iduser }),
+        });
 
-    const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({iduser: iduser}),
-    });
-
-    if (response.ok) {
-    
-      const data= await response.json()
-      console.log(data.usuario + 'creditosUser')
-      return data.usuario
-
-    }else{
-      return null
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.usuario + 'creditosUser');
+            return data.usuario;
+        } else {
+            console.error('Error en la respuesta de la API:', response.status, response.statusText);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+        return null;
     }
 }
+
