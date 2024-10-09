@@ -43,28 +43,56 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
                 }else{ 
                     console.log(`Compra inmediata: ${product.buyNowPrice}`);
 
-                    const response = await fetch(`${Environment.getDomain()}/api/buyInmediatly`, {
-                        method: 'POST',
-                        headers: {
-                        'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ iduser: user.iduser, idauction: product.idAuction, bidAmount: product.buyNowPrice }),
-                    });
-
-
-                    if (response.ok) {
+                    try {
+                        const response = await fetch(`${Environment.getDomain()}/api/buyInmediatly`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                iduser: user.iduser,
+                                idauction: product.idAuction,
+                                bidAmount: product.buyNowPrice,
+                            }),
+                        });
+                    
+                        // Verificar si la respuesta fue exitosa
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Error en la compra inmediata:', errorData);
+                            setConfirmationMessage('Hubo un problema con su compra inmediata. Por favor, inténtelo nuevamente.');
+                            setShowConfirmation(true);
+                            return;
+                        }
+                    
+                        // Obtener datos de la respuesta si es exitosa
                         const data = await response.json();
-                        console.log(data)
-                        Notificaciones.anunciarGanador(product.idAuction)
+                        console.log('Compra exitosa:', data);
+                    
+                        // Notificar al ganador
+                        try {
+                            Notificaciones.anunciarGanador(product.idAuction);
+                        } catch (error) {
+                            console.error('Error al notificar al ganador:', error);
+                        }
+                    
+                        // Confirmar la compra al usuario
                         setConfirmationMessage(`Su compra por ${product.buyNowPrice} ha sido aprobada`);
                         setShowConfirmation(true);
-                        setCredits(user.iduser,product.buyNowPrice)
-
-
-                    } else {
-                        const errorData = await response.json();
-                        console.log('Error:', errorData);
+                    
+                        // Actualizar créditos del usuario
+                        try {
+                            setCredits(user.iduser,(user.credits-product.buyNowPrice))
+                        } catch (error) {
+                            console.error('Error al actualizar los créditos del usuario:', error);
+                        }
+                    
+                    } catch (error) {
+                        console.error('Error en la solicitud de compra inmediata:', error);
+                        setConfirmationMessage('Error de conexión. Por favor, revise su conexión y vuelva a intentarlo.');
+                        setShowConfirmation(true);
                     }
+                    
                     
                 }
 
@@ -85,37 +113,47 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
                         console.log( user.iduser, '-',product.idAuction,'-', bidAmount )
                           // Realizar una solicitud GET con Axios
+                          try {
                             const response = await fetch(`${Environment.getDomain()}/api/new/bid`, {
                                 method: 'POST',
                                 headers: {
-                                'Content-Type': 'application/json',
+                                    'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ iduser: user.iduser, idauction: product.idAuction, bidAmount: bidAmount }),
+                                body: JSON.stringify({
+                                    iduser: user.iduser,
+                                    idauction: product.idAuction,
+                                    bidAmount: bidAmount,
+                                }),
                             });
-
-
+                        
+                            // Verificar si la respuesta fue exitosa
+                            if (!response.ok) {
+                                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+                            }
+                        
                             if (response.ok) {
                                
                                 setConfirmationMessage(`Su oferta por ${bidAmount} ha sido aprobada`);
                                 setShowConfirmation(true);
-                                setCredits(user.iduser,bidAmount)
+                                setCredits(user.iduser,(user.credits-bidAmount))
 
                                 if(bidAmount>=product.buyNowPrice){
                                     Notificaciones.anunciarGanador(product.idAuction)
                                 }
 
 
-                            } else {
-                                const errorData = await response.json();
-                                console.log('Error:', errorData);
-                            }
+                            } 
+                        } catch (error) {
+                            console.error('Error al realizar la oferta:', error);
+                            alert('Hubo un problema al procesar tu oferta. Por favor, intenta de nuevo.');
+                            return null;
+                        }
                             
                         }
-        
     
-                } else {
-                    console.log('Por favor, ingresa un valor de oferta.');
-                }
+                    } else {
+                        console.log('Por favor, ingresa un valor de oferta.');
+                    }
             }else{
                 
             }
@@ -130,47 +168,57 @@ const BidForm: React.FC<BidFormProps> = ({ product, onClose }) => {
 
     async function setCredits(idUser:number, credits:number){
         // Realizar una solicitud GET con Axios
-        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ iduser: idUser , credits:credits}),
-        });
-    
-        if (response.ok) {
-          console.log()
-          return response.json()
-    
-        }else{
-          return null
-        }
-    }
-
-    async function getCredits(iduser:number){
-        // Realizar una solicitud GET con Axios
-        console.log(iduser + "ksksk")
-        console.log(JSON.stringify({iduser: iduser}))
-
-        const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({iduser: iduser}),
-        });
-    
-        if (response.ok) {
+        try {
+            const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ iduser: idUser , credits:credits}),
+            });
         
-          const data= await response.json()
-          console.log(data.usuario)
-          return data.usuario
-    
-        }else{
-          return null
+            if (response.ok) {
+            console.log()
+            return response.json()
+        
+            }else{
+            return null
+            } 
+        } catch (error) {
+            // Captura errores 
+            console.error('Error al realizar la solicitud:', error);
+            return null;
         }
     }
 
+    async function getCredits(iduser: number) {
+        console.log(iduser + "ksksk");
+        console.log(JSON.stringify({ iduser: iduser }));
+    
+        try {
+            const response = await fetch(`${Environment.getDomain()}/api/getCredits`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ iduser: iduser }),
+            });
+    
+            if (!response.ok) {
+                console.warn(`Error en la solicitud: ${response.status} ${response.statusText}`);
+                return null;  // Maneja el caso cuando la respuesta no es exitosa
+            }
+    
+            const data = await response.json();
+            console.log(data.usuario);
+            return data.usuario;
+        } catch (error) {
+            // Captura errores de red o excepciones en la solicitud
+            console.error('Error al realizar la solicitud:', error);
+            return null;
+        }
+    }
+    
 
     const handleCloseConfirmation = () => {
         setShowConfirmation(false);

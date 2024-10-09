@@ -29,6 +29,6 @@
     "baseDefense": 11,
     "baseHealth": 44,
     "baseMaxHealth": 44,
-    "image": "src/assets/BarbaroTanque.png"
+    "image": "BarbaroTanque.png"
   }
 ]

@@ -364,7 +364,7 @@ const Inventario: React.FC = () => {
       <div className={styles.leftPanel}>
         <div className={styles.heroSection}>
           <div className={`${styles.heroImage} ${isHeroExcited ? styles.excited : ''}`}>
-            <img src={selectedHero?.image} alt={selectedHero?.name} />
+            <img src={`/Images/${selectedHero.image}`} alt={selectedHero?.name} />
           </div>
          <div className={styles.equippedItems}>
   {['armor1', 'armor2', 'weapon'].map((slot) => (
