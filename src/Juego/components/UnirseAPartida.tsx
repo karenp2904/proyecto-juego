@@ -27,7 +27,7 @@ const UnirseapartidaPage: React.FunctionComponent<IUnirseaPartidaPageProps> = (p
       <div className="content-wrapper">
         <div className="back-arrow">
           <img
-            src={flechaAtras2}
+            src={`/Images/${flechaAtras2}`}
             alt="Flecha Atrás"
             onClick={handleNavigateToCrearPartida}
           />
