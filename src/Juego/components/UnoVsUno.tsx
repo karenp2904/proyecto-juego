@@ -30,6 +30,8 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
   const [isEnemyShielding, setIsEnemyShielding] = useState(false);
   const navigate = useNavigate();
   const [showRewardPanel, setShowRewardPanel] = useState(false);
+  const [playerCredits, setPlayerCredits] = useState(0);
+
 
   
   
