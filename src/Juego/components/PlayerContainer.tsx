@@ -9,6 +9,7 @@ import accionesData from '../data/acciones.json';
 import efectosHeroeData from '../data/Efectosheroe.json'
 import EfectosHeroe from "../interfaces/EfectosHeroe";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../hooks/useAuth";
 
 interface ActiveEffect {
   value: number;
@@ -109,6 +110,10 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [effectsTimer, setEffectsTimer] = useState<NodeJS.Timeout | null>(null);
   const [activeEffects, setActiveEffects] = useState<ActiveEffects>({});
   const navigate = useNavigate();
+
+  
+  const user = useAuth(s => s.user);
+
   const [baseStats, setBaseStats] = useState({
     attack: 0,
     defense: 0,

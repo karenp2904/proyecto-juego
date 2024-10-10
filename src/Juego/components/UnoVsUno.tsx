@@ -19,6 +19,10 @@ interface UnoVsUnoProps {
 }
 
 const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, selectedHeroId }) => {
+
+
+
+
   const location = useLocation();
   const [updatedJugador, setUpdatedJugador] = useState<Combatiente | null>(jugadorInicial);
   const [enemigo, setEnemigo] = useState<Combatiente | null>(null);
@@ -28,6 +32,7 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
   const [isEnemyAttacking, setIsEnemyAttacking] = useState(false);
   const [isPlayerShielding, setIsPlayerShielding] = useState(false);
   const [isEnemyShielding, setIsEnemyShielding] = useState(false);
+
   const navigate = useNavigate();
   
   
