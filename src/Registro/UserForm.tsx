@@ -77,13 +77,15 @@ const UserForm: React.FC = () => {
             // Groserías colombianas
             'hijueputa', 'gonorrea', 'carechimba', 'marica', 'pendejo', 'guevon', 'mamon', 'pirobo', 'culicagao', 'zorra',
             'caremondá', 'culicagado', 'malparido', 'careverga', 'chimba', 'verraco', 'cojudo', 'careculo', 'careguevo',
-            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 'jueputa','sapo', 'bigdick',
+            'perra', 'puto', 'ñero', 'guevón','guevon', 'wevon', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 'jueputa','sapo', 'bigdick',
             'dick','pussy','gay', 'gays','sapo perro','manacido','loparieroncagando','homosexual','malparida','gordo','gordofobico',
-            'gayelquelolea', 'gay el que lo lea', 'como', 'ojo que te cojo',
+            'gayelquelolea', 'gay el que lo lea', 'como', 'ojo que te cojo','sapa', 'puta','monda',
             // Groserías y términos ofensivos de otros países de Latinoamérica
             'chingado', 'culero', 'verga', 'boludo', 'pelotudo', 'pajero', 'cabrón', 'pendeja', 'culiao', 'gilipollas', 
             'mierda', 'carajo', 'cabronazo', 'putazo', 'forro', 'tarado', 'baboso', 'mequetrefe', 'mamaguevo', 'coño', 
             'carapicha', 'maldito', 'destroyerpussy','triplehijueputa','tripplejueputa','triplehp',
+
+            'mrda',  'tetranutra','pito', 'piroba',  'carepicha','monda', 'culo',  'cuca','pitudo', 'paraco',  'nigga','mierda',
     
             // Nombres de celebridades
             'shakira', 'maluma', 'jbalvin', 'messi', 'cristiano', 'badbunny', 'thalia', 'ricky', 'daddyyankee', 'jlo', 

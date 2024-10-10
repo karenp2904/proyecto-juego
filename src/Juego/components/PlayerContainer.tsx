@@ -727,7 +727,7 @@ const iniciarTurnoJugador = () => {
       case "Mano de piedra":
         return "/Images/Escudo.png";
       default:
-        return "/Images/default-action.png"; // You might want to add a default image
+        return "/Images/AccionPlus.png"; // You might want to add a default image
     }
   };
 
