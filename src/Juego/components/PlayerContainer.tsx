@@ -251,7 +251,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
     return () => clearInterval(timer);
   }, [isJugadorTurn, gameOver, turnEnded]);
 
-  useEffect(() => {
+   useEffect(() => {
     if (gameOver) {
       if (jugador && jugador.health > 0) {
         onGameOver(true); // Jugador ganó
@@ -828,7 +828,7 @@ const handleSkillSelect = (habilidad: Acciones) => {
       const habilidadesConAtaqueAdicional = [
         "Shield Throw", "Embate sangriento", "Lanza de los dioses",
         "Misiles de magma", "Lluvia de hielo", "Flor de loto", "Cortada", "Agonía", "Machetazo",
-        "Mano de piedra", "Defensa feroz", "Vulcano", "Golpe de tormenta", "Pared de fuego", "Cono de hielo"
+        "Mano de piedra", "Defensa feroz", "Vulcano", "Golpe de tormenta", "Pared de fuego", "Cono de hielo", "Bola de hielo"
       ];
 
       if (habilidadesConAtaqueAdicional.includes(habilidad.name)) {

@@ -41,7 +41,11 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
       baseAttack: hero.attack,
       baseDefense: hero.defense,
       baseHealth: hero.health,
-      baseMaxHealth: hero.maxHealth
+      baseMaxHealth: hero.maxHealth,
+      baseDamage: hero.damage, // Añadimos baseDamage
+      powerPointsLeft: hero.powerPoints, // Asumiendo que inicialmente es igual a powerPoints
+      inventory: [], // Inicializamos como un array vacío si no está presente en combatientesData
+      abilities: hero.abilities || [],
     }));
     setHeroes(initialHeroes);
   

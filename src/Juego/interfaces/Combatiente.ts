@@ -24,7 +24,6 @@ export interface Equipment {
 
 export default interface Combatiente {
   _id: string;
-  name: string;
   type: string;
   level: number;
   powerPoints: number;
