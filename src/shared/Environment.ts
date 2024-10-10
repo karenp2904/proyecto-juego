@@ -18,7 +18,7 @@ export default class Environment{
 
     public static readonly getDomainAdminInventory=(): string =>{
         const PORT=  6000
-        const HOST= '34.23.21.25'
+        const HOST= '34.174.4.47'
         const PROTOCOL= process.env['PROTOCOL'] ?? 'http'
 
         return(`${PROTOCOL}://${HOST}`)
