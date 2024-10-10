@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'OCR A';
-  src: url('/fonts/OCRAEXT.TTF') format('truetype');
+  src: url('../../public/fonts/OCRAEXT.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  background-image: url('/backgroundC.jpeg');
+  background-image: url('../../public/backgroundC.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;
@@ -273,7 +273,7 @@ body {
   width: 100%;
   height: 100%;
   padding: 20px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(green-background.jpg);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('../../public/Designer.jpeg');
   background-size: cover;
   background-position: center;
   border-radius: 15px;
