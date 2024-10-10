@@ -24,7 +24,7 @@ const ModosDeJuego: React.FunctionComponent<IModosDeJuegoProps> = (props) => {
         <div className='content-container'>
           <h1 className='heading'>Modos De Juego</h1>
           <div className='button-group'>
-            <Button   onClick={() => {}} disabled>JUGADOR VS JUGADOR</Button>
+            <Button   onClick={() => {} } disabled>JUGADOR VS JUGADOR</Button>
             <Button  onClick={handleJugadorVsMaquina}>JUGADOR VS MAQUINA</Button>
             <Button onClick={() => {}} disabled>POR EQUIPOS</Button>
           </div>
