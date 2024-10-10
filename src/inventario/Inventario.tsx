@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import "./Style.css";
+import './Style.css'
 //import BoxEstadisticas from "./componentes/estadisticas";
 import ObjDetalle from "./componentes/objetoDetalle";
 import axios from "axios";
