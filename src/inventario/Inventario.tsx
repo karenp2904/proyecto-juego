@@ -7,6 +7,8 @@ import axios from "axios";
 import DroppableCuadrado from "./componentes/droppableCuadrado";
 import DraggableItem from "./componentes/draggableItem";
 import InventoryGrid from "./componentes/InventaryGrid";
+import Environment from "../shared/Environment";
+import { useAuth } from "../hooks/useAuth";
 
 interface InventoryItem {
   _id: string;
@@ -36,6 +38,8 @@ interface Effects {
 }
 
 function Inventario() {
+  const user = useAuth(s => s.user);
+
   const [items, setItems] = useState<{ [key: string]: InventoryItem | null }>(
     {}
   );
@@ -46,7 +50,7 @@ function Inventario() {
   useEffect(() => {
     const obtenerInventario = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/inventary/8`);
+        const response = await axios.get(`${Environment.getDomainInventory}/inventary/${user?.iduser.toString()}`);
         const formattedItems = response.data.inventario.reduce(
           (
             acc: { [key: string]: InventoryItem },
@@ -77,7 +81,7 @@ function Inventario() {
     const obtenerInventario_game = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/inventary_game/8`
+         `${Environment.getDomainInventory}/inventary_game/${user?.iduser.toString()}`
         );
         const formattedItems = response.data.inventario.reduce(
           (
