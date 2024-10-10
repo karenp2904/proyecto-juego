@@ -1,5 +1,6 @@
 import { FunctionComponent, Dispatch, SetStateAction, useState, useEffect, MouseEvent, useRef    } from "react";
 import styles from "../styles/PlayerContainer.module.css";
+import '../styles/global.css';
 import { Acciones } from "../interfaces/Acciones";
 import Combatiente from "../interfaces/Combatiente";
 //import batallaData from '../data/batalla.json';
@@ -14,8 +15,27 @@ interface ActiveEffect {
   duration: number;
 }
 
+interface BaseStats {
+  attack: number;
+  defense: number;
+  health: number;
+  maxHealth: number;
+  damage: number;
+}
+
 interface ActiveEffects {
   [key: string]: ActiveEffect;
+}
+
+interface SpecialEffects {
+  florDeLoto?: string;
+  [key: string]: string | undefined;
+}
+
+interface ExtendedCombatiente extends Combatiente {
+  immuneToPhysicalDamage?: boolean;
+  magicDamageReduction?: number;
+  returnDamage?: number;
 }
 
 type PlayerContainerProps = {
@@ -90,20 +110,30 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [activeEffects, setActiveEffects] = useState<ActiveEffects>({});
   const navigate = useNavigate();
   const [baseStats, setBaseStats] = useState({
-    attack: jugador?.baseAttack || jugador?.attack || 0, 
-    defense: jugador?.baseDefense || jugador?.defense || 0, 
-    health: jugador?.baseHealth || jugador?.health || 100, // Cambia 100 por un valor predeterminado razonable
-    maxHealth: jugador?.baseMaxHealth || jugador?.maxHealth || 100, // Cambia 100 por un valor predeterminado
+    attack: 0,
+    defense: 0,
+    health: 100,
+    maxHealth: 100,
+    damage: 0, // Inicializamos damage
+
   });
-  
-  
+  const [specialEffects, setSpecialEffects] = useState<SpecialEffects>({});
+  const [equipmentEffects, setEquipmentEffects] = useState<BaseStats>({
+    attack: 0,
+    defense: 0,
+    health: 0,
+    maxHealth: 0,
+    damage: 0,
+  });
+  const [selectedAction, setSelectedAction] = useState<Acciones | null>(null);
+  const [actionPerformed, setActionPerformed] = useState(false);
+  const [temporaryEffects, setTemporaryEffects] = useState<ActiveEffects>({});
 
 
+  
 
   
-  const getSelectedHeroId = () => {
-    return selectedHeroId;
-  };
+
   
   const [equippedItems, setEquippedItems] = useState<Combatiente['equippedItems']>({
     armor1: null,
@@ -115,109 +145,67 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   
   console.log("jugadorContainer renderizando. selectedHeroId:", selectedHeroId);
   
-  const initializePlayerStats = (jugador: Combatiente) => {
-    console.log("Inicializando estadísticas del jugador");
-    const newBaseStats = {
-      attack: jugador.baseAttack || jugador.attack,
-      defense: jugador.baseDefense || jugador.defense,
-      health: jugador.baseHealth || jugador.health,
-      maxHealth: jugador.baseMaxHealth || jugador.maxHealth
-    };
-    console.log("Nuevas estadísticas base:", newBaseStats);
 
-    setBaseStats(newBaseStats);
-    setJugadorVidaActual(newBaseStats.health);
-
-    const updatedPlayer = applyEquipmentEffects(jugador, newBaseStats);
-    console.log("Jugador actualizado:", updatedPlayer);
-
-    setJugador(updatedPlayer);
-    setPowerPointsLeft(updatedPlayer.powerPoints);
-    setEquippedItems(updatedPlayer.equippedItems);
-    setOriginalStats({
-      attack: updatedPlayer.attack,
-      defense: updatedPlayer.defense,
-      damage: updatedPlayer.damage || 0,
-    });
-  };
   
   useEffect(() => {
     if (jugador) {
-      console.log("Jugador inicial:", jugador);
-
-      const base = {
+      const newBaseStats = {
         attack: jugador.baseAttack || jugador.attack,
         defense: jugador.baseDefense || jugador.defense,
         health: jugador.baseHealth || jugador.health,
-        maxHealth: jugador.baseMaxHealth || jugador.maxHealth
+        maxHealth: jugador.baseMaxHealth || jugador.maxHealth,
+        damage: jugador.baseDamage || jugador.damage || 0,
       };
-      setBaseStats(base);
-      console.log("Estadísticas base establecidas:", base);
-      initializePlayerStats(jugador);
-
-      const updatedJugador = applyEquipmentEffects(jugador, base);
+      setBaseStats(newBaseStats);
+      
+      const updatedJugador = applyEquipmentEffects(jugador, newBaseStats);
       setJugador(updatedJugador);
-      setPowerPointsLeft(updatedJugador.powerPointsLeft);
+      setPowerPointsLeft(updatedJugador.powerPoints);
       setEquippedItems(updatedJugador.equippedItems);
-      setOriginalStats({ 
-        attack: updatedJugador.attack, 
-        defense: updatedJugador.defense, 
-        damage: updatedJugador.damage || 0, 
-      });
-  
-      console.log("Jugador actualizado con efectos de equipamiento:", updatedJugador);
-  
+      
       const habilidadesData = accionesData
-      .filter(a => a.heroType === updatedJugador.type && updatedJugador.level >= a.minLevel)
-      .map(habilidad => ({
-        ...habilidad,
-        effects: Object.fromEntries(
-          Object.entries(habilidad.effects).filter(([, value]) => value !== undefined)
-        )
-      }));
+        .filter(a => a.heroType === updatedJugador.type && updatedJugador.level >= a.minLevel)
+        .map(habilidad => ({
+          ...habilidad,
+          effects: Object.fromEntries(
+            Object.entries(habilidad.effects).filter(([, value]) => value !== undefined)
+          )
+        }));
+      setHabilidades(habilidadesData);
+    }
+  }, []); 
+  const applyEquipmentEffects = (hero: Combatiente, baseStats: BaseStats): Combatiente => {
+    let updatedHero = { ...hero };
+    let equipmentEffects = { ...baseStats };
 
-    setHabilidades(habilidadesData);
-  }
-  }, [jugador]);
-  
-  const applyEquipmentEffects = (hero: Combatiente, baseStats: { attack: number; defense: number; health: number; maxHealth: number }): Combatiente => {
-    let updatedHero = { 
-      ...hero,
-      attack: baseStats.attack,
-      defense: baseStats.defense,
-      health: baseStats.health,
-      maxHealth: baseStats.maxHealth
-    };
-    let additionalHealth = 0;
-  
-    console.log("Aplicando efectos de equipamiento. Vida base:", updatedHero.health);
-  
     // Aplicar efectos de los ítems equipados
     Object.values(hero.equippedItems).forEach(item => {
       if (item) {
-        updatedHero.attack += item.effects.attack || 0;
-        updatedHero.defense += item.effects.defense || 0;
-        additionalHealth += item.effects.health || 0;
-        console.log(`Efecto de ítem equipado: +${item.effects.health || 0} salud`);
+        equipmentEffects.attack += item.effects.attack || 0;
+        equipmentEffects.defense += item.effects.defense || 0;
+        equipmentEffects.health += item.effects.health || 0;
+        equipmentEffects.maxHealth += item.effects.health || 0;
       }
     });
-  
+
     // Aplicar efectos de los ítems en la bolsa
     hero.bagItems.forEach(item => {
-      updatedHero.attack += item.effects.attack || 0;
-      updatedHero.defense += item.effects.defense || 0;
-      additionalHealth += item.effects.health || 0;
-      console.log(`Efecto de ítem en bolsa: +${item.effects.health || 0} salud`);
+      equipmentEffects.attack += item.effects.attack || 0;
+      equipmentEffects.defense += item.effects.defense || 0;
+      equipmentEffects.health += item.effects.health || 0;
+      equipmentEffects.maxHealth += item.effects.health || 0;
     });
-  
-    updatedHero.maxHealth += additionalHealth;
-    updatedHero.health += additionalHealth;
-  
-    console.log(`Salud adicional de ítems: ${additionalHealth}`);
-    console.log(`Salud final: ${updatedHero.health}/${updatedHero.maxHealth}`);
-  
+
+    updatedHero.attack = equipmentEffects.attack;
+    updatedHero.defense = equipmentEffects.defense;
+    updatedHero.health = equipmentEffects.health;
+    updatedHero.maxHealth = equipmentEffects.maxHealth;
+
+    setEquipmentEffects(equipmentEffects);
+
     return updatedHero;
   };
+
   
   const updateHeroStats = () => {
     if (jugador && baseStats) {
@@ -364,15 +352,15 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   };
 
 
-  const calcularDañoFinal = (atacante: Combatiente, defensor: Combatiente) => {
+  const calcularDañoFinal = (atacante: Combatiente, defensor: Combatiente, esAtaqueJugador: boolean) => {
     let ataqueTotal = calcularAtaque(atacante);
     const { efecto, daño } = seleccionarEfecto(atacante.type);
-
+  
     // Aplicar efectos activos
     ataqueTotal += activeEffects.increaseAttack?.value || 0;
-
+  
     let defensaTotal = defensor.defense + (activeEffects.increaseDefense?.value || 0);
-
+  
     if (ataqueTotal <= defensaTotal) {
       return {
         dañoFinal: 0,
@@ -380,36 +368,68 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         ataqueExitoso: false
       };
     }
+  
+    let dañoBase = calcularDaño(atacante.type);
+    let dañoFinal = dañoBase;
+  
+    // Aplicar efectos especiales solo si es el ataque del jugador
+    if (esAtaqueJugador) {
+      // Aplicar el efecto de "Flor de loto"
+      if (specialEffects.florDeLoto) {
+        const dañoAdicional = Math.floor(Math.random() * 5) + 4; // 4-8 daño adicional
+        dañoFinal += dañoAdicional;
+        console.log(`Daño adicional de Flor de loto: ${dañoAdicional}`);
+        setSpecialEffects(prev => ({ ...prev, florDeLoto: undefined }));
+      }
 
-    const dañoBase = calcularDaño(atacante.type);
-    let dañoFinal = 0;
+      if (specialEffects.agonia) {
+        const dañoAdicional = Math.floor(Math.random() * 8) + 2; // 2-9 daño adicional
+        dañoFinal += dañoAdicional;
+        console.log(`Daño adicional de Agonía: ${dañoAdicional}`);
+        setSpecialEffects(prev => ({ ...prev, agonia: undefined }));
+      }
 
+      if (specialEffects.machetazo) {
+        const dañoAdicional = Math.floor(Math.random() * 7) + 2; // 2-8 daño adicional
+        dañoFinal += dañoAdicional;
+        console.log(`Daño adicional de Machetazo: ${dañoAdicional}`);
+        setSpecialEffects(prev => ({ ...prev, machetazo: undefined }));
+      }
+  
+      // Aplicar el efecto de "Cortada"
+      if (activeEffects.cortada) {
+        dañoFinal += activeEffects.cortada.value;
+        console.log(`Daño adicional de Cortada: ${activeEffects.cortada.value}`);
+      }
+    }
+  
+    // Aplicar modificadores de daño basados en el efecto
     switch (efecto) {
       case "causar daño":
-        dañoFinal = dañoBase * parseFloat(daño) / 100;
+        dañoFinal = dañoFinal * parseFloat(daño) / 100;
         break;
       case "causar daño crítico": {
         const [minStr, maxStr] = daño.split("-");
         const min = parseFloat(minStr) / 100;
         const max = parseFloat(maxStr) / 100;
-        dañoFinal = dañoBase * (Math.random() * (max - min) + min);
+        dañoFinal = dañoFinal * (Math.random() * (max - min) + min);
         break;
       }
       case "evaden el golpe":
       case "escapan al golpe":
       case "resisten el golpe":
-        dañoFinal = dañoBase * parseFloat(daño) / 100;
+        dañoFinal = dañoFinal * parseFloat(daño) / 100;
         break;
       case "no causar daño":
         dañoFinal = 0;
         break;
-      default:
-        dañoFinal = dañoBase;
     }
-
-    // Aplicar efectos adicionales al daño
-    if (activeEffects.increaseDamage) {
-      dañoFinal += activeEffects.increaseDamage.value;
+  
+    console.log(`Daño base: ${dañoBase}, Daño final: ${dañoFinal}`);
+    if (!esAtaqueJugador && defensor === jugador) {
+      // Si es un ataque del enemigo al jugador, actualizamos la vida del jugador
+      const nuevaVidaJugador = Math.max(0, defensor.health - dañoFinal);
+      updatePlayerHealth(nuevaVidaJugador);
     }
 
     return {
@@ -418,18 +438,13 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
       ataqueExitoso: true
     };
   };
-  const finalizarTurnoJugador = () => {
-    const updatedActiveEffects: ActiveEffects = {};
-    Object.entries(activeEffects).forEach(([key, effect]) => {
-      if (effect.duration > 1) {
-        updatedActiveEffects[key] = { ...effect, duration: effect.duration - 1 };
-      }
-    });
-    setActiveEffects(updatedActiveEffects);
+  
 
+  const finalizarTurnoJugador = () => {
     setIsJugadorTurn(false);
     onTurnEnd();
-    setActionUsed(false);
+    setSelectedAction(null);
+    setActionPerformed(false);
     setShieldThrowUsed(false);
     setTimeout(() => {
       handleTurnoEnemigo();
@@ -438,12 +453,11 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
 
   const handleAtaque = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (jugador && enemigo && !gameOver && isOpponentSelected && (!actionUsed || shieldThrowUsed)) {
-      setActionUsed(true);
+    if (jugador && enemigo && !gameOver && isOpponentSelected && isJugadorTurn) {
       onPlayerAttack();
       
-      const { dañoFinal, efecto, ataqueExitoso } = calcularDañoFinal(jugador, enemigo);
-  
+      const { dañoFinal, efecto, ataqueExitoso } = calcularDañoFinal(jugador, enemigo, true);
+    
       if (ataqueExitoso) {
         const nuevaVidaEnemigo = Math.max(0, enemigo.health - dañoFinal);
         setEnemigo(prevEnemigo => {
@@ -456,7 +470,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
           message: `¡${jugador.name} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
           defenderType: null
         });
-  
+    
         if (nuevaVidaEnemigo === 0) {
           onActionMessage({
             message: "¡Has ganado la batalla!",
@@ -471,44 +485,63 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
           defenderType: 'enemy'
         });
       }
-  
+    
       finalizarTurnoJugador();
     } else if (!isOpponentSelected) {
       onActionMessage({
         message: "¡Debes seleccionar un oponente primero!",
         defenderType: null
       });
-    } else if (actionUsed && !shieldThrowUsed) {
-      onActionMessage({
-        message: "Ya has realizado una acción este turno.",
-        defenderType: null
-      });
-    }
+    } 
   };
 
 
+
+  const updatePlayerHealth = (newHealth: number) => {
+    console.log(`Actualizando vida del jugador. Actual: ${jugador?.health}, Nueva: ${newHealth}`);
+    setJugador(prevJugador => {
+      if (prevJugador) {
+        const updatedJugador = { ...prevJugador, health: newHealth };
+        console.log('Jugador actualizado:', updatedJugador);
+        return updatedJugador;
+      }
+      return prevJugador;
+    });
+    setJugadorVidaActual(newHealth);
+  };
+
+  // Modificar la función handleTurnoEnemigo
   const handleTurnoEnemigo = () => {
-    if (enemigo && jugador && jugadorVidaActual !== null && !gameOver) {
+    if (enemigo && jugador && !gameOver) {
       onEnemyAttack();
-      const { dañoFinal, efecto, ataqueExitoso } = calcularDañoFinal(enemigo, jugador);
-
+      
+      // Crear una copia del jugador con los efectos temporales aplicados
+      const jugadorConEfectos = {
+        ...jugador,
+        attack: jugador.attack + (activeEffects.increaseAttack?.value || 0),
+        defense: jugador.defense + (activeEffects.increaseDefense?.value || 0),
+        damage: jugador.damage + (activeEffects.increaseDamage?.value || 0),
+        // Añadir otros efectos relevantes aquí
+      };
+  
+      console.log('Jugador con efectos aplicados:', jugadorConEfectos);
+  
+      const { dañoFinal, efecto, ataqueExitoso } = calcularDañoFinal(enemigo, jugadorConEfectos, false);
+    
       if (ataqueExitoso) {
-        const nuevaVidaJugador = Math.max(0, jugadorVidaActual - dañoFinal);
+        const nuevaVidaJugador = Math.max(0, jugador.health - dañoFinal);
         
-        setJugadorVidaActual(nuevaVidaJugador);
-        setJugador(prevJugador => {
-          if (prevJugador) {
-            console.log(`Vida del jugador actualizada: ${nuevaVidaJugador}`);
-            return { ...prevJugador, health: nuevaVidaJugador };
-          }
-          return prevJugador;
-        });
-
+        console.log('Vida actual antes del ataque:', jugador.health);
+        console.log('Daño calculado:', dañoFinal);
+        console.log('Nueva vida calculada:', nuevaVidaJugador);
+    
+        updatePlayerHealth(nuevaVidaJugador);
+    
         onActionMessage({
           message: `¡${enemigo.name} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
           defenderType: null
         });
-
+    
         if (nuevaVidaJugador === 0) {
           onActionMessage({
             message: "¡Has perdido la batalla!",
@@ -523,30 +556,17 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
           defenderType: 'player'
         });
       }
-  
       recuperarPuntosPoder();
+      actualizarEfectosActivos();
+  
       setTimeout(() => {
         iniciarTurnoJugador();
       }, 1000);
     }
   };
 
+  
 
-  const resetearEfectos = () => {
-    if (jugador && originalStats && jugadorVidaActual !== null) {
-      const updatedJugador = {
-        ...jugador,
-        attack: originalStats.attack,
-        defense: originalStats.defense,
-        health: jugadorVidaActual
-      };
-      
-      setJugador(updatedJugador);
-      setCurrentEffects({});
-      setEfectosTemporales({});
-      updateHeroStats();
-    }
-  };
 
 
   
@@ -569,44 +589,118 @@ const recuperarPuntosPoder = () => {
 
   
 
-const aplicarEfectos = (habilidad: Acciones) => {
+const aplicarEfectos = (habilidad: Acciones): ActiveEffects => {
   if (habilidad.effects && jugador) {
     console.log(`Aplicando efectos de ${habilidad.name}:`, habilidad.effects);
     const newActiveEffects: ActiveEffects = { ...activeEffects };
     
+    const newSpecialEffects: SpecialEffects = { ...specialEffects };
+    
     Object.entries(habilidad.effects).forEach(([key, value]) => {
-      if (typeof value === 'number') {
-        newActiveEffects[key] = { value, duration: 2 };
-      } else if (typeof value === 'object' && 'amount' in value) {
-        const amount = typeof value.amount === 'string' ? parseInt(value.amount) : value.amount;
+      if (habilidad.name === "Flor de loto" && key === "increaseDamage") {
+        newSpecialEffects.florDeLoto = "active";
+      } else if (habilidad.name === "Agonía" && key === "increaseDamage") {
+        newSpecialEffects.agonia = "active";
+      } else if (habilidad.name === "Cortada" && key === "increaseDamage") {
+        if (typeof value === 'object' && 'amount' in value && 'duration' in value) {
+          newActiveEffects[key] = { 
+            value: typeof value.amount === 'number' ? value.amount : 0, 
+            duration: typeof value.duration === 'number' ? value.duration : 1 
+          };
+        }
+      } else if (habilidad.name === "Machetazo") {
+        if (key === "increaseDamage" && typeof value === 'string') {
+          newSpecialEffects.machetazo = value;
+        } else if (key === "increaseAttack" && typeof value === 'number') {
+          newActiveEffects[key] = { value: value, duration: 1 };
+        }
+      } else if (habilidad.name === "Mano de piedra" && key === "increaseDefense") {
+        if (typeof value === 'number') {
+          newActiveEffects[key] = { value, duration: 1 };
+        } else if (typeof value === 'object' && 'amount' in value) {
+          newActiveEffects[key] = { 
+            value: typeof value.amount === 'number' ? value.amount : 0,
+            duration: typeof value.duration === 'number' ? value.duration : 1
+          };
+        }
+        console.log("Efecto Mano de piedra activado:", newActiveEffects[key]);
+      } else if (typeof value === 'number') {
+        newActiveEffects[key] = { value, duration: 1 };
+      } else if (typeof value === 'object' && 'amount' in value && 'duration' in value) {
         newActiveEffects[key] = { 
-          value: amount || 0, 
-          duration: value.duration || 2 
+          value: typeof value.amount === 'number' ? value.amount : 0, 
+          duration: typeof value.duration === 'number' ? value.duration : 1 
         };
+      } else if (typeof value === 'boolean') {
+        newActiveEffects[key] = { value: value ? 1 : 0, duration: 1 };
       }
-      console.log(`Efecto ${key} aplicado:`, newActiveEffects[key]);
     });
 
     setActiveEffects(newActiveEffects);
+    setSpecialEffects(newSpecialEffects);
 
-    // Aplicar inmediatamente el efecto a las estadísticas del jugador
-    const updatedJugador = { ...jugador };
-    if (newActiveEffects.increaseAttack) {
-      updatedJugador.attack += newActiveEffects.increaseAttack.value;
-      console.log(`Ataque aumentado en ${newActiveEffects.increaseAttack.value}. Nuevo ataque: ${updatedJugador.attack}`);
-    }
-    if (newActiveEffects.increaseDefense) {
-      updatedJugador.defense += newActiveEffects.increaseDefense.value;
-      console.log(`Defensa aumentada en ${newActiveEffects.increaseDefense.value}. Nueva defensa: ${updatedJugador.defense}`);
-    }
-    if (newActiveEffects.increaseDamage) {
-      updatedJugador.damage += newActiveEffects.increaseDamage.value;
-      console.log(`Daño aumentado en ${newActiveEffects.increaseDamage.value}. Nuevo daño: ${updatedJugador.damage}`);
-    }
+    actualizarEstadisticasJugador(newActiveEffects);
+
+    return newActiveEffects;
+  }
+  return {};
+};
+
+
+const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
+  if (jugador) {
+    const updatedJugador = {
+      ...jugador,
+      attack: equipmentEffects.attack,
+      defense: equipmentEffects.defense,
+      damage: equipmentEffects.damage,
+    };
+
+    Object.entries(efectos).forEach(([key, effect]) => {
+      switch (key) {
+        case 'increaseAttack':
+          updatedJugador.attack += effect.value;
+          break;
+        case 'increaseDefense':
+          updatedJugador.defense += effect.value;
+          break;
+        case 'increaseDamage':
+          updatedJugador.damage += effect.value;
+          break;
+        // ... (otros casos según sea necesario)
+      }
+    });
+
     setJugador(updatedJugador);
-    console.log("Estadísticas del jugador actualizadas:", updatedJugador);
+    console.log("Estadísticas actualizadas del jugador:", updatedJugador);
   }
 };
+
+
+const actualizarEfectosActivos = () => {
+  const newActiveEffects: ActiveEffects = {};
+  let effectsChanged = false;
+
+  Object.entries(activeEffects).forEach(([key, effect]) => {
+    if (effect.duration > 1) {
+      newActiveEffects[key] = { ...effect, duration: effect.duration - 1 };
+    } else {
+      effectsChanged = true;
+    }
+  });
+
+  if (effectsChanged || Object.keys(newActiveEffects).length !== Object.keys(activeEffects).length) {
+    setActiveEffects(newActiveEffects);
+    actualizarEstadisticasJugador(newActiveEffects);
+  }
+  
+  console.log("Efectos activos actualizados:", newActiveEffects);
+};
+
+
+
+
+
 
 const handleSkillSelect = (habilidad: Acciones) => {
   console.log("Habilidad seleccionada:", habilidad);
@@ -614,6 +708,8 @@ const handleSkillSelect = (habilidad: Acciones) => {
 
   if (jugador && habilitado && isOpponentSelected && !actionUsed) {
     if (powerPointsLeft >= habilidad.powerCost) {
+      setSelectedAction(habilidad);
+      setActionPerformed(true);
       const updatedPowerPointsLeft = powerPointsLeft - habilidad.powerCost;
       setPowerPointsLeft(updatedPowerPointsLeft);
       
@@ -622,30 +718,52 @@ const handleSkillSelect = (habilidad: Acciones) => {
         defenderType: null
       });
 
-      aplicarEfectos(habilidad);
+      // Aplicar efectos de la habilidad
+      const efectosAplicados = aplicarEfectos(habilidad);
 
       console.log("Estadísticas del jugador después de aplicar la habilidad:", jugador);
+      console.log("Efectos aplicados:", efectosAplicados);
 
-      if (habilidad.name === "Shield Throw" || habilidad.name === "Embate sangriento" || habilidad.name === "Lanza de los dioses") {
+      // Manejar efectos específicos de ciertas habilidades
+      switch (habilidad.name) {
+        case "Flor de loto":
+          onActionMessage({
+            message: "¡Flor de loto activada! Tu próximo ataque causará daño adicional.",
+            defenderType: null
+          });
+          break;
+        case "Agonía":
+          onActionMessage({
+            message: "¡Agonía activada! Tu próximo ataque causará daño adicional",
+            defenderType: null
+          });
+          break;
+        case "Mano de piedra":
+          onActionMessage({
+            message: "¡Mano de piedra activada! Tu defensa ha aumentado considerablemente.",
+            defenderType: null
+          });
+          break;
+        // ... (otros casos específicos)
+      }
+
+      // Lista de habilidades que permiten un ataque adicional
+      const habilidadesConAtaqueAdicional = [
+        "Shield Throw", "Embate sangriento", "Lanza de los dioses",
+        "Misiles de magma", "Lluvia de hielo", "Flor de loto", "Cortada", "Agonía", "Machetazo",
+        "Mano de piedra", "Defensa feroz", "Vulcano", "Golpe de tormenta", "Pared de fuego", "Cono de hielo"
+      ];
+
+      if (habilidadesConAtaqueAdicional.includes(habilidad.name)) {
         if (habilidad.name === "Shield Throw") {
           setShieldThrowUsed(true);
-        } else {
-          // Para Embate sangriento y Lanza de los dioses
-          console.log(`Aplicando ${habilidad.name}. Ataque antes:`, jugador.attack, "Daño antes:", jugador.damage);
         }
         onActionMessage({
           message: `¡${habilidad.name} activado! Ahora puedes atacar con el efecto aplicado.`,
           defenderType: null
         });
       } else {
-        setActionUsed(true);
         finalizarTurnoJugador();
-      }
-
-      if (habilidad.name === "Mano de piedra") {
-        console.log("Aplicando Mano de piedra. Defensa antes:", jugador.defense);
-        aplicarEfectos(habilidad);
-        console.log("Mano de piedra aplicada. Defensa después:", jugador.defense);
       }
 
       if (updatedPowerPointsLeft <= 0) {
@@ -665,9 +783,9 @@ const handleSkillSelect = (habilidad: Acciones) => {
       message: "¡Debes seleccionar un oponente primero!",
       defenderType: null
     });
-  } else if (actionUsed) {
+  } else if (selectedAction || actionPerformed) {
     onActionMessage({
-      message: "Ya has realizado una acción este turno.",
+      message: "Ya has seleccionado una acción este turno.",
       defenderType: null
     });
   }
@@ -686,23 +804,21 @@ const iniciarTurnoJugador = () => {
     };
     setJugador(updatedJugador);
   }
-
+  actualizarEfectosActivos(); // Asegurarse de que los efectos se actualicen al inicio del turno del jugador
   setIsJugadorTurn(true);
-  setHabilitado(true);
-  setActionUsed(false);
+  setSelectedAction(null);
+  setActionPerformed(false);
   setShieldThrowUsed(false);
   setTimeLeft(TURN_TIME);
   setTurnEnded(false);
 
-  if (jugadorVidaActual !== null) {
-    setJugador(prevJugador => {
-      if (prevJugador) {
-        return { ...prevJugador, health: jugadorVidaActual };
-      }
-      return prevJugador;
-    });
-  }
+
 };
+
+// Añade este efecto para monitorear los cambios en la vida del jugador
+useEffect(() => {
+  console.log('Vida del jugador (desde useEffect):', jugador?.health);
+}, [jugador?.health]);
 
 
 
@@ -723,16 +839,36 @@ const iniciarTurnoJugador = () => {
   const getActionImage = (actionName: string) => {
     switch (actionName) {
       case "Shield Throw":
-        return "src/assets/AccionPlus.png";
+        return "AccionPlus.png";
       case "Mano de piedra":
-        return "src/assets/Escudo.png";
+        return "Escudo.png";
+      case "Misiles de magma":
+      return "AccionMago1.png";  
+      case "Pared de fuego":
+      return "AccionMago2.png";
+      case "Flor de loto":
+      return "AccionVeneno1.png";
+      case "Agonía":
+      return "AccionVeneno2.png";
+      case "Cortada":
+      return "AccionMachete1.png";
+      case "Machetazo":
+      return "AccionMachete2.png";
+      case "Embate sangriento":
+      return "AccionArmas1.png";
+      case "Lanza de los dioses":
+      return "AccionArmas2.png";
+      case "Lluvia de hielo":
+      return "AccionHielo1.png";
+      case "Bola de hielo":
+      return "AccionHielo2.png";
       default:
         return "src/assets/default-action.png"; // You might want to add a default image
     }
   };
 
   const getJugadorVidaActual = (): number => {
-    return jugadorVidaActual !== null ? jugadorVidaActual : baseStats.health;
+    return jugadorVidaActual !== null ? jugadorVidaActual : (jugador?.health || 0);
   };
   
   const handleSurrender = () => {
@@ -773,23 +909,24 @@ const iniciarTurnoJugador = () => {
   return (
     <footer className={styles.playerContainer}>
       {!gameOver && (
-          <button
-            className={styles.surrenderButton}
-            onClick={handleSurrender}
-          >
-            Rendirse
-          </button>
-        )}
-           
-           {gameOver && (
+        <button
+          className={styles.surrenderButton}
+          onClick={handleSurrender}
+        >
+          Rendirse
+        </button>
+      )}
+      
+      {gameOver && (
         <button
           className={styles.exitButton}
-          onClick={onExitGame} // Use the new prop here
+          onClick={onExitGame}
         >
           Salir
         </button>
       )}
-       <div className={styles.timerContainer}>
+
+      <div className={styles.timerContainer}>
         <div className={styles.timerCircle}>
           <div className={styles.timerContent}>
             <span className={styles.timerNumber}>{timeLeft}</span>
@@ -797,53 +934,52 @@ const iniciarTurnoJugador = () => {
           </div>
         </div>
       </div>
-      <div className={styles.barradeaccion} />
-        <div className={styles.playerInfo}>
-          <div className={styles.playerName}>
-            <div className={styles.playerNameDisplay}>
-            <div className={styles.barraestaticadevida} />
-        <button className={styles.barradinamicadevidajugadorParent}                
-                style={jugador ? getBarraVidaStyle(getJugadorVidaActual(), jugador.maxHealth) : {}}
 
-        >
-          <div
-            className={styles.barradinamicadevidajugador}
-          />
-          <b className={styles.porcentajevidajugador}>
-            {jugador ? `${Math.round((jugador.health / jugador.maxHealth) * 100)}%` : 'Cargando...'}
-          </b>
-        </button>
-      </div>
-            <div className={styles.nombrejugadorWrapper}>
-              <b className={styles.nombrejugador}>
-                {jugador ? `${jugador.name} lvl. ${jugador.level}` : 'Cargando...'}
+      <div className={styles.barradeaccion} />
+
+      <div className={styles.playerInfo}>
+        <div className={styles.playerName}>
+          <div className={styles.playerNameDisplay}>
+            <div className={styles.barraestaticadevida} />
+            <button 
+              className={styles.barradinamicadevidajugadorParent}
+              style={jugador ? getBarraVidaStyle(getJugadorVidaActual(), jugador.maxHealth) : {}}
+            >
+              <div className={styles.barradinamicadevidajugador} />
+              <b className={styles.porcentajevidajugador}>
+                {jugador ? `${Math.round((jugador.health / jugador.maxHealth) * 100)}%` : 'Cargando...'}
               </b>
-            </div>
+            </button>
           </div>
-          <div className={styles.enemyInfo}>
-            <div className={styles.enemyName}>
-              <b className={styles.nombreenemigo}>
-                {enemigo ? `${enemigo.name} lvl. ${enemigo.level}` : 'Cargando...'}
-              </b>
-            </div>
-            <div className={styles.enemyHealth}>
-              <div className={styles.barraestaticadevida1} />
-              <button className={styles.enemyHealthDisplay}
-              style={enemigo ? getBarraVidaStyle(enemigo.health, enemigo.maxHealth) : {}}
->
-                <div
-                  className={styles.barradinamicadevidaenemigo}
-                />
-                <b className={styles.porcentajevidaenemigo}>
-                  {enemigo ? `${Math.round((enemigo.health / enemigo.maxHealth) * 100)}%` : 'Cargando...'}
-                </b>
-              </button>
-            </div>
+          <div className={styles.nombrejugadorWrapper}>
+            <b className={styles.nombrejugador}>
+              {jugador ? `${jugador.name} lvl. ${jugador.level}` : 'Cargando...'}
+            </b>
           </div>
         </div>
-        <div className={styles.gameActions}>
-          <div className={styles.turnActions}>
-       
+        <div className={styles.enemyInfo}>
+          <div className={styles.enemyName}>
+            <b className={styles.nombreenemigo}>
+              {enemigo ? `${enemigo.name} lvl. ${enemigo.level}` : 'Cargando...'}
+            </b>
+          </div>
+          <div className={styles.enemyHealth}>
+            <div className={styles.barraestaticadevida1} />
+            <button 
+              className={styles.enemyHealthDisplay}
+              style={enemigo ? getBarraVidaStyle(enemigo.health, enemigo.maxHealth) : {}}
+            >
+              <div className={styles.barradinamicadevidaenemigo} />
+              <b className={styles.porcentajevidaenemigo}>
+                {enemigo ? `${Math.round((enemigo.health / enemigo.maxHealth) * 100)}%` : 'Cargando...'}
+              </b>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.gameActions}>
+        <div className={styles.turnActions}>
           {!gameOver && (
             <div className={styles.turnIndicator}>
               <h3 className={styles.indicadordeturno}>
@@ -852,72 +988,65 @@ const iniciarTurnoJugador = () => {
             </div>
           )}
           {gameOver && (<br />)}
-            <div className={styles.actionButtons}>
-              <div className={styles.attackSkillButtons}>
-                
-                <button
-                  className={styles.botonatacar}
-                  onClick={(e) => handleAtaque(e)}
-                  disabled={!isJugadorTurn || !isOpponentSelected || turnEnded}
-                >
-                  <img src="src/assets/ataque.png" alt="Atacar" className={styles.attackButtonImage} />
-                </button>
-              </div>
-              <div className={styles.attackSkillButtons1}>
-                <div className={styles.botonhabilidadesParent}>
+          <div className={styles.actionButtons}>
+            <div className={styles.attackSkillButtons}>
+              <button
+                className={styles.botonatacar}
+                onClick={(e) => handleAtaque(e)}
+                disabled={!isJugadorTurn || !isOpponentSelected || turnEnded}
+              >
+                <img src="/Images/Ataque.png" alt="Atacar" className={styles.attackButtonImage} />
+              </button>
+            </div>
+            <div className={styles.attackSkillButtons1}>
+              <div className={styles.botonhabilidadesParent}>
                 {habilidades.map((habilidad) => (
                   <button
-                  key={habilidad._id}
-                  className={styles.botonaccion}
-                  onClick={() => handleSkillSelect(habilidad)}
-                  disabled={!isJugadorTurn || !isOpponentSelected || powerPointsLeft < habilidad.powerCost || actionUsed || shieldThrowUsed}
-                  >
-                  <img 
-                    src={getActionImage(habilidad.name)} 
-                    alt={habilidad.name} 
-                    className={styles.actionButtonImage} 
-                  />
+                    key={habilidad._id}
+                    className={styles.botonaccion}
+                    onClick={() => handleSkillSelect(habilidad)}
+                    disabled={!isJugadorTurn || selectedAction !== null || actionPerformed || !isOpponentSelected || gameOver || powerPointsLeft < habilidad.powerCost}
+                    >
+                    <img 
+                      src={`/Images/${getActionImage(habilidad.name)}`} 
+                      alt={habilidad.name} 
+                      className={styles.actionButtonImage} 
+                    />
                   </button>
                 ))}
-                </div>
               </div>
-              <div className={styles.powerPoints}>
-                {jugador && (
-                  <b className={styles.cantidadpuntospoder}>
-                    {powerPointsLeft} / {jugador.powerPoints} Puntos de Poder
-                  </b>
-                )}
-              </div>
-
             </div>
-            {showSkills && (
-              <div className={styles.skillsList} style={{ maxHeight: "114px", overflowY: "auto" }}>
-                <ul style={{ fontSize: "16px" }}>
-                  {habilidades.map((habilidad) => (
-                    <li
-                      key={habilidad._id}
-                      onClick={() => handleSkillSelect(habilidad)}
-                      style={{ fontSize: "16px" }}
-                    >
-                      {habilidad.name} ({habilidad.powerCost} PP)
-                    </li>
-                  ))}
-                </ul>
-                
-              </div>
-            )}
-            
-            {gameOver && (
-  <div className={styles.gameOverMessage}>
-    {jugador?.health === 0 ? "¡Has perdido la batalla!" : "¡Has ganado la batalla!"}
-  </div>
-)}
-
+            <div className={styles.powerPoints}>
+              {jugador && (
+                <b className={styles.cantidadpuntospoder}>
+                  {powerPointsLeft} / {jugador.powerPoints} Puntos de Poder
+                </b>
+              )}
+            </div>
+          </div>
+          {showSkills && (
+            <div className={styles.skillsList} style={{ maxHeight: "114px", overflowY: "auto" }}>
+              <ul style={{ fontSize: "16px" }}>
+                {habilidades.map((habilidad) => (
+                  <li
+                    key={habilidad._id}
+                    onClick={() => handleSkillSelect(habilidad)}
+                    style={{ fontSize: "16px" }}
+                  >
+                    {habilidad.name} ({habilidad.powerCost} PP)
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {gameOver && (
+            <div className={styles.gameOverMessage}>
+              {jugador?.health === 0 ? "¡Has perdido la batalla!" : "¡Has ganado la batalla!"}
+            </div>
+          )}
         </div>
-    </div>
-      
+      </div>
     </footer>
   );
 };
-
 export default PlayerContainer;

@@ -13,8 +13,8 @@
   box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff3333, 0 0 40px #ff6666; /* Efecto de neón */
   position: absolute;
   overflow: hidden;
-  top: 100px;
-  left: 46.5%;
+  top: -300px;
+  left: 45%;
   display: flex; 
   z-index: 10; /* Asegura que el botón esté por encima de otros elementos */
   /* Para que los efectos de animación no se salgan */
@@ -57,8 +57,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para simular elevación */
   margin-top: 10px;
   transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
-  top: 400px;
-  left: 46.7%;
+  top: 250px;
+  left: 44.7%;
   translate: x(-50%);
   position: absolute;
 }
@@ -96,14 +96,15 @@
   position: absolute; /* Posición absoluta para superponer sobre otros elementos */
   display: block;
   unicode-bidi: isolate;
-  flex-direction: column; 
+  flex-direction: column;
+   
 
 }
 
 .timerContainer {
-  position: absolute;
-  top: 200px; /* Adjust this value to position the timer above the game area */
-  left: 50%;
+  position: relative;
+  top: -130%; /* Adjust this value to position the timer above the game area */
+  left: 4%;
   transform: translateX(-50%);
   z-index: 10;
 }
@@ -178,9 +179,10 @@
   height: 44px;
   width: 277px;
   position: relative;
-  border-radius: var(--br-6xl);
-  background-color: var(--color-white);
+  border-radius: 24px;
+  background-color: var(white);
   display: none;
+  
 }
 
 .barradinamicadevidajugador {
@@ -515,8 +517,10 @@ border-radius: var(--br-xl);
 
 
 .cantidadpuntospoder {
-  position: absolute;
+  position: absolute; 
+  display: flex;
   z-index: 2;
+  right: 60px;
 }
 
 .actionButtons {
@@ -582,7 +586,7 @@ border-radius: var(--br-xl);
   flex-direction: column;
   align-items: center;
   padding: var(--padding-20xl) var(--padding-xl) var(--padding-5xl)
-    var(--padding-8xl);
+  var(--padding-8xl);
   gap: var(--gap-52xl);
   z-index: 1;
   text-align: left;

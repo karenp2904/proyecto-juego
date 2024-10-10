@@ -8,8 +8,6 @@ import botData from '../data/bot.json';
 import { useNavigate } from 'react-router-dom';
 
 
-// Estoy cansado Jefe
-
 type ActionMessageType = {
   message: string;
   defenderType: 'player' | 'enemy' | null;
@@ -127,11 +125,12 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                 maxHealth={updatedJugador.maxHealth}
               />
               <img
-                className={`${styles.jugadorIcon} ${
-                  isPlayerAttacking ? styles.jugadorIconAttack : ""
-                } ${updatedJugador.type === 'Fuego' || updatedJugador.type === 'Hielo' ? styles.magoImage : ''}`}
+                className={`${styles.jugadorIcon} 
+                  ${isPlayerAttacking ? styles.jugadorIconAttack : ""}
+                  ${updatedJugador.type === 'Fuego' || updatedJugador.type === 'Hielo' ? styles.magoImage : ''}
+                  ${updatedJugador.health <= 0 ? styles.derrotado1 : ''}`}
                 alt="Jugador"
-                src={updatedJugador.image}
+                src={`/Images/${updatedJugador.image}`}
               />
               {isPlayerShielding && (
                 <div className={styles.shieldEffect}>🛡️</div>
@@ -147,12 +146,12 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                 health={enemigo.health}
                 maxHealth={enemigo.maxHealth}
               />}
-              <img
-                className={`${styles.enemigoIcon} ${
-                  isEnemyAttacking ? styles.enemigoIconAttack : ""
-                }`}
+             <img
+                className={`${styles.enemigoIcon} 
+                  ${isEnemyAttacking ? styles.enemigoIconAttack : ""}
+                  ${enemigo && enemigo.health <= 0 ? styles.derrotado2 : ''}`}
                 alt="Enemigo"
-                src={enemigo?.image || "src/assets/BarbaroTanque.png"}
+                src={`/Images/${enemigo?.image}` || "./Juego/assets/BarbaroTanque.png"}
               />
               {isEnemyShielding && (
                 <div className={styles.shieldEffect}>🛡️</div>

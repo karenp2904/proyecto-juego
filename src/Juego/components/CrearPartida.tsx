@@ -14,18 +14,12 @@ const CrearPartidaPage: React.FunctionComponent<ICrearPartidaPageProps> = (props
     navigate(Router.modosdejuego)
   };
 
-  const handleNavigateToUnirseAPartida = () => {
-    navigate(Router.crearpartida);
-  };
 
   return (
     <div className="crear-partida-container" style={{ backgroundImage: `url(${background})` }}>
       <div className='button-container'>
         <Button onClick={handleNavigateToCrearPartida}>
           CREAR PARTIDA
-        </Button>
-        <Button onClick={handleNavigateToUnirseAPartida}>
-          BUSCAR PARTIDA
         </Button>
       </div>
     </div>

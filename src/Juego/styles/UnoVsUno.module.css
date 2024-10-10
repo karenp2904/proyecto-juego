@@ -4,21 +4,24 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: url('src/assets/fondoCombate.jpg') no-repeat center center;
+  background: url('../assets/fondoCombate.jpg') no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  padding-top: 20%;
 }
+
+
 
 .gameContent {
   transform: scale(0.67);
   transform-origin: center top;
   width: 149.25%;
   height: 149.25%;
-  position: absolute;
-  top: 0%; /* Ajusta este valor para subir o bajar el contenido */
+  position: relative;
+  top: 15%; /* Ajusta este valor para subir o bajar el contenido */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,7 +33,7 @@
 .unovsuno .escenariodefondoIcon {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   object-fit: cover;
@@ -53,27 +56,29 @@
 
 /* Excluir a los magos del efecto */
 .magoImage {
-  transform: scaleX(1); /* O simplemente elimínalo, ya que es el valor por defecto */
+  transform: scaley(-1); /* O simplemente elimínalo, ya que es el valor por defecto */
 }
 
 .unovsuno .enemigoIcon  {
-  transform: scaleX(-1);
+  transform: scaleX(1);
 }
 
 @keyframes playerAttackMove {
-  0% { transform: translateX(0) scaleX(1);; }
-  50% { transform: translateX(100px)  scaleX(1);}
-  100% { transform: translateX(0) scaleX(1);; }
+  0% { transform: translateX(0) scaleX(-1);; }
+  50% { transform: translateX(100px)  scaleX(-1);}
+  100% { transform: translateX(0) scaleX(-1);; }
 }
 
 @keyframes enemyAttackMove {
-  0% { transform: translateX(0) scaleX(-1); }
-  50% { transform: translateX(-100px) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(-1); }
+  0% { transform: translateX(0) scaleX(1); }
+  50% { transform: translateX(-100px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
 }
 
 .unovsuno .jugadorIcon {
   transition: all 0.3s ease;
+  transform: scaleX(-1);
+
 }
 
 .unovsuno .jugadorIconAttack {
@@ -107,7 +112,7 @@
 
 .unovsuno .actionMessage {
   position: absolute;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -159,6 +164,19 @@
   z-index: 2;
 }
 
+.unovsuno .derrotado1 {
+  
+  transform: rotate(90deg) scaley(-1);
+  opacity: 1;
+  filter: grayscale(50%);
+}
+
+.unovsuno .derrotado2 {
+  transform: rotate(90deg) scaley(1);
+  opacity: 1;
+  filter: grayscale(50%);
+}
+
 @keyframes shieldPulse {
   0% {
     opacity: 0;
@@ -186,4 +204,6 @@
     flex-wrap: wrap;
   }
 }
+
+
 
