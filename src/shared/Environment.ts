@@ -21,6 +21,6 @@ export default class Environment{
         const HOST= '34.23.21.25'
         const PROTOCOL= process.env['PROTOCOL'] ?? 'http'
 
-        return(`${PROTOCOL}://${HOST}:${PORT}`)
+        return(`${PROTOCOL}://${HOST}`)
     } 
 }
