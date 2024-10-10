@@ -25,7 +25,7 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
     };
 
     return (
-        <div className='w-full px-3 py-3 bg-primary flex flex-row justify-between items-center shadow-xl'>
+        <div className='w-full px-3 py-3 bg-tertiary flex flex-row justify-between items-center shadow-xl'>
 
             {/* Menu hamburguesa para pantallas menores a `md` */}
             <button
@@ -37,7 +37,7 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
             </button>
 
             {/* Menú de navegación para pantallas menores a `md` */}
-            <div className={`z-50 fixed top-0 right-0 w-2/6 h-full shadow-2xl bg-primary p-4 xl:hidden transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
+            <div className={`z-50 fixed top-0 right-0 w-2/6 h-full shadow-2xl bg-secundary p-4 xl:hidden transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
                 <div className='flex flex-col gap-4'>
                     <div className='flex flex-row justify-end items-center'>
                         <MdClose className='w-6 h-6 cursor-pointer' onClick={CloseMenu} />
@@ -47,6 +47,8 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
                     <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} type={undefined} />
                     <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} type={undefined} />
                     <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} type={undefined} />
+                    <Button name={'SALIR'} onClick={() => handleNavigation('/login')} type={undefined} />
+
                 </div>
             </div>
 
@@ -56,6 +58,8 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
                 <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} type={undefined} />
                 <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} type={undefined} />
                 <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} type={undefined} />
+                <Button name={'SALIR'} onClick={() => handleNavigation('/login')} type={undefined} />
+
             </div>
         </div>
     );

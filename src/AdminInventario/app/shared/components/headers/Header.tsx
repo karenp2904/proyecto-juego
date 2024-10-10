@@ -31,7 +31,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
   };
 
   return (
-    <div className='w-full px-3 py-3 bg-primary flex flex-row justify-between items-center shadow-lg'>
+    <div className='w-full px-3 py-3 bg-secundary flex flex-row justify-between items-center shadow-lg'>
       <Searchbar />
       
       {/* Menu hamburguesa para pantallas menores a `md` */}
@@ -50,18 +50,18 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           <MdClose className='w-6 h-6 cursor-pointer' onClick={CloseMenu}/>
           </div>
           <Avatar name={'Ivan'}/>
-          <Button name={'JUGAR ONLINE'} onClick={handleClick}/>
-          <Button name={'TORNEO'} onClick={handleClick}/>
-          <Button name={'SUBASTA'} onClick={handleClick}/>
-          <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} />
+          <Button name={'JUGAR ONLINE'} onClick={handleClick} type={undefined}/>
+          <Button name={'TORNEO'} onClick={handleClick} type={undefined}/>
+          <Button name={'SUBASTA'} onClick={handleClick} type={undefined}/>
+          <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} type={undefined} />
         </div>
       </div>
 
       <div className='hidden lg:flex flex-row gap-3'>
-        <Button name={'JUGAR ONLINE'} onClick={handleClick}/>
-        <Button name={'TORNEO'} onClick={handleClick}/>
-        <Button name={'SUBASTA'} onClick={handleClick}/>
-        <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} />
+        <Button name={'JUGAR ONLINE'} onClick={handleClick} type={undefined}/>
+        <Button name={'TORNEO'} onClick={handleClick} type={undefined}/>
+        <Button name={'SUBASTA'} onClick={handleClick} type={undefined}/>
+        <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} type={undefined} />
         <Avatar name={'Ivan'}/>
       </div>
     </div>
