@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ItemData } from "../app/pages/admin/crearItem/CrearItemPage";
+import Environment from "../../shared/Environment";
 
 
 export class ItemService {
@@ -20,7 +21,7 @@ export class ItemService {
     formData.append("image", image);
 
     return new Promise((res, rej) => {
-      axios.post("http://192.168.10.13:5000/api/arma", formData, {
+      axios.post(`${Environment.getDomainAdminInventory()}/api/arma`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

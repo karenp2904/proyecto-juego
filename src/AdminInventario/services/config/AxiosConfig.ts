@@ -7,7 +7,7 @@ const getToken = () => {
 };
 
 const apiClient = axios.create({
-  baseURL: `${Environment.getDomain()}/api`, // Cambia esto a la URL base de tu servidor //CAMBIO DE PUERTO
+  baseURL: `${Environment.getDomainAdminInventory()}/api`, // Cambia esto a la URL base de tu servidor //CAMBIO DE PUERTO
 });
 
 // Interceptor para agregar el token a los headers de cada solicitud
