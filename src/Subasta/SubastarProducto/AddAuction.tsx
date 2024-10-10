@@ -40,6 +40,9 @@ const AddAuction: React.FC = () => {
      // Método para obtener los productos subastados
      const fetchProducts = async () => {
         try {
+            if(user){
+                console.log(user.iduser) 
+            }
     
             const response = await fetch(`${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`, {
                 method: 'GET',
