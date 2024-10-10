@@ -6,7 +6,8 @@ import styles from "../styles/UnoVsUno.module.css";
 import Combatiente from "../interfaces/Combatiente";
 import botData from '../data/bot.json';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from "../../hooks/useAuth";
+import Environment from "../../shared/Environment";
 
 type ActionMessageType = {
   message: string;
@@ -21,6 +22,7 @@ interface UnoVsUnoProps {
 const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, selectedHeroId }) => {
 
 
+  const user = useAuth(s => s.user);
 
 
   const location = useLocation();
@@ -124,8 +126,38 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
     setPlayerCredits(newTotalCredits);    
     console.log("2 créditos añadidos al jugador");
     setShowRewardPanel(false);
+    if(user){
+      setCreditsUser(user?.iduser, (user?.credits+creditsEarned))
+    }
     handleExitGame();
   };
+
+  
+  async function setCreditsUser(idUser:number, credits:number){
+    // Realizar una solicitud GET con Axios
+    try {
+      console.log(idUser, credits)
+        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ iduser: idUser , credits:credits}),
+        });
+    
+        if (response.ok) {
+        console.log()
+        return response.json()
+    
+        }else{
+        return 0
+        } 
+    } catch (error) {
+        // Captura errores de red o excepciones en la solicitud
+        console.error('Error al realizar la solicitud:', error);
+        return null;
+    }
+  }
 
   const RewardPanel = () => (
     <div className={styles.rewardPanelOverlay}>
