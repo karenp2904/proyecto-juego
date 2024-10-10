@@ -41,11 +41,7 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
       baseAttack: hero.attack,
       baseDefense: hero.defense,
       baseHealth: hero.health,
-      baseMaxHealth: hero.maxHealth,
-      baseDamage: hero.damage, // Añadimos baseDamage
-      powerPointsLeft: hero.powerPoints, // Asumiendo que inicialmente es igual a powerPoints
-      inventory: [], // Inicializamos como un array vacío si no está presente en combatientesData
-      abilities: hero.abilities || [], // Asumiendo que puede no estar presente en combatientesData
+      baseMaxHealth: hero.maxHealth
     }));
     setHeroes(initialHeroes);
   
@@ -145,11 +141,12 @@ const Lobby: React.FC<LobbyProps> = ({ onStartGame, onEquipHero, onHeroSelect })
               <div className={styles.heroCardFront}>
                 <img className={styles.heroImage} src={heroImages[hero.type]} alt={hero.name} />
                 <div className={styles.heroInfo}>
+                  <h3 className={styles.heroName}>{hero.name}</h3>
                   <p className={styles.heroType}>{hero.type}</p>
                 </div>
               </div>
               <div className={styles.heroCardBack}>
-                <br></br>
+                <h3>{hero.name}</h3>
                 <div className={styles.heroStats}>
                   <div className={styles.statItem}>
                     <span className={styles.statLabel}>Lvl:</span>
