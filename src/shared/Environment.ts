@@ -2,10 +2,10 @@ export default class Environment{
 
     public static readonly getDomain=(): string =>{
         const PORT= process.env['PORT'] ?? 4000
-        const HOST= process.env['HOST'] ??  'localhost'
+        const HOST=  '34.23.146.241'
         const PROTOCOL= process.env['PROTOCOL'] ?? 'http'
 
-        return(`${PROTOCOL}://${HOST}:${PORT}`)
+        return(`${PROTOCOL}://${HOST}`)
     }
     
     public static readonly getDomainInventory=(): string =>{
