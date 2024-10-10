@@ -20,7 +20,7 @@ import UnoVsUno from "../Juego/components/UnoVsUno";
 
 import InventarioPage from "../AdminInventario/app/pages/admin/inventario/InventarioPage";
 import NotFoundPage from "../AdminInventario/app/pages/common/NotFoundPage";
-import { CrearHeroePage } from "../AdminInventario/app/pages/admin/inventarioDetalle/CrearHeorePage";
+import { CrearHeroePage } from "../AdminInventario/app/pages/admin/crearHeroe/CrearHeorePage";
 import { CrearArmaPage } from "../AdminInventario/app/pages/admin/crearArma/CrearArmaPage";
 import { CrearArmaduraPage } from "../AdminInventario/app/pages/admin/crearArmadura/CrearArmaduraPage";
 import { CrearItemPage } from "../AdminInventario/app/pages/admin/crearItem/CrearItemPage";

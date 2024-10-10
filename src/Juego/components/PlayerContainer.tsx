@@ -341,7 +341,6 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   
   const obtenerCreditos = async () => {
     if (enemigo?.health === 0) {
-      setCreditos(prevCredits => prevCredits + 2);
       setCreditsWon(2); // Créditos ganados
 
       setShowVictoryPanel(true); // Mostrar panel de victoria
