@@ -32,7 +32,6 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
   const [showRewardPanel, setShowRewardPanel] = useState(false);
   const [playerCredits, setPlayerCredits] = useState(0);
 
-
   
   
 
@@ -111,12 +110,13 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
       setShowRewardPanel(true);
     } else {
       // Manejar el caso de derrota si es necesario
-      handleExitGame();
     }
   };
 
   const handleCollectReward = () => {
-    // Aquí puedes implementar la lógica para añadir los créditos al jugador
+    const creditsEarned = 2;
+    const newTotalCredits = playerCredits + creditsEarned;
+    setPlayerCredits(newTotalCredits);    
     console.log("2 créditos añadidos al jugador");
     setShowRewardPanel(false);
     handleExitGame();
