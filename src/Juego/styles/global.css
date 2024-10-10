@@ -1,0 +1,40 @@
+:root {
+    /* Colores */
+    --color-gray: #0f0d0d;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-mediumseagreen-100: #3cb371;
+    --color-mediumseagreen-200: #2e8b57;
+    --color-gainsboro: #dcdcdc;
+  
+    /* Tamaños de fuente */
+    --font-size-base: 16px;
+    --font-size-lgi: 19px;
+    --font-size-3xl: 22px;
+    --font-size-5xl: 24px;
+    --font-size-9xl: 28px;
+  
+    /* Padding */
+    
+   
+    
+  
+    /* Gaps */
+    --gap-mid: 17px;
+    --gap-xl: 20px;
+    --gap-2xl: 21px;
+    --gap-lg: 18px;
+  
+    /* Border radius */
+    --br-xl: 20px;
+    --br-6xl: 25px;
+  
+    /* Fuentes */
+    --font-inria-sans: 'Inria Sans', sans-serif;
+
+    
+  }
+
+  
+
+  

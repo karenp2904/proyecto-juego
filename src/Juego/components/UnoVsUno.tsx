@@ -125,9 +125,10 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                 maxHealth={updatedJugador.maxHealth}
               />
               <img
-                className={`${styles.jugadorIcon} ${
-                  isPlayerAttacking ? styles.jugadorIconAttack : ""
-                } ${updatedJugador.type === 'Fuego' || updatedJugador.type === 'Hielo' ? styles.magoImage : ''}`}
+                className={`${styles.jugadorIcon} 
+                  ${isPlayerAttacking ? styles.jugadorIconAttack : ""}
+                  ${updatedJugador.type === 'Fuego' || updatedJugador.type === 'Hielo' ? styles.magoImage : ''}
+                  ${updatedJugador.health <= 0 ? styles.derrotado1 : ''}`}
                 alt="Jugador"
                 src={`/Images/${updatedJugador.image}`}
               />
@@ -145,10 +146,10 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
                 health={enemigo.health}
                 maxHealth={enemigo.maxHealth}
               />}
-              <img
-                className={`${styles.enemigoIcon} ${
-                  isEnemyAttacking ? styles.enemigoIconAttack : ""
-                }`}
+             <img
+                className={`${styles.enemigoIcon} 
+                  ${isEnemyAttacking ? styles.enemigoIconAttack : ""}
+                  ${enemigo && enemigo.health <= 0 ? styles.derrotado2 : ''}`}
                 alt="Enemigo"
                 src={`/Images/${enemigo?.image}` || "./Juego/assets/BarbaroTanque.png"}
               />
