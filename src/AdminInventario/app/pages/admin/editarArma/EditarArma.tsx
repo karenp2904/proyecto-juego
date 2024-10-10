@@ -1,15 +1,15 @@
 import * as React from 'react';
-import ArmaForm from './components/ArmaForm';
 import TextArea from '../../../shared/components/inputs/TextArea';
 import ImagePicker from '../../../shared/components/imagepicker/ImagePicker';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArmaService } from '../../../../services/ArmaService';
 import { getProductoById } from '../../../../services/InventarioService';
-export interface ArmaData {
+import ArmaForm from '../crearArma/components/ArmaForm';
+import { TiposService } from '../../../../services/Tipos';
+import ArmaFormEdit from './components/ArmaFormEdit';
+export interface ArmaDataEdit {
   _id: string;
-  tipo: string;
-  subtipo: string;
   descripcion: string;
   stock: number,
   armas: {
@@ -21,13 +21,11 @@ export interface ArmaData {
 
 interface IInventarioDetallePageProps { }
 
-export const CrearArmaPage: React.FunctionComponent<IInventarioDetallePageProps> = () => {
+export const EditarArma: React.FunctionComponent<IInventarioDetallePageProps> = () => {
   const { id } = useParams<{ id: any }>();
   const [file, setFile] = useState<File | null>(null);
-  const [ArmData, setArmData] = useState<ArmaData>({
+  const [ArmData, setArmData] = useState<ArmaDataEdit>({
     _id: '',
-    tipo: '',
-    subtipo: '',
     descripcion: '',
     stock: -1,
     armas: {
@@ -41,10 +39,21 @@ export const CrearArmaPage: React.FunctionComponent<IInventarioDetallePageProps>
   React.useEffect(() => {
     const fetchProducto = async () => {
       try {
-        if (id != null) {
+        console.log(id)
+        if (id) {
           const producto = await getProductoById(id as string);
-          // Aquí puedes actualizar el estado con los datos del producto
-          setArmData(producto);
+          console.log(producto)
+
+          setArmData({
+            _id: producto._id,
+            descripcion: producto.descripcion ?? '',  // Si el producto no tiene un campo 'descripcion', puedes dejarlo vacío
+            stock: producto.stock,
+            armas: {
+              nombre: producto.nombre,
+              efectos: producto.efectos ?? '',  // El campo 'efectos' no existe, lo dejamos vacío
+              porcentajeCaida: producto.tasaCaida  // Mapea el valor de 'tasaCaida'
+            }
+          });
         }
       } catch (error) {
         console.error('Error al obtener el producto:', error);
@@ -68,7 +77,7 @@ export const CrearArmaPage: React.FunctionComponent<IInventarioDetallePageProps>
   const guardar = () => {
     if (!file) return;
 
-    ArmaService.guardarArma(ArmData, file);
+    //ArmaService.guardarArma(ArmData, file);
   }
 
   return (
@@ -77,7 +86,7 @@ export const CrearArmaPage: React.FunctionComponent<IInventarioDetallePageProps>
       <div className='h-auto sm:h-full w-full sm:w-[40%] xl:w-[25%] flex flex-col justify-start items-center'>
         <div className="w-3/4 aspect-square flex justify-center items-center">
           {/* Contenido del lado izquierdo */}
-          <ImagePicker defaultImageUrl={"/hero_default.png"} onChange={handleFileChange} />
+          <ImagePicker defaultImageUrl={undefined} onChange={handleFileChange} />
         </div>
 
         <div className='w-full flex-grow h-[200px] sm:h-auto'>
@@ -86,8 +95,8 @@ export const CrearArmaPage: React.FunctionComponent<IInventarioDetallePageProps>
       </div>
       {/* Contenedor derecho con scroll */}
       <div className="w-full sm:w-[60%] xl:w-[75%] bg-quaternary sm:overflow-y-auto p-4 flex-1">
-        <ArmaForm
-          ArmaData={ArmData}
+        <ArmaFormEdit
+          ArmaDataEdit={ArmData}
           setArmaData={setArmData}
           onSubmit={guardar}
         />

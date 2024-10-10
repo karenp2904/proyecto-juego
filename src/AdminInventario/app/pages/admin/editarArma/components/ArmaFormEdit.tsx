@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../../../shared/components/inputs/Input";
 import Select from "../../../../shared/components/inputs/Select";
-import DiceInput, {
-  DiceInputValue,
-} from "../../../../shared/components/inputs/DiceInput";
 import Button from "../../../../shared/components/buttons/Button";
-import { EpicaData } from "../CrearEpicaPage";
 import { TiposService } from "../../../../../services/Tipos";
+import { ArmaDataEdit } from "../EditarArma";
 
-interface EpicaFormProps {
-  EpicaData: EpicaData;
+interface ArmaFormProps {
+  ArmaDataEdit: ArmaDataEdit;
   onSubmit: () => void;
-  setEpicaData: React.Dispatch<React.SetStateAction<EpicaData>>;
+  setArmaData: React.Dispatch<React.SetStateAction<ArmaDataEdit>>;
 }
 
 type SelectOption = {
@@ -19,10 +16,10 @@ type SelectOption = {
   label: string;
 };
 
-const EpicaForm: React.FC<EpicaFormProps> = ({
-  EpicaData,
+const ArmaFormEdit: React.FC<ArmaFormProps> = ({
+    ArmaDataEdit,
   onSubmit,
-  setEpicaData,
+  setArmaData,
 }) => {
 
   const [tipoOptions, setTipos] = useState<SelectOption[]>([]);
@@ -41,7 +38,7 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
   // }, []);
 
   // useEffect(() => {
-  //   TiposService.obtenerSubTipos(EpicaData.tipo)
+  //   TiposService.obtenerSubTipos(ArmaDataEdit.tipo)
   //       .then(res => {
   //         console.log("subpepe", res);
   //         setSubTipos(res.map(t => ({
@@ -49,7 +46,7 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
   //           value: t._id
   //         })));
   //       });
-  // }, [EpicaData])
+  // }, [ArmaDataEdit])
 
   useEffect(() => {
     const fetchTipos = async () => {
@@ -58,64 +55,46 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
         if (res.length > 0) {
           const tipo = res[0]._id; // Asigna el primer tipo por defecto
           setTipos(res.map(t => ({ label: t.descripcion, value: t._id })));
-          setEpicaData((prev) => ({ ...prev, tipo }));
+          setArmaData((prev) => ({ ...prev, tipo }));
         }
       } catch (err) {
         console.error("Error al obtener tipos:", err);
       }
     };
-
+  
     fetchTipos();
   }, []);
 
-  useEffect(() => {
-    const fetchSubTipos = async () => {
-      if (EpicaData.tipo) { // Solo si el tipo es válido
-        try {
-          const res = await TiposService.obtenerSubTipos(EpicaData.tipo);
-          if (res.length > 0) {
-            const subtipo = res[0]._id; // Asigna el primer subtipo por defecto
-            setSubTipos(res.map(t => ({ label: t.descripcion, value: t._id })));
-            setEpicaData((prev) => ({ ...prev, subtipo }));
-          }
-        } catch (err) {
-          console.error("Error al obtener subtipos:", err);
-        }
-      }
-    };
-
-    fetchSubTipos();
-  }, [EpicaData.tipo]);
-
+  
 
   const handleTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setEpicaData((prev) => ({ ...prev, tipo: e.target.value }));
+    setArmaData((prev) => ({ ...prev, tipo: e.target.value }));
   };
 
   const handleSubtipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setEpicaData((prev) => ({ ...prev, subtipo: e.target.value }));
+    setArmaData((prev) => ({ ...prev, subtipo: e.target.value }));
   };
 
   const handleNombreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setEpicaData(prevState => ({
-      ...prevState,
-      epica: {
-        ...prevState.epica,
-        nombre: value
-      }
-    }));
+      const { value } = e.target;
+      setArmaData(prevState => ({
+          ...prevState,
+          armas: {
+              ...prevState.armas,
+              nombre: value
+          }
+      }));
   };
-
+  
 
   const handleArmasChange = (
-    name: keyof EpicaData["epica"],
+    name: keyof ArmaDataEdit["armas"],
     value: number
   ) => {
-    setEpicaData((prev) => ({
+    setArmaData((prev) => ({
       ...prev,
-      epica: {
-        ...prev.epica,
+      armas: {
+        ...prev.armas,
         [name]: value,
       },
     }));
@@ -132,41 +111,26 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Detalle</h2>
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4">
-          <Select
-            id="tipo-select"
-            label="Tipo:"
-            value={EpicaData.tipo}
-            name="tipo"
-            onChange={handleTipoChange}
-            options={tipoOptions}
-          />
-          <Select
-            id="subtipo-select"
-            label="Subtipo:"
-            value={EpicaData.subtipo}
-            name="subtipo"
-            onChange={handleSubtipoChange}
-            options={subtipoOptions}
-          />
+
         </div>
 
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          epica
+          Armas
         </h2>
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4">
-          <Input
+        <Input
             id={"iiii"}
             label={"Nombre:"}
-            value={EpicaData.epica.nombre.toString()}
+            value={ArmaDataEdit.armas.nombre.toString()}
             name="nombre"
             onChange={handleNombreChange}
 
-          />
+        />
           <Input
             id={""}
             label={"Efectos:"}
-            value={EpicaData.epica.efectos.toString()}
+            value={ArmaDataEdit.armas.efectos.toString()}
             name="efectos"
             onChange={(e) =>
               handleArmasChange("efectos", Number(e.target.value))
@@ -175,7 +139,7 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
           <Input
             id={""}
             label={"Porcentaje de Caída:"}
-            value={EpicaData.epica.porcentajeCaida.toString()}
+            value={ArmaDataEdit.armas.porcentajeCaida.toString()}
             name="porcentajeCaida"
             onChange={(e) =>
               handleArmasChange(
@@ -190,11 +154,11 @@ const EpicaForm: React.FC<EpicaFormProps> = ({
         <Button
           name={"GUARDAR"}
           type="submit"
-          onClick={() => { console.log("hola") }}
+          onClick={()=>{console.log("hola")}}
         />
       </div>
     </form>
   );
 };
 
-export default EpicaForm;
+export default ArmaFormEdit;

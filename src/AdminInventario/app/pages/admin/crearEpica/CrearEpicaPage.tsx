@@ -8,21 +8,16 @@ import { useParams } from 'react-router-dom';
 import { getProductoById } from '../../../../services/InventarioService';
 import { EpicaService } from '../../../../services/EpicaService';
 export interface EpicaData {
-    _id: string;
-    tipo: string;
-    subtipo: string;
-    descripcion: string;
-    estadisticas: {
-      poder: number;
-      vida: number;
-      defensa: number;
-    };
-    armas: {
-      set: number;
-      nombre: string;
-      efectos: string;
-      porcentajeCaida: number;
-    };
+  _id: string;
+  tipo: string;
+  subtipo: string;
+  descripcion: string;
+  stock: number,
+  epica: {
+    nombre: string;
+    efectos: string;
+    porcentajeCaida: number;
+  };
   } 
 
 interface IInventarioDetallePageProps { }
@@ -35,19 +30,14 @@ export const CrearEpicaPage: React.FunctionComponent<IInventarioDetallePageProps
     tipo: '',
     subtipo: '',
     descripcion: '',
-    estadisticas: {
-      poder: 0,
-      vida: 0,
-      defensa: 0,
-    },
-    armas: {
-        set: 0,
+    stock: -1,
+    epica: {
         nombre: '',
         efectos: '',
         porcentajeCaida: 0
       }
   });
-
+  /*
   useEffect(() => {
     const fetchProducto = async () => {
       try {
@@ -60,7 +50,7 @@ export const CrearEpicaPage: React.FunctionComponent<IInventarioDetallePageProps
     };
 
     fetchProducto();
-  }, [id]);
+  }, [id]);*/
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setArmData({
@@ -96,7 +86,7 @@ export const CrearEpicaPage: React.FunctionComponent<IInventarioDetallePageProps
       <div className="w-full sm:w-[60%] xl:w-[75%] bg-quaternary sm:overflow-y-auto p-4 flex-1">
         <EpicaForm
           EpicaData={EpicaData}
-          setHeroData={setArmData}
+          setEpicaData={setArmData}
           onSubmit={guardar}
         />
       </div>

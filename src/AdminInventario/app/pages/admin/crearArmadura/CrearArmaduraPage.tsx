@@ -1,71 +1,46 @@
 import * as React from 'react';
 import ArmaduraForm from './components/ArmaduraForm';
 import TextArea from '../../../shared/components/inputs/TextArea';
-import { DiceInputValue } from '../../../shared/components/inputs/DiceInput';
 import ImagePicker from '../../../shared/components/imagepicker/ImagePicker';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProductoById } from '../../../../services/InventarioService';
 import { ArmaduraService } from '../../../../services/ArmaduraService';
 
 export interface ArmaduraData {
-    _id: string;
-    tipo: string;
-    subtipo: string;
-    descripcion: string;
-    estadisticas: {
-      poder: number;
-      vida: number;
-      defensa: number;
-    };
-    armadura: {
-      set: number;
-      nombre: string;
-      efectos: string;
-      porcentajeCaida: number;
-    };
-  } 
+  _id: string;
+  tipo: string;
+  subtipo: string;
+  descripcion: string;
+  stock: number,
+  armadura: {
+    nombre: string;
+    efectos: string;
+    porcentajeCaida: number;
+  };
+} 
 
 interface IInventarioDetallePageProps { }
 
 export const CrearArmaduraPage: React.FunctionComponent<IInventarioDetallePageProps> = () => {
   const { id } = useParams<{ id: string }>();
   const [file, setFile] = useState<File | null>(null);
-  const [ArmaduraData, setArmaduraData] = useState<ArmaduraData>({
+  const [armaduraData, setArmaduraData] = useState<ArmaduraData>({
     _id: '',
     tipo: '',
     subtipo: '',
     descripcion: '',
-    estadisticas: {
-      poder: 0,
-      vida: 0,
-      defensa: 0,
-    },
+    stock: -1,
     armadura: {
-        set: 0,
         nombre: '',
         efectos: '',
         porcentajeCaida: 0
       }
   });
 
-  useEffect(() => {
-    const fetchProducto = async () => {
-      try {
-        const producto = await getProductoById(id as string);
-        // Aquí puedes actualizar el estado con los datos del producto
-        setArmaduraData(producto);
-      } catch (error) {
-        console.error('Error al obtener el producto:', error);
-      }
-    };
-
-    fetchProducto();
-  }, [id]);
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setArmaduraData({
-      ...ArmaduraData,
+      ...armaduraData,
       descripcion: e.target.value
     });
   };
@@ -77,7 +52,7 @@ export const CrearArmaduraPage: React.FunctionComponent<IInventarioDetallePagePr
   const guardar = () => {
     if(!file) return;
 
-    ArmaduraService.guardarArma(ArmaduraData, file);
+    ArmaduraService.guardarArma(armaduraData, file);
   }
 
   return (
@@ -90,14 +65,14 @@ export const CrearArmaduraPage: React.FunctionComponent<IInventarioDetallePagePr
         </div>
 
         <div className='w-full flex-grow h-[200px] sm:h-auto'>
-          <TextArea label={'Descripcion:'} value={ArmaduraData.descripcion} placeholder='Type hero description ...' rows={10} onChange={handleDescriptionChange} />
+          <TextArea label={'Descripcion:'} value={armaduraData.descripcion} placeholder='Type hero description ...' rows={10} onChange={handleDescriptionChange} />
         </div>
       </div>
       {/* Contenedor derecho con scroll */}
       <div className="w-full sm:w-[60%] xl:w-[75%] bg-quaternary sm:overflow-y-auto p-4 flex-1">
         <ArmaduraForm
-          ArmaduraData={ArmaduraData}
-          setHeroData={setArmaduraData}
+          ArmaduraData={armaduraData}
+          setArmaduraData={setArmaduraData}
           onSubmit={guardar}
         />
       </div>

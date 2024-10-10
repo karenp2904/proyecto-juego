@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../../../shared/components/inputs/Input";
 import Select from "../../../../shared/components/inputs/Select";
-import DiceInput, {
-  DiceInputValue,
-} from "../../../../shared/components/inputs/DiceInput";
+import DiceInput, { DiceInputValue } from "../../../../shared/components/inputs/DiceInput";
 import Button from "../../../../shared/components/buttons/Button";
 import { HeroeData } from "../CrearHeorePage";
 import { TiposService } from "../../../../../services/Tipos";
@@ -24,32 +22,43 @@ const HeroeForm: React.FC<HeroeFormProps> = ({
   onSubmit,
   setHeroData,
 }) => {
-
   const [tipoOptions, setTipos] = useState<SelectOption[]>([]);
   const [subtipoOptions, setSubTipos] = useState<SelectOption[]>([]);
-
+  
   useEffect(() => {
-    console.log("ASFASFASFASFASF");
     TiposService.obtenerTipos()
       .then(res => {
-        console.log("pepe", res);
-        setTipos(res.map(t => ({
-          label: t.descripcion,
-          value: t._id
-        })));
-      });
-  }, []);
-
-  useEffect(() => {
-    TiposService.obtenerSubTipos(HeroeData.tipo)
-        .then(res => {
-          console.log("subpepe", res);
-          setSubTipos(res.map(t => ({
+        if (res.length > 0) {
+          setHeroData((prev) => ({ ...prev, tipo: res[0]._id }));
+          setTipos(res.map(t => ({
             label: t.descripcion,
             value: t._id
           })));
+        }
+        console.log(res)
+      })
+      .catch(err => {
+        console.error("Error al obtener tipos:", err);
+      });
+  }, []);
+  
+  useEffect(() => {
+    if (HeroeData.tipo != undefined && HeroeData.tipo != null && HeroeData.tipo != "" ) {
+      TiposService.obtenerSubTipos(HeroeData.tipo)
+        .then(res => {
+          if (res.length > 0) {
+            setSubTipos(res.map(t => ({
+              label: t.descripcion,
+              value: t._id
+            })));
+            setHeroData((prev) => ({ ...prev, subtipo: res[0]._id }));
+          }
+        })
+        .catch(err => {
+          console.error("Error al obtener subtipos:", err);
         });
-  }, [HeroeData])
+    }
+  }, [HeroeData.tipo]);
 
   const handleTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setHeroData((prev) => ({ ...prev, tipo: e.target.value }));
@@ -89,6 +98,9 @@ const HeroeForm: React.FC<HeroeFormProps> = ({
       estadisticas: {
         ...prev.estadisticas,
         [name]: value,
+                modificador: Number(value.modificador) || 0,
+        lanzamientos: Number(value.lanzamientos) || 0,
+        caras: Number(value.caras) || 0,
       },
     }));
   };
@@ -263,3 +275,4 @@ const HeroeForm: React.FC<HeroeFormProps> = ({
 };
 
 export default HeroeForm;
+
