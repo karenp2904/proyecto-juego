@@ -50,29 +50,37 @@ function Inventario() {
   useEffect(() => {
     const obtenerInventario = async () => {
       try {
-        const response = await axios.get(`${Environment.getDomainInventory}/inventary/${user?.iduser.toString()}`);
-        const formattedItems = response.data.inventario.reduce(
-          (
-            acc: { [key: string]: InventoryItem },
-            item: {
-              objetoId: InventoryItem;
-              active: boolean;
-              effects?: Effects;
-            },
-            index: number
-          ) => {
-            acc[`inventory${index + 1}`] = {
-              _id: item.objetoId._id,
-              name: item.objetoId.name,
-              image: item.objetoId.image,
-              active: item.active,
-              effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
-            };
-            return acc;
+        const response = await fetch(`${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          {}
-        );
-        setItems(formattedItems);
+        });
+        if (response.ok) {
+          const data = await response.json()
+              const formattedItems = data.inventario.reduce(
+                (
+                  acc: { [key: string]: InventoryItem },
+                  item: {
+                    objetoId: InventoryItem;
+                    active: boolean;
+                    effects?: Effects;
+                  },
+                  index: number
+                ) => {
+                  acc[`inventory${index + 1}`] = {
+                    _id: item.objetoId._id,
+                    name: item.objetoId.name,
+                    image: item.objetoId.image,
+                    active: item.active,
+                    effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
+                  };
+                  return acc;
+                },
+                {}
+              );
+              setItems(formattedItems);
+            }
       } catch (error) {
         console.error("Error al obtener inventario:", error);
       }
@@ -80,31 +88,37 @@ function Inventario() {
 
     const obtenerInventario_game = async () => {
       try {
-        const response = await axios.get(
-         `${Environment.getDomainInventory}/inventary_game/${user?.iduser.toString()}`
-        );
-        const formattedItems = response.data.inventario.reduce(
-          (
-            acc: { [key: string]: InventoryItem },
-            item: {
-              objetoId: InventoryItem;
-              active: boolean;
-              effects?: Effects;
-            },
-            index: number
-          ) => {
-            acc[`bag${index + 1}`] = {
-              _id: item.objetoId._id,
-              name: item.objetoId.name,
-              image: item.objetoId.image,
-              active: item.active,
-              effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
-            };
-            return acc;
+        const response = await fetch(`${Environment.getDomainInventory()}/inventary_game/${user?.iduser.toString()}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          {}
-        );
-        setItems(formattedItems);
+        });
+        if (response.ok) {
+            const data = await response.json()
+            const formattedItems = data.inventario.reduce(
+              (
+                acc: { [key: string]: InventoryItem },
+                item: {
+                  objetoId: InventoryItem;
+                  active: boolean;
+                  effects?: Effects;
+                },
+                index: number
+              ) => {
+                acc[`bag${index + 1}`] = {
+                  _id: item.objetoId._id,
+                  name: item.objetoId.name,
+                  image: item.objetoId.image,
+                  active: item.active,
+                  effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
+                };
+                return acc;
+              },
+              {}
+            );
+            setItems(formattedItems);
+          }
       } catch (error) {
         console.error("Error al obtener inventario:", error);
       }
