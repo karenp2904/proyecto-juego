@@ -282,6 +282,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         defenderType: null
       });
       setGameOver(true);
+      ObtenerCreditos();
     }
   }, [jugador?.health, enemigo?.health, gameOver]);
 
@@ -657,34 +658,35 @@ const aplicarEfectos = (habilidad: Acciones): ActiveEffects => {
 };
 
 
-const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
-  if (jugador) {
-    const updatedJugador = {
-      ...jugador,
-      attack: equipmentEffects.attack,
-      defense: equipmentEffects.defense,
-      damage: equipmentEffects.damage,
-    };
+  const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
+    if (jugador) {
+      const updatedJugador = {
+        ...jugador,
+        attack: baseStats.attack,
+        defense: baseStats.defense,
+        damage: baseStats.damage,
+        health: currentPlayerHealth, // Usar la vida actual en lugar de baseStats.health
+      };
 
-    Object.entries(efectos).forEach(([key, effect]) => {
-      switch (key) {
-        case 'increaseAttack':
-          updatedJugador.attack += effect.value;
-          break;
-        case 'increaseDefense':
-          updatedJugador.defense += effect.value;
-          break;
-        case 'increaseDamage':
-          updatedJugador.damage += effect.value;
-          break;
-        // ... (otros casos según sea necesario)
-      }
-    });
+      Object.entries(efectos).forEach(([key, effect]) => {
+        switch (key) {
+          case 'increaseAttack':
+            updatedJugador.attack += effect.value;
+            break;
+          case 'increaseDefense':
+            updatedJugador.defense += effect.value;
+            break;
+          case 'increaseDamage':
+            updatedJugador.damage += effect.value;
+            break;
+          // No modificar la salud aquí
+        }
+      });
 
-    setJugador(updatedJugador);
-    console.log("Estadísticas actualizadas del jugador:", updatedJugador);
-  }
-};
+      setJugador(updatedJugador);
+      console.log("Estadísticas actualizadas del jugador:", updatedJugador);
+    }
+  };
 
 
 const actualizarEfectosActivos = () => {

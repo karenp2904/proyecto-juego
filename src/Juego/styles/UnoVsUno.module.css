@@ -177,6 +177,92 @@
   filter: grayscale(50%);
 }
 
+.rewardPanelOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding-bottom: 65vh;
+}
+
+.rewardPanel {
+  background: linear-gradient(45deg, #4a4a4a, #2a2a2a);
+  border: 2px solid #ffd700;
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  animation: slideDown 0.5s ease-out; /* Añadimos una animación */
+
+}
+
+.rewardTitle {
+  color: #ffd700;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.rewardContent {
+  margin-bottom: 20px;
+}
+
+.trophyImage {
+  width: 100px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.rewardText {
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.rewardItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.creditImage {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.creditAmount {
+  color: #ffd700;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.collectButton {
+  background-color: #ffd700;
+  color: #2a2a2a;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.collectButton:hover {
+  background-color: #ffec8b;
+  transform: scale(1.05);
+}
+
+
 @keyframes shieldPulse {
   0% {
     opacity: 0;

@@ -29,6 +29,8 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
   const [isPlayerShielding, setIsPlayerShielding] = useState(false);
   const [isEnemyShielding, setIsEnemyShielding] = useState(false);
   const navigate = useNavigate();
+  const [showRewardPanel, setShowRewardPanel] = useState(false);
+
   
   
 
@@ -102,6 +104,39 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
     setIsOpponentSelected(false);
   };
 
+  const handleGameOver = (playerWon: boolean) => {
+    if (playerWon) {
+      setShowRewardPanel(true);
+    } else {
+      // Manejar el caso de derrota si es necesario
+      handleExitGame();
+    }
+  };
+
+  const handleCollectReward = () => {
+    // Aquí puedes implementar la lógica para añadir los créditos al jugador
+    console.log("2 créditos añadidos al jugador");
+    setShowRewardPanel(false);
+    handleExitGame();
+  };
+
+  const RewardPanel = () => (
+    <div className={styles.rewardPanelOverlay}>
+      <div className={styles.rewardPanel}>
+        <h2 className={styles.rewardTitle}>¡Victoria!</h2>
+        <div className={styles.rewardContent}>
+          <p className={styles.rewardText}>Has ganado la batalla</p>
+          <div className={styles.rewardItem}>
+            <span className={styles.creditAmount}>+2 Créditos</span>
+          </div>
+        </div>
+        <button className={styles.collectButton} onClick={handleCollectReward}>
+          Recoger Recompensa
+        </button>
+      </div>
+    </div>
+  );
+
   const handleExitGame = () => {
     // Realiza cualquier limpieza necesaria aquí
     navigate('/crearpartida');
@@ -156,8 +191,11 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
               {isEnemyShielding && (
                 <div className={styles.shieldEffect}>🛡️</div>
               )}
+                        {showRewardPanel && <RewardPanel />}
+
             </div>
           </div>
+
         </section>
   
         <PlayerContainer
@@ -172,14 +210,17 @@ const UnoVsUno: FunctionComponent<UnoVsUnoProps> = ({ jugador: jugadorInicial, s
           onTurnEnd={handleTurnEnd}
           selectedHeroId={selectedHeroId}
           onExitGame={handleExitGame} // Pass the new function as a prop
+          onGameOver={handleGameOver}
+
 
         />
-  
+
         {actionMessage && (
           <div className={styles.actionMessage}>
             <h2>{actionMessage}</h2>
           </div>
         )}
+
       </div>
     </div>
   );
