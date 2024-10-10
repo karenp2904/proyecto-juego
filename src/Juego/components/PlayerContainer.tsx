@@ -9,6 +9,9 @@ import accionesData from '../data/acciones.json';
 import efectosHeroeData from '../data/Efectosheroe.json'
 import EfectosHeroe from "../interfaces/EfectosHeroe";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../hooks/useAuth";
+import Environment from "../../shared/Environment";
+import VictoryPanel from "./VictoryPanel";
 
 interface ActiveEffect {
   value: number;
@@ -111,6 +114,10 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [effectsTimer, setEffectsTimer] = useState<NodeJS.Timeout | null>(null);
   const [activeEffects, setActiveEffects] = useState<ActiveEffects>({});
   const navigate = useNavigate();
+
+
+  const user = useAuth(s => s.user);
+
   const [baseStats, setBaseStats] = useState({
     attack: 0,
     defense: 0,
@@ -291,16 +298,66 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         message: "¡Has perdido la batalla!",
         defenderType: null
       });
-      setGameOver(true);
+      setGameOver(true);    
     } else if (enemigo?.health === 0) {
       onActionMessage({
         message: "¡Has ganado la batalla!",
         defenderType: null
       });
+      obtenerCreditos()
       setGameOver(true);
     }
   }, [jugador?.health, enemigo?.health, gameOver]);
 
+
+
+  async function setCreditsUser(idUser:number, credits:number){
+    // Realizar una solicitud GET con Axios
+    try {
+        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ iduser: idUser , credits:credits}),
+        });
+    
+        if (response.ok) {
+        console.log()
+        return response.json()
+    
+        }else{
+        return 0
+        } 
+    } catch (error) {
+        // Captura errores de red o excepciones en la solicitud
+        console.error('Error al realizar la solicitud:', error);
+        return null;
+    }
+  }
+
+  const [showVictoryPanel, setShowVictoryPanel] = useState(false);
+  const [creditsWon, setCreditsWon] = useState(0);
+  
+  const obtenerCreditos = async () => {
+    if (enemigo?.health === 0) {
+      setCreditos(prevCredits => prevCredits + 2);
+      setCreditsWon(2); // Créditos ganados
+
+      setShowVictoryPanel(true); // Mostrar panel de victoria
+      console.log("gameOver:", gameOver);
+      console.log("jugador?.health:", jugador?.health);
+      console.log("showVictoryPanel:", showVictoryPanel);
+      
+      if(user) {
+        console.log('creditos')
+        const creditos = await setCreditsUser(user?.iduser, (user?.credits + creditsWon));
+        console.log(creditos);
+      }
+    }
+  };
+  
+  const closeVictoryPanel = () => setShowVictoryPanel(false);
 
  
 
@@ -1064,7 +1121,16 @@ useEffect(() => {
             <div className={styles.gameOverMessage}>
               {jugador?.health === 0 ? "¡Has perdido la batalla!" : "¡Has ganado la batalla!"}
             </div>
+            
+      
           )}
+
+            {gameOver && (jugador?.health !== 0 || enemigo?.health==0) && showVictoryPanel && (
+              <VictoryPanel 
+                creditsWon={creditsWon} 
+                onClose={closeVictoryPanel} 
+              />
+            )}
         </div>
       </div>
     </footer>

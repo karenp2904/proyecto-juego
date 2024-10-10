@@ -8,7 +8,7 @@ function BoxEstadisticas(props: BoxProps) {
 
   return (
     <div className="boxestadisticas">
-      <h4>{titulo}</h4>
+      <h2>{titulo}</h2>
       <span>{numero}</span>
     </div>
   );
