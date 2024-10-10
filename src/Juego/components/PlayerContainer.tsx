@@ -839,6 +839,7 @@ useEffect(() => {
   const getActionImage = (actionName: string) => {
     switch (actionName) {
       case "Shield Throw":
+
         return "AccionPlus.png";
       case "Mano de piedra":
         return "Escudo.png";
@@ -862,8 +863,9 @@ useEffect(() => {
       return "AccionHielo1.png";
       case "Bola de hielo":
       return "AccionHielo2.png";
+
       default:
-        return "src/assets/default-action.png"; // You might want to add a default image
+        return "/Images/AccionPlus.png"; // You might want to add a default image
     }
   };
 
@@ -988,6 +990,7 @@ useEffect(() => {
             </div>
           )}
           {gameOver && (<br />)}
+
           <div className={styles.actionButtons}>
             <div className={styles.attackSkillButtons}>
               <button
@@ -1012,6 +1015,7 @@ useEffect(() => {
                       alt={habilidad.name} 
                       className={styles.actionButtonImage} 
                     />
+
                   </button>
                 ))}
               </div>

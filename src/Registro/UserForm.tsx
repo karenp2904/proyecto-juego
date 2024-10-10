@@ -77,13 +77,15 @@ const UserForm: React.FC = () => {
             // Groserías colombianas
             'hijueputa', 'gonorrea', 'carechimba', 'marica', 'pendejo', 'guevon', 'mamon', 'pirobo', 'culicagao', 'zorra',
             'caremondá', 'culicagado', 'malparido', 'careverga', 'chimba', 'verraco', 'cojudo', 'careculo', 'careguevo',
-            'perra', 'puto', 'ñero', 'guevón', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 'jueputa','sapo', 'bigdick',
+            'perra', 'puto', 'ñero', 'guevón','guevon', 'wevon', 'imbecil', 'estúpido', 'maldito', 'hp', 'mk', 'jueputa','sapo', 'bigdick',
             'dick','pussy','gay', 'gays','sapo perro','manacido','loparieroncagando','homosexual','malparida','gordo','gordofobico',
-            'gayelquelolea', 'gay el que lo lea', 'como', 'ojo que te cojo',
+            'gayelquelolea', 'gay el que lo lea', 'como', 'ojo que te cojo','sapa', 'puta','monda',
             // Groserías y términos ofensivos de otros países de Latinoamérica
             'chingado', 'culero', 'verga', 'boludo', 'pelotudo', 'pajero', 'cabrón', 'pendeja', 'culiao', 'gilipollas', 
             'mierda', 'carajo', 'cabronazo', 'putazo', 'forro', 'tarado', 'baboso', 'mequetrefe', 'mamaguevo', 'coño', 
             'carapicha', 'maldito', 'destroyerpussy','triplehijueputa','tripplejueputa','triplehp',
+
+            'mrda',  'tetranutra','pito', 'piroba',  'carepicha','monda', 'culo',  'cuca','pitudo', 'paraco',  'nigga','mierda',
     
             // Nombres de celebridades
             'shakira', 'maluma', 'jbalvin', 'messi', 'cristiano', 'badbunny', 'thalia', 'ricky', 'daddyyankee', 'jlo', 
@@ -212,14 +214,30 @@ const UserForm: React.FC = () => {
     const handleToLogin = ()=>{
         navigate(Router.login)
     }
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (validateForm()) {
-            axios.post( `${Environment.getDomain()}/api/registro`, formData )
-            handleToLogin()
+    
+        // Verifica si el formulario pasa la validación
+        if (!validateForm()) {
+            return;
+        }
+    
+        try {
+            const response = await axios.post(`${Environment.getDomain()}/api/registro`, formData);
+    
+            // Si la solicitud es exitosa, redirige al usuario al login
+            if (response.status === 201 || response.status==200) {  // Puedes ajustar el código de estado según lo devuelto por tu API
+                handleToLogin();
+            } else {
+                console.error('Error en el registro:', response.data);
+                alert('Hubo un problema con el registro. Inténtalo nuevamente.');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de registro:', error);
+            alert('No se pudo completar el registro. Por favor, revise su conexión y vuelva a intentarlo.');
         }
     };
+    
 
     return (
             <div className="form-container">

@@ -47,7 +47,7 @@ function Login() {
 
           localStorage.setItem("usuario", JSON.stringify(data.usuario));
           auth();
-          //setCredits(data.usuario.iduser,200)
+          setCredits(data.usuario.iduser,200)
           if(data.usuario.surname=='admin' ||data.usuario.name=='Admin'){
 
             navigate(Router.adminInventario);
@@ -71,25 +71,31 @@ function Login() {
   };
 
   
+
   async function setCredits(idUser:number, credits:number){
     // Realizar una solicitud GET con Axios
-    const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ iduser: idUser , credits:credits}),
-    });
-
-    if (response.ok) {
-      
-      return await response.json()
-
-    }else{
-      return null
-   }
-  }
-
+    try {
+        const response = await fetch(`${Environment.getDomain()}/api/setCredits`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ iduser: idUser , credits:credits}),
+        });
+    
+        if (response.ok) {
+        console.log()
+        return response.json()
+    
+        }else{
+        return 0
+        } 
+    } catch (error) {
+        // Captura errores de red o excepciones en la solicitud
+        console.error('Error al realizar la solicitud:', error);
+        return null;
+    }
+}
 
  
 
