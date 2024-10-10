@@ -1,5 +1,4 @@
 import axios from "axios";
-import Environment from "../../shared/Environment";
 import apiClient from "./config/AxiosConfig";
 
 export interface ITipo {
@@ -14,15 +13,17 @@ export class TiposService {
 
     static obtenerTipos(): Promise<ITipo[]> {
         return new Promise((res) => {
-            apiClient.get(`${Environment.getDomainAdminInventory()}/api/tipo`)
+            apiClient.get("/tipo")
             .then(_res => res(_res.data.data))
-            .catch(() => {res([])})
+            .catch((error) => {
+                console.log(error)
+                res([])})
         })
     }
 
     static obtenerSubTipos(id: string): Promise<ITipo[]> {
         return new Promise((res) => {
-            axios.get(`${Environment.getDomainAdminInventory()}/api/subtipo/${id}`)
+            apiClient.get(`/subtipo/${id}`)
             .then(_res => res(_res.data.data))
             .catch(() => {res([])})
         })

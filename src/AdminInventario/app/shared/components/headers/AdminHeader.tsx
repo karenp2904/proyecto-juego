@@ -26,7 +26,6 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
 
     return (
         <div className='w-full px-3 py-3 bg-primary flex flex-row justify-between items-center shadow-xl'>
-            <Searchbar />
 
             {/* Menu hamburguesa para pantallas menores a `md` */}
             <button
@@ -43,22 +42,20 @@ const AdminHeader: React.FunctionComponent<IAdminHeaderProps> = ({}) => {
                     <div className='flex flex-row justify-end items-center'>
                         <MdClose className='w-6 h-6 cursor-pointer' onClick={CloseMenu} />
                     </div>
-                    <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} />
-                    <Button name={'CREAR HEROE'} onClick={() => handleNavigation('/admin/inventario/crearheroe')} />
-                    <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} />
-                    <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} />
-                    <Button name={'CREAR ITEM'} onClick={() => handleNavigation('/admin/inventario/crearitem')} />
-                    <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} />
+                    <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} type={undefined} />
+                    <Button name={'CREAR HEROE'} onClick={() => handleNavigation('/admin/inventario/crearheroe')} type={undefined} />
+                    <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} type={undefined} />
+                    <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} type={undefined} />
+                    <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} type={undefined} />
                 </div>
             </div>
 
             <div className='hidden xl:flex flex-row gap-3'>
-                <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} />
-                <Button name={'CREAR HEROE'} onClick={() => handleNavigation('/admin/inventario/crearheroe')} />
-                <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} />
-                <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} />
-                <Button name={'CREAR ITEM'} onClick={() => handleNavigation('/admin/inventario/crearitem')} />
-                <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} />
+                <Button name={'INVENTARIO'} onClick={() => handleNavigation('/admin/inventario')} type={undefined} />
+                <Button name={'CREAR HEROE'} onClick={() => handleNavigation('/admin/inventario/crearheroe')} type={undefined} />
+                <Button name={'CREAR ARMA'} onClick={() => handleNavigation('/admin/inventario/creararma')} type={undefined} />
+                <Button name={'CREAR ARMADURA'} onClick={() => handleNavigation('/admin/inventario/creararmadura')} type={undefined} />
+                <Button name={'CREAR EPICA'} onClick={() => handleNavigation('/admin/inventario/crearepica')} type={undefined} />
             </div>
         </div>
     );

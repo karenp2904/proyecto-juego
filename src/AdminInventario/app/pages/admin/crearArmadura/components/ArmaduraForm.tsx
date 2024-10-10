@@ -9,9 +9,9 @@ import { ArmaduraData } from "../CrearArmaduraPage";
 import { TiposService } from "../../../../../services/Tipos";
 
 interface ArmaduraFormProps {
-    ArmaduraData: ArmaduraData;
+  ArmaduraData: ArmaduraData;
   onSubmit: () => void;
-  setHeroData: React.Dispatch<React.SetStateAction<ArmaduraData>>;
+  setArmaduraData: React.Dispatch<React.SetStateAction<ArmaduraData>>;
 }
 
 type SelectOption = {
@@ -20,86 +20,79 @@ type SelectOption = {
 };
 
 const ArmaduraForm: React.FC<ArmaduraFormProps> = ({
-    ArmaduraData,
+  ArmaduraData,
   onSubmit,
-  setHeroData,
+  setArmaduraData,
 }) => {
 
   const [tipoOptions, setTipos] = useState<SelectOption[]>([]);
   const [subtipoOptions, setSubTipos] = useState<SelectOption[]>([]);
 
   useEffect(() => {
-    console.log("ASFASFASFASFASF");
-    TiposService.obtenerTipos()
-      .then(res => {
-        console.log("pepe", res);
-        setTipos(res.map(t => ({
-          label: t.descripcion,
-          value: t._id
-        })));
-      });
+    const fetchTipos = async () => {
+      try {
+        const res = await TiposService.obtenerTipos();
+        if (res.length > 0) {
+          const tipo = res[0]._id; // Asigna el primer tipo por defecto
+          setTipos(res.map(t => ({ label: t.descripcion, value: t._id })));
+          setArmaduraData((prev) => ({ ...prev, tipo }));
+        }
+      } catch (err) {
+        console.error("Error al obtener tipos:", err);
+      }
+    };
+  
+    fetchTipos();
   }, []);
-
+  
   useEffect(() => {
-    TiposService.obtenerSubTipos(ArmaduraData.tipo)
-        .then(res => {
-          console.log("subpepe", res);
-          setSubTipos(res.map(t => ({
-            label: t.descripcion,
-            value: t._id
-          })));
-        });
-  }, [ArmaduraData])
+    const fetchSubTipos = async () => {
+      if (ArmaduraData.tipo) { // Solo si el tipo es válido
+        try {
+          const res = await TiposService.obtenerSubTipos(ArmaduraData.tipo);
+          if (res.length > 0) {
+            const subtipo = res[0]._id; // Asigna el primer subtipo por defecto
+            setSubTipos(res.map(t => ({ label: t.descripcion, value: t._id })));
+            setArmaduraData((prev) => ({ ...prev, subtipo }));
+          }
+        } catch (err) {
+          console.error("Error al obtener subtipos:", err);
+        }
+      }
+    };
+  
+    fetchSubTipos();
+  }, [ArmaduraData.tipo]);
 
   const handleTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setHeroData((prev) => ({ ...prev, tipo: e.target.value }));
+    setArmaduraData((prev) => ({ ...prev, tipo: e.target.value }));
   };
 
   const handleSubtipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setHeroData((prev) => ({ ...prev, subtipo: e.target.value }));
+    setArmaduraData((prev) => ({ ...prev, subtipo: e.target.value }));
   };
 
-  const handlePoderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHeroData((prev) => ({
-      ...prev,
-      estadisticas: { ...prev.estadisticas, poder: Number(e.target.value) },
+  const handleNombreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setArmaduraData(prevState => ({
+        ...prevState,
+        armadura: {
+            ...prevState.armadura,
+            nombre: value
+        }
     }));
-  };
+};
 
-  const handleVidaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHeroData((prev) => ({
-      ...prev,
-      estadisticas: { ...prev.estadisticas, vida: Number(e.target.value) },
-    }));
-  };
 
-  const handleDefensaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHeroData((prev) => ({
-      ...prev,
-      estadisticas: { ...prev.estadisticas, defensa: Number(e.target.value) },
-    }));
-  };
-
-  const handleEstadisticasChange = (
-    name: keyof ArmaduraData["estadisticas"],
-    value: DiceInputValue
-  ) => {
-    setHeroData((prev) => ({
-      ...prev,
-      estadisticas: {
-        ...prev.estadisticas,
-        [name]: value,
-      },
-    }));
-  };
 
   const handleArmaduraChange = (
     name: keyof ArmaduraData["armadura"],
     value: number
   ) => {
-    setHeroData((prev) => ({
+    console.log(value)
+    setArmaduraData((prev) => ({
       ...prev,
-      armas: {
+      armadura: {
         ...prev.armadura,
         [name]: value,
       },
@@ -136,53 +129,18 @@ const ArmaduraForm: React.FC<ArmaduraFormProps> = ({
         </div>
 
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Estadisticas
+          Armas
         </h2>
 
         <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4">
-          <Input
-            id={""}
-            type="number"
-            label={"Poder:"}
-            value={ArmaduraData.estadisticas.poder.toString()}
-            name="poder"
-            onChange={handlePoderChange}
-          />
-          <Input
-            id={""}
-            label={"Vida:"}
-            value={ArmaduraData.estadisticas.vida.toString()}
-            name="vida"
-            onChange={handleVidaChange}
-          />
-          <Input
-            id={""}
-            label={"Defensa:"}
-            value={ArmaduraData.estadisticas.defensa.toString()}
-            name="defensa"
-            onChange={handleDefensaChange}
-          />
-          {/* <DiceInput
-            id={""}
-            label={"Ataque:"}
-            value={ArmaData.estadisticas.ataque}
-            onChange={(newValue) =>
-              handleEstadisticasChange("ataque", newValue)
-            }
-          /> */}
-          {/* <DiceInput
-            id={""}
-            label={"Daño:"}
-            value={ArmaData.estadisticas.daño}
-            onChange={(newValue) => handleEstadisticasChange("daño", newValue)}
-          /> */}
-        </div>
+        <Input
+            id={"iiii"}
+            label={"Nombre:"}
+            value={ArmaduraData.armadura.nombre.toString()}
+            name="nombre"
+            onChange={handleNombreChange}
 
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Probabilidades
-        </h2>
-
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-4">
+        />
           <Input
             id={""}
             label={"Efectos:"}
@@ -204,58 +162,13 @@ const ArmaduraForm: React.FC<ArmaduraFormProps> = ({
               )
             }
           />
-          {/* <Input
-            id={""}
-            label={"Evadir Golpe:"}
-            value={ArmaData.probabilidadDeAtaque.evadirGolpe.toString()}
-            name="evadirGolpe"
-            onChange={(e) =>
-              handleProbabilidadDeAtaqueChange(
-                "evadirGolpe",
-                Number(e.target.value)
-              )
-            }
-          />
-          <Input
-            id={""}
-            label={"Resistir Golpe:"}
-            value={ArmaData.probabilidadDeAtaque.resistirGolpe.toString()}
-            name="resistirGolpe"
-            onChange={(e) =>
-              handleProbabilidadDeAtaqueChange(
-                "resistirGolpe",
-                Number(e.target.value)
-              )
-            }
-          />
-          <Input
-            id={""}
-            label={"Escapar Golpe:"}
-            value={ArmaData.probabilidadDeAtaque.escaparGolpe.toString()}
-            name="escaparGolpe"
-            onChange={(e) =>
-              handleProbabilidadDeAtaqueChange(
-                "escaparGolpe",
-                Number(e.target.value)
-              )
-            }
-          />
-          <Input
-            id={""}
-            label={"No Daño:"}
-            value={ArmaData.probabilidadDeAtaque.noDaño.toString()}
-            name="noDaño"
-            onChange={(e) =>
-              handleProbabilidadDeAtaqueChange("noDaño", Number(e.target.value))
-            }
-          /> */}
         </div>
       </div>
       <div className="w-full flex flex-col items-end justify-center">
         <Button
           name={"GUARDAR"}
           type="submit"
-          onClick={() => {}}
+          onClick={()=>{console.log("hola")}}
         />
       </div>
     </form>
