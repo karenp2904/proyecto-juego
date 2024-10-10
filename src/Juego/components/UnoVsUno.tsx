@@ -8,6 +8,8 @@ import botData from '../data/bot.json';
 import { useNavigate } from 'react-router-dom';
 
 
+// Estoy cansado Jefe
+
 type ActionMessageType = {
   message: string;
   defenderType: 'player' | 'enemy' | null;
