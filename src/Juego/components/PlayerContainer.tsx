@@ -290,7 +290,17 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
     }
   }, [jugador?.health, enemigo?.health, gameOver]);
 
+  const [Creditos, setCreditos] = useState(0);
 
+  const ObtenerCreditos = () => {
+    if (enemigo?.health === 0) {
+      setCreditos(prevCredits => prevCredits + 2);
+      onActionMessage({
+        message: "¡Felicidades! Has ganado 2 créditos por tu victoria.",
+        defenderType: null
+      });
+    }
+  };
  
 
   const calcularAtaque = (combatiente: Combatiente): number => {
