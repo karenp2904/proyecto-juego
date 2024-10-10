@@ -1,29 +1,22 @@
 @font-face {
   font-family: 'OCR A';
-  src: url('../../public/fonts/OCRAEXT.TTF') format('truetype');
+  src: url('/fonts/OCRAEXT.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-/*
+
 body {
-  background-image: url('../../public/backgroundC.jpeg');
+  background-image: url('/backgroundC.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;
   overflow: hidden;
   font-family: "OCR A", monospace;
 }
-*/
-.container_inv {
-  background-image: url('../../public/backgroundC.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin: 0;
-  color: black;
-  overflow: hidden;
-  font-family: "OCR A", monospace;
+
+.container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 5px;
   width: 100%;
@@ -276,17 +269,36 @@ body {
 }
 
 .ObjDetalle {
-  display: none;
-  position: absolute;
-  width: 353px;
-  height: 616px;
-  left: 0px;
-  top: 0px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../../public/Designer.jpeg);
-  background-size: cover; /* La imagen cubre todo el área del contenedor */
-  background-position: 45% 60%; /* Desplaza la imagen 40% hacia la derecha y 60% hacia abajo */
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(green-background.jpg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  color: #f1f1f1; /* Light text to contrast with green background */
 }
 
+.ObjDetalle h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #e3e3e3; /* Slightly lighter text for titles */
+}
 
+.ObjDetalle img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
 
+.ObjDetalle .effect-container {
+  margin-top: 20px;
+}
 
+.ObjDetalle .effect {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #b8e986; /* Accent color to highlight effects */
+}
