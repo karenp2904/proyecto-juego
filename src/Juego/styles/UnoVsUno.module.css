@@ -13,6 +13,8 @@
   padding-top: 20%;
 }
 
+
+
 .gameContent {
   transform: scale(0.67);
   transform-origin: center top;
@@ -54,27 +56,29 @@
 
 /* Excluir a los magos del efecto */
 .magoImage {
-  transform: scaleX(1); /* O simplemente elimínalo, ya que es el valor por defecto */
+  transform: scaley(-1); /* O simplemente elimínalo, ya que es el valor por defecto */
 }
 
 .unovsuno .enemigoIcon  {
-  transform: scaleX(-1);
+  transform: scaleX(1);
 }
 
 @keyframes playerAttackMove {
-  0% { transform: translateX(0) scaleX(1);; }
-  50% { transform: translateX(100px)  scaleX(1);}
-  100% { transform: translateX(0) scaleX(1);; }
+  0% { transform: translateX(0) scaleX(-1);; }
+  50% { transform: translateX(100px)  scaleX(-1);}
+  100% { transform: translateX(0) scaleX(-1);; }
 }
 
 @keyframes enemyAttackMove {
-  0% { transform: translateX(0) scaleX(-1); }
-  50% { transform: translateX(-100px) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(-1); }
+  0% { transform: translateX(0) scaleX(1); }
+  50% { transform: translateX(-100px) scaleX(1); }
+  100% { transform: translateX(0) scaleX(1); }
 }
 
 .unovsuno .jugadorIcon {
   transition: all 0.3s ease;
+  transform: scaleX(-1);
+
 }
 
 .unovsuno .jugadorIconAttack {
@@ -108,7 +112,7 @@
 
 .unovsuno .actionMessage {
   position: absolute;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -160,6 +164,19 @@
   z-index: 2;
 }
 
+.unovsuno .derrotado1 {
+  
+  transform: rotate(90deg) scaley(-1);
+  opacity: 1;
+  filter: grayscale(50%);
+}
+
+.unovsuno .derrotado2 {
+  transform: rotate(90deg) scaley(1);
+  opacity: 1;
+  filter: grayscale(50%);
+}
+
 @keyframes shieldPulse {
   0% {
     opacity: 0;
@@ -187,4 +204,6 @@
     flex-wrap: wrap;
   }
 }
+
+
 
