@@ -1,6 +1,6 @@
 import axios from "axios";
-import { HeroeData } from "../app/pages/admin/inventarioDetalle/CrearHeorePage";
 import apiClient from "./config/AxiosConfig";
+import { HeroeData } from "../app/pages/admin/crearHeroe/CrearHeorePage";
 
 export class HeroeService {
     static guardarHeroe(heroe: HeroeData, image: File): Promise<void> {

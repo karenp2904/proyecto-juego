@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Environment from '../../../shared/Environment';
 
 // Función para obtener el token, por ejemplo desde localStorage o contexto
 const getToken = () => {
@@ -6,7 +7,7 @@ const getToken = () => {
 };
 
 const apiClient = axios.create({
-  baseURL: 'http://192.168.1.4:5000/api', // Cambia esto a la URL base de tu servidor //CAMBIO DE PUERTO
+  baseURL: `${Environment.getDomain()}/api`, // Cambia esto a la URL base de tu servidor //CAMBIO DE PUERTO
 });
 
 // Interceptor para agregar el token a los headers de cada solicitud
