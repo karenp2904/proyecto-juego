@@ -1,35 +1,38 @@
-import React, { useState, useEffect } from "react";
-import {
-  DndContext,
-  useDroppable,
-  useDraggable,
-  DragEndEvent,
-  UniqueIdentifier,
-} from "@dnd-kit/core";
+import { useState, useEffect } from "react";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import "./Style.css";
-import BoxEstadisticas from "./componentes/estadisticas";
+//import BoxEstadisticas from "./componentes/estadisticas";
 import ObjDetalle from "./componentes/objetoDetalle";
 import axios from "axios";
-import Environment from "../shared/Environment";
-import { useAuth } from "../hooks/useAuth";
-
-interface DroppableCuadradoProps {
-  id: UniqueIdentifier;
-  extraClasses?: string;
-  children?: React.ReactNode;
-}
-
-interface DraggableItemProps {
-  id: UniqueIdentifier;
-  content: string;
-  image: string; // Agregado para mostrar la imagen del objeto
-}
+import DroppableCuadrado from "./componentes/droppableCuadrado";
+import DraggableItem from "./componentes/draggableItem";
+import InventoryGrid from "./componentes/InventaryGrid";
 
 interface InventoryItem {
   _id: string;
   name: string;
   image: string;
   active: boolean;
+  effects?: Effects; // Se añaden los efectos opcionales
+}
+interface Effects {
+  attackBoost?: { number: number; turn_effect: number };
+  damageBoost?: { number: number; turn_effect: number };
+  criticBoost?: { number: number; turn_effect: number };
+  magic_damage?: { number: number; turn_effect: number };
+  healthBoost?: { number: number; turn_effect: number };
+  recover_health?: { number: number; turn_effect: number };
+  defenseBoost?: { number: number; turn_effect: number };
+  oponent_power?: { number: number; turn_effect: number };
+  oponent_attack?: { number: number; turn_effect: number };
+  oponent_damage?: { number: number; turn_effect: number };
+  oponent_critical_damage?: { number: number; turn_effect: number };
+  multiply_object_effect?: {
+    object: string; // o el tipo correcto que uses para referenciar objetos
+    effect: number;
+  };
+  return_damage?: { number: number; turn_effect: number };
+  ignore_physic_atack?: { boolean: boolean; turn_effect: number };
 }
 
 function Inventario() {
@@ -37,20 +40,21 @@ function Inventario() {
     {}
   );
   const [inventoryPage, setInventoryPage] = useState(1);
+  const [hoveredItem, setHoveredItem] = useState<InventoryItem | null>(null); // Estado para el objeto "hovered"
   //const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
-
-  const user = useAuth(s => s.user);
 
   useEffect(() => {
     const obtenerInventario = async () => {
       try {
-        const response = await axios.get(
-          `${Environment.getDomainInventory()}/inventary/${user?.iduser.toString()}`
-        );
+        const response = await axios.get(`http://localhost:3000/inventary/8`);
         const formattedItems = response.data.inventario.reduce(
           (
             acc: { [key: string]: InventoryItem },
-            item: { objetoId: InventoryItem; active: boolean },
+            item: {
+              objetoId: InventoryItem;
+              active: boolean;
+              effects?: Effects;
+            },
             index: number
           ) => {
             acc[`inventory${index + 1}`] = {
@@ -58,6 +62,7 @@ function Inventario() {
               name: item.objetoId.name,
               image: item.objetoId.image,
               active: item.active,
+              effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
             };
             return acc;
           },
@@ -72,13 +77,16 @@ function Inventario() {
     const obtenerInventario_game = async () => {
       try {
         const response = await axios.get(
-          `${Environment.getDomainInventory()}/inventary_game/${user?.iduser.toString()}`
+          `http://localhost:3000/inventary_game/8`
         );
-       console.log(await response.data)
-        const formattedItems = await response.data.inventario.reduce(
+        const formattedItems = response.data.inventario.reduce(
           (
             acc: { [key: string]: InventoryItem },
-            item: { objetoId: InventoryItem; active: boolean },
+            item: {
+              objetoId: InventoryItem;
+              active: boolean;
+              effects?: Effects;
+            },
             index: number
           ) => {
             acc[`bag${index + 1}`] = {
@@ -86,6 +94,7 @@ function Inventario() {
               name: item.objetoId.name,
               image: item.objetoId.image,
               active: item.active,
+              effects: item.objetoId.effects || {}, // Se añaden los efectos aquí
             };
             return acc;
           },
@@ -140,19 +149,23 @@ function Inventario() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="container_inv">
-        <ObjDetalle
-          titulo="hola"
-          img="Armaduras/AtaduraCarmesi"
-          calificacion={2}
-          estadisticas="muchas"
-        />
-
+      <div className="container">
         <div
           className="section1"
           style={{ fontFamily: "OCR A", fontSize: "20px" }}
         >
-          <div className="estadisticas">
+          {/* Mostrar el detalle del objeto que está siendo hovered */}
+          {hoveredItem && (
+            <ObjDetalle
+              titulo={hoveredItem.name}
+              img={hoveredItem.image}
+              calificacion={0}
+              estadisticas="Estadísticas dinámicas aquí"
+              effects={hoveredItem.effects || {}}
+            />
+          )}
+
+          {/* <div className="estadisticas">
             <h1>ESTADÍSTICA</h1>
             <BoxEstadisticas titulo="Nivel" numero={45} />
             <BoxEstadisticas titulo="Vida" numero={100} />
@@ -160,15 +173,15 @@ function Inventario() {
             <BoxEstadisticas titulo="Defensa" numero={70} />
             <BoxEstadisticas titulo="Ataque" numero={90} />
             <BoxEstadisticas titulo="Daño" numero={60} />
-          </div>
-          <div className="habilidades">
+          </div> */}
+          {/* <div className="habilidades">
             <h1>HABILIDADES ÉPICAS</h1>
             {/* {epicAbilities.map((ability) => (
               <div key={ability.id} className="epic-ability">
                 {ability.name}
               </div>
-            ))} */}
-          </div>
+            ))} 
+          </div> */}
         </div>
         <div className="section2">
           <div className="sub-section1">
@@ -223,6 +236,17 @@ function Inventario() {
                           id={items[cuadradoId]!._id}
                           content={items[cuadradoId]!.name}
                           image={items[cuadradoId]!.image}
+                          onHover={(item) =>
+                            item
+                              ? setHoveredItem({
+                                  _id: item?._id ?? "",
+                                  name: item?.name ?? "",
+                                  image: item?.image ?? "",
+                                  active: item?.active ?? false,
+                                  effects: items[cuadradoId]?.effects || {},
+                                })
+                              : null
+                          }
                         />
                       )}
                     </DroppableCuadrado>
@@ -250,6 +274,17 @@ function Inventario() {
                           id={items[cuadradoId]!._id}
                           content={items[cuadradoId]!.name}
                           image={items[cuadradoId]!.image}
+                          onHover={(item) =>
+                            item
+                              ? setHoveredItem({
+                                  _id: item?._id ?? "",
+                                  name: item?.name ?? "",
+                                  image: item?.image ?? "",
+                                  active: item?.active ?? false,
+                                  effects: items[cuadradoId]?.effects || {},
+                                })
+                              : null
+                          }
                         />
                       )}
                     </DroppableCuadrado>
@@ -273,87 +308,24 @@ function Inventario() {
             </button>
           </div>
           <div className="inventario">
-            <InventoryGrid baseId="inventory" items={items} />
+            <InventoryGrid
+              baseId="inventory"
+              items={items}
+              setHoveredItem={setHoveredItem}
+            />
           </div>
           <h1>BOLSA</h1>
           <div className="bolsa">
-            <InventoryGrid baseId="bag" items={items} />
+            <InventoryGrid
+              baseId="bag"
+              items={items}
+              setHoveredItem={setHoveredItem}
+            />
           </div>
         </div>
       </div>
     </DndContext>
   );
 }
-
-const InventoryGrid: React.FC<{
-  baseId: string;
-  items: { [key: string]: InventoryItem | null };
-}> = ({ baseId, items }) => {
-  return (
-    <>
-      {Array.from({ length: 16 }, (_, index) => (
-        <DroppableCuadrado
-          key={`${baseId}${index + 1}`}
-          id={`${baseId}${index + 1}`}
-        >
-          {items[`${baseId}${index + 1}`] && (
-            <DraggableItem
-              id={items[`${baseId}${index + 1}`]!._id}
-              content={items[`${baseId}${index + 1}`]!.name}
-              image={items[`${baseId}${index + 1}`]!.image}
-            />
-          )}
-        </DroppableCuadrado>
-      ))}
-    </>
-  );
-};
-
-const DroppableCuadrado: React.FC<DroppableCuadradoProps> = ({
-  id,
-  extraClasses = "",
-  children,
-}) => {
-  const { setNodeRef, isOver } = useDroppable({ id });
-
-  return (
-    <div
-      ref={setNodeRef}
-      className={`cuadrado ${extraClasses} ${isOver ? "over" : ""}`}
-    >
-      {children}
-    </div>
-  );
-};
-
-const DraggableItem: React.FC<DraggableItemProps> = ({
-  id,
-  content,
-  image,
-}) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
-
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
-
-  return (
-    <div
-      ref={setNodeRef}
-      className="draggable"
-      style={style}
-      {...listeners}
-      {...attributes}
-    >
-      <img
-        src={image}
-        alt={content}
-        style={{ width: "50px", height: "50px" }}
-      />
-    </div>
-  );
-};
 
 export default Inventario;
