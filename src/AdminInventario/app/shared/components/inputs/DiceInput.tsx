@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface DiceInputProps {
   id: string;
@@ -8,23 +8,30 @@ interface DiceInputProps {
 }
 
 export interface DiceInputValue {
-  modificador: string;
-  lanzamientos: string;
+  modificador: number;
+  lanzamientos: number;
   caras: string;
 }
 
 const DiceInput: React.FC<DiceInputProps> = ({ id, label, value, onChange }) => {
   const handleBaseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...value, modificador: e.target.value });
+    onChange({ ...value, modificador: Number(e.target.value) });
   };
 
   const handleDiceCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...value, lanzamientos: e.target.value });
+    onChange({ ...value, lanzamientos: Number(e.target.value) });
   };
 
   const handleDiceTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange({ ...value, caras: e.target.value });
   };
+
+  // const handleDiceTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const diceType = Number(e.target.value);
+  //   const faces = parseInt(diceType.substring(1), 10); // Extrae el número de caras y conviértelo a número
+  //   onChange({ ...value, caras: faces });
+  // };
+  
 
   return (
     <div className="mb-4">
@@ -51,7 +58,7 @@ const DiceInput: React.FC<DiceInputProps> = ({ id, label, value, onChange }) => 
         />
         <select
           id={`${id}-dice-type`}
-          value={value.caras}
+          value={`d${value.caras}`}
           onChange={handleDiceTypeChange}
           className="w-24 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >

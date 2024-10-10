@@ -53,6 +53,8 @@ type PlayerContainerProps = {
   onTurnEnd: () => void;
   selectedHeroId: string; // Nuevo prop para recibir el ID del héroe seleccionado
   onExitGame: () => void; // New prop for handling exit game action
+  onGameOver: (playerWon: boolean) => void;
+
 
   
   
@@ -85,8 +87,8 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   isOpponentSelected,
   onTurnEnd,
   selectedHeroId, // Nuevo prop
-  onExitGame // Add this new prop
-
+  onExitGame, // Add this new prop
+  onGameOver
 
 
 }) => {
@@ -135,6 +137,9 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   const [selectedAction, setSelectedAction] = useState<Acciones | null>(null);
   const [actionPerformed, setActionPerformed] = useState(false);
   const [temporaryEffects, setTemporaryEffects] = useState<ActiveEffects>({});
+  const [currentPlayerHealth, setCurrentPlayerHealth] = useState<number>(100);
+  const [, forceUpdate] = useState({});
+
 
 
   
@@ -164,6 +169,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         damage: jugador.baseDamage || jugador.damage || 0,
       };
       setBaseStats(newBaseStats);
+      setCurrentPlayerHealth(jugador.health);
       
       const updatedJugador = applyEquipmentEffects(jugador, newBaseStats);
       setJugador(updatedJugador);
@@ -246,6 +252,16 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   }, [isJugadorTurn, gameOver, turnEnded]);
 
   useEffect(() => {
+    if (gameOver) {
+      if (jugador && jugador.health > 0) {
+        onGameOver(true); // Jugador ganó
+      } else {
+        onGameOver(false); // Jugador perdió
+      }
+    }
+  }, [gameOver, jugador, onGameOver]);
+
+  useEffect(() => {
     if (jugador && originalStats) {
       const updatedJugador = { ...jugador };
       updatedJugador.attack = originalStats.attack + (activeEffects.increaseAttack?.value || 0);
@@ -293,7 +309,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
     }
   }, [jugador?.health, enemigo?.health, gameOver]);
 
-  const [Creditos, setCreditos] = useState(0);
+
 
   async function setCreditsUser(idUser:number, credits:number){
     // Realizar una solicitud GET con Axios
@@ -342,6 +358,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   };
   
   const closeVictoryPanel = () => setShowVictoryPanel(false);
+
  
 
   const calcularAtaque = (combatiente: Combatiente): number => {
@@ -427,6 +444,12 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
   
     let dañoBase = calcularDaño(atacante.type);
     let dañoFinal = dañoBase;
+
+    if (!esAtaqueJugador) {
+      // Si es un ataque del enemigo, aplicar el daño al jugador
+      const nuevaVidaJugador = Math.max(0, currentPlayerHealth - dañoFinal);
+      updatePlayerHealth(nuevaVidaJugador);
+    }
   
     // Aplicar efectos especiales solo si es el ataque del jugador
     if (esAtaqueJugador) {
@@ -554,7 +577,8 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
 
 
   const updatePlayerHealth = (newHealth: number) => {
-    console.log(`Actualizando vida del jugador. Actual: ${jugador?.health}, Nueva: ${newHealth}`);
+    console.log(`Actualizando vida del jugador. Actual: ${currentPlayerHealth}, Nueva: ${newHealth}`);
+    setCurrentPlayerHealth(newHealth);
     setJugador(prevJugador => {
       if (prevJugador) {
         const updatedJugador = { ...prevJugador, health: newHealth };
@@ -563,7 +587,6 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
       }
       return prevJugador;
     });
-    setJugadorVidaActual(newHealth);
   };
 
   // Modificar la función handleTurnoEnemigo
@@ -571,13 +594,12 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
     if (enemigo && jugador && !gameOver) {
       onEnemyAttack();
       
-      // Crear una copia del jugador con los efectos temporales aplicados
       const jugadorConEfectos = {
         ...jugador,
         attack: jugador.attack + (activeEffects.increaseAttack?.value || 0),
         defense: jugador.defense + (activeEffects.increaseDefense?.value || 0),
         damage: jugador.damage + (activeEffects.increaseDamage?.value || 0),
-        // Añadir otros efectos relevantes aquí
+        health: currentPlayerHealth, // Usar la vida actual
       };
   
       console.log('Jugador con efectos aplicados:', jugadorConEfectos);
@@ -585,9 +607,9 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
       const { dañoFinal, efecto, ataqueExitoso } = calcularDañoFinal(enemigo, jugadorConEfectos, false);
     
       if (ataqueExitoso) {
-        const nuevaVidaJugador = Math.max(0, jugador.health - dañoFinal);
+        const nuevaVidaJugador = Math.max(0, currentPlayerHealth - dañoFinal);
         
-        console.log('Vida actual antes del ataque:', jugador.health);
+        console.log('Vida actual antes del ataque:', currentPlayerHealth);
         console.log('Daño calculado:', dañoFinal);
         console.log('Nueva vida calculada:', nuevaVidaJugador);
     
@@ -707,9 +729,10 @@ const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
   if (jugador) {
     const updatedJugador = {
       ...jugador,
-      attack: equipmentEffects.attack,
-      defense: equipmentEffects.defense,
-      damage: equipmentEffects.damage,
+      attack: baseStats.attack,
+      defense: baseStats.defense,
+      damage: baseStats.damage,
+      health: currentPlayerHealth, // Mantener la vida actual
     };
 
     Object.entries(efectos).forEach(([key, effect]) => {
@@ -723,7 +746,7 @@ const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
         case 'increaseDamage':
           updatedJugador.damage += effect.value;
           break;
-        // ... (otros casos según sea necesario)
+        // No modificar la salud aquí
       }
     });
 
@@ -731,7 +754,6 @@ const actualizarEstadisticasJugador = (efectos: ActiveEffects) => {
     console.log("Estadísticas actualizadas del jugador:", updatedJugador);
   }
 };
-
 
 const actualizarEfectosActivos = () => {
   const newActiveEffects: ActiveEffects = {};
@@ -895,7 +917,6 @@ useEffect(() => {
   const getActionImage = (actionName: string) => {
     switch (actionName) {
       case "Shield Throw":
-
         return "AccionPlus.png";
       case "Mano de piedra":
         return "Escudo.png";
@@ -919,9 +940,8 @@ useEffect(() => {
       return "AccionHielo1.png";
       case "Bola de hielo":
       return "AccionHielo2.png";
-
       default:
-        return "/Images/AccionPlus.png"; // You might want to add a default image
+        return "src/assets/default-action.png"; // You might want to add a default image
     }
   };
 
@@ -1046,7 +1066,6 @@ useEffect(() => {
             </div>
           )}
           {gameOver && (<br />)}
-
           <div className={styles.actionButtons}>
             <div className={styles.attackSkillButtons}>
               <button
@@ -1071,7 +1090,6 @@ useEffect(() => {
                       alt={habilidad.name} 
                       className={styles.actionButtonImage} 
                     />
-
                   </button>
                 ))}
               </div>

@@ -34,8 +34,8 @@ export interface HeroeData {
 interface IInventarioDetallePageProps { }
 
 export const CrearHeroePage: React.FunctionComponent<IInventarioDetallePageProps> = () => {
-  const { id } = useParams<{ id: string }>();
-  const [file, setFile] = useState<File | null>(null);
+  // const { id } = useParams<{ id: string }>();
+  const [file, setFile] = useState< File | null>(null);
   const [heroData, setHeroData] = useState<HeroeData>({
     _id: '',
     tipo: '',
@@ -46,8 +46,8 @@ export const CrearHeroePage: React.FunctionComponent<IInventarioDetallePageProps
       poder: 0,
       vida: 0,
       defensa: 0,
-      ataque: { modificador: '0', lanzamientos: '0', caras: 'd4' },
-      daño: { modificador: '0', lanzamientos: '0', caras: 'd4' },
+      ataque: { modificador: 0, lanzamientos: 0, caras: 'd4' },
+      daño: { modificador: 0, lanzamientos: 0, caras: 'd4' },
       acciones: []
     },
     probabilidadDeAtaque: {
@@ -59,20 +59,6 @@ export const CrearHeroePage: React.FunctionComponent<IInventarioDetallePageProps
       noDaño: 0
     }
   });
-
-  useEffect(() => {
-    const fetchProducto = async () => {
-      try {
-        const producto = await getProductoById(id as string);
-        // Aquí puedes actualizar el estado con los datos del producto
-        setHeroData(producto);
-      } catch (error) {
-        console.error('Error al obtener el producto:', error);
-      }
-    };
-
-    fetchProducto();
-  }, [id]);
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setHeroData({
@@ -86,10 +72,10 @@ export const CrearHeroePage: React.FunctionComponent<IInventarioDetallePageProps
   };
 
   const guardar = () => {
-    if(!file) return;
-
+    if (!file) return;
     HeroeService.guardarHeroe(heroData, file);
   }
+  
 
   return (
     <div className="flex flex-col flex-grow overflow-y-auto sm:flex-row h-full">
