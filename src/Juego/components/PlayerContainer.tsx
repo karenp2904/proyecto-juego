@@ -489,7 +489,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
           return prevEnemigo;
         });
         onActionMessage({
-          message: `¡${jugador.name} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
+          message: `¡${jugador.type} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
           defenderType: null
         });
     
@@ -503,7 +503,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         }
       } else {
         onActionMessage({
-          message: `¡La defensa de ${enemigo.name} fue superior!`,
+          message: `¡La defensa de ${enemigo.type} fue superior!`,
           defenderType: 'enemy'
         });
       }
@@ -559,7 +559,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         updatePlayerHealth(nuevaVidaJugador);
     
         onActionMessage({
-          message: `¡${enemigo.name} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
+          message: `¡${enemigo.type} ha atacado! Efecto: ${efecto}. Daño: ${dañoFinal}`,
           defenderType: null
         });
     
@@ -573,7 +573,7 @@ const PlayerContainer: FunctionComponent<PlayerContainerProps> = ({
         }
       } else {
         onActionMessage({
-          message: `¡La defensa de ${jugador.name} fue superior!`,
+          message: `¡La defensa de ${jugador.type} fue superior!`,
           defenderType: 'player'
         });
       }
@@ -735,7 +735,7 @@ const handleSkillSelect = (habilidad: Acciones) => {
       setPowerPointsLeft(updatedPowerPointsLeft);
       
       onActionMessage({
-        message: `¡${jugador.name} ha utilizado ${habilidad.name}!`,
+        message: `¡${jugador.type} ha utilizado ${habilidad.name}!`,
         defenderType: null
       });
 
@@ -974,14 +974,14 @@ useEffect(() => {
           </div>
           <div className={styles.nombrejugadorWrapper}>
             <b className={styles.nombrejugador}>
-              {jugador ? `${jugador.name} lvl. ${jugador.level}` : 'Cargando...'}
+              {jugador ? `${jugador.type} lvl. ${jugador.level}` : 'Cargando...'}
             </b>
           </div>
         </div>
         <div className={styles.enemyInfo}>
           <div className={styles.enemyName}>
             <b className={styles.nombreenemigo}>
-              {enemigo ? `${enemigo.name} lvl. ${enemigo.level}` : 'Cargando...'}
+              {enemigo ? `${enemigo.type} lvl. ${enemigo.level}` : 'Cargando...'}
             </b>
           </div>
           <div className={styles.enemyHealth}>

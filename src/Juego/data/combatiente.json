@@ -32,7 +32,7 @@
       "64d3402d681948532712a466",
       "64d3402d681948532712a467"
     ],
-    "image": "BarbaroTanque.png"
+    "image": "src/assets/BarbaroTanque.png"
 
   },
   
@@ -57,7 +57,7 @@
       "64d3402d681948532712a472",
       "64d3402d681948532712a473"
     ],
-    "image": "Barbaro.png"
+    "image": "src/assets/Barbaro.png"
 
 
   },
@@ -82,7 +82,7 @@
       "64d3402d681948532712a482",
       "64d3402d681948532712a483"
     ],
-    "image": "MagoFuego.png"
+    "image": "src/assets/MagoFuego.png"
 
   },
   {
@@ -106,7 +106,7 @@
       "64d3402d681948532712a492",
       "64d3402d681948532712a493"
     ],
-    "image": "MagoHielo.png"
+    "image": "src/assets/MagoHielo.png"
 
   },
   {
@@ -130,7 +130,7 @@
       "64d3402d681948532712a4a2",
       "64d3402d681948532712a4a3"
     ],
-    "image": "PicaroVeneno.png"
+    "image": "src/assets/PicaroVeneno.png"
 
   },
   {
@@ -154,6 +154,6 @@
       "64d3402d681948532712a4b2",
       "64d3402d681948532712a4b3"
     ],
-    "image": "PicaroVeneno.png"
+    "image": "src/assets/PícaroMachete.png"
   }
 ]
